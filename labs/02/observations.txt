@@ -1,0 +1,6 @@
+example1
+	This part of the loop will terminate if the end of the file is reached.
+
+example2
+	For some reason, an undescore does not count as a letter or number. If I enter just "_" it is not recognized.
+	However, if I include a character such as a letter along with the underscore, it does count as a word and when the program parsing prints word, it prints the underscores in the input as well. For example, input: "__f" produces "__WORD."
