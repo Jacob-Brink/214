@@ -4,3 +4,8 @@ example1
 example2
 	For some reason, an undescore does not count as a letter or number. If I enter just "_" it is not recognized.
 	However, if I include a character such as a letter along with the underscore, it does count as a word and when the program parsing prints word, it prints the underscores in the input as well. For example, input: "__f" produces "__WORD."
+
+example4
+	a. A terminal is a statement consisting of capital letters for a name which is also found in the lex file and is followed by a code block blocked out by curly brackets. A nonterminal, unlke terminals are defined by a group of terminals or a group of nonterminals.
+	b. While most of the commands work, turning heat on or off gives a weird output, "Heat turned on or off," instead of the expected "Heat turned on" if "heat on" is given as input.
+	

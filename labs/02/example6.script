@@ -1,0 +1,21 @@
+Script started on 2020-02-14 13:23:20-0500
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ a2ps example6.script observations.txtexample6.script [11P./example6[29@gcc lex.yy.c example6.tab.c -o example6[20Pbison -d example6.y[2Pflex example6.lex
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ flex example6.lexa2ps example6.script observations.txtexample6.script [11P./example6[29@gcc lex.yy.c example6.tab.c -o example6[20Pbison -d example6.y
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ bison -d example6.y[2Pflex example6.lexa2ps example6.script observations.txtexample6.script [11P./example6[29@gcc lex.yy.c example6.tab.c -o example6
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ ./example6
+set tempearture      rature 420
+	Temperature set to 420
+set temperature 6969
+	Temperature set to 6969
+set humidity 420
+	Humidity set to 420
+set humidity 6969
+	Humidity set to 6969
+heat on
+	Heat turned on
+heat off
+	Heat turned off
+^C
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ exit
+
+Script done on 2020-02-14 13:24:10-0500
