@@ -1,0 +1,355 @@
+Script started on 2020-02-20 13:04:59-0500
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ cat year_codes.
+year_codes.adb  year_codes.clj  year_codes.rb   
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ cat year_codes.
+year_codes.adb  year_codes.clj  year_codes.rb   
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ cat year_codes.           year    YearCodes.java
+/* YearCodes.java is a driver for function yearCode().
+ * Student: Jacob Brink
+ * Date: 2/20/2020
+ * Lab: 03
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ ****************************************************************/
+
+import java.util.Scanner;
+
+public class YearCodes {
+
+    
+   public static void main(String[] args) {
+      Scanner keyboard = new Scanner(System.in);
+      System.out.println("\nEnter your academic year: "); // prompt
+
+      String year = keyboard.next();      // read year
+      System.out.println(yearCode(year)); // display its code
+   }
+
+   /***************************************************************
+    * yearCode() converts an academic year into its integer code.
+    *
+    * Receive: year, a string.
+    * PRE: yearName == one of {freshman, sophomore, junior, or senior}.
+    * Return: the integer code corresponding to year.
+    */
+    
+    public static int yearCode(String year)
+    {
+	if (year.equals("freshman"))
+	    return 1;
+	else if (year.equals("sophomore"))
+	    return 2;
+	else if (year.equals("junior"))
+	    return 3;
+	else if (year.equals("senior"))
+	    return 4;
+	else
+	    return 0;
+    }
+    
+}
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ javac YearCodes.java
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ java ya  YearCodes
+
+Enter your academic year: 
+freshman
+1
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ java YearCodes
+
+Enter your academic year: 
+sophm omore
+2
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ java YearCodes
+
+Enter your academic year: 
+junior
+3
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ java YearCodes
+
+Enter your academic year: 
+senior
+4
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ java YearCodes
+
+Enter your academic year: 
+should_be_s zero
+0
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ yep it was
+
+Command 'yep' not found, did you mean:
+
+  command 'rep' from deb rep
+  command 'iep' from deb emboss
+  command 'xep' from deb pvm-examples
+  command 'yap' from deb yap
+  command 'dep' from deb go-dep
+  command 'yes' from deb coreutils
+  command 'yelp' from deb yelp
+
+Try: apt install <deb name>
+
+]0;jpb34@gold04: ~/Documents/214/labs/03[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/03[00m$ exit
+
+Script done on 2020-02-20 13:07:39-0500
+Script started on 2020-02-21 13:08:37-0500
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ./year_codesgnatmake year_codes.adb [12P./year_codesgnatmake year_codes.adb [6Pcat year_codes.adb[6P./year_codescat year_codes.adb
+-- year_codes.adb converts academic year codes to corresponding years.
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+-- Student: Jacob Brink
+-- Date: 2/21/2020
+-- Lab: 03
+-- Input: year, a string
+-- Precondition: year is one of "freshman", "sophomore", "junior", "senior"
+-- Output: The year code (1, 2, 3 or 4) corresponding to year.
+----------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use  Ada.Text_IO, Ada.Integer_Text_IO;
+
+procedure year_codes is
+
+   year : String(1..9) := "         ";
+   charsRead : Natural;
+   
+   
+   -- function yearCode computes the integer that represents the given school year
+   -- Parameter: year, a string
+   -- Precondition: year is string
+   -- Return: 1-4 for freshman, sophomore, junior, senior respectively, 0 for anything else
+   ----------------------------------------------------
+   function yearCode (Year : string) return integer is
+   begin
+      
+      if Year = "freshman " then
+	 return 1;
+      elsif ( Year = "sophomore" ) then
+	 return 2;
+      elsif ( Year = "junior   " ) then
+	 return 3;
+      elsif (Year = "senior   " ) then
+	 return 4;
+      else
+	 return 0;
+      end if;
+	 
+   end YearCode;
+     
+
+begin                                          
+   Put("Enter your academic year: ");           -- Prompt for input
+   Get_Line(year, charsRead);                   -- Input
+   Put( yearCode(year) );                       -- Convert and output
+   New_Line;
+end year_codes;
+
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ cat year_codes.adb[6P./year_codesgnatmake year_codes.adb 
+gnatmake: "year_codes" up to date.
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ gnatmake year_codes.adb [6Pcat year_codes.adb[6P./year_codes
+Enter your academic year: j frs eshj ,am   man
+          1
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ./year_codes
+Enter your academic year: sophomore
+          2
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ./year_codes
+Enter your academic year: junior
+          3
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ./year_codes
+Enter your academic year: senior
+          4
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ./year_codes
+Enter your academic year: should_be_s zeroooooo
+          0
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ exit
+
+Script done on 2020-02-21 13:09:14-0500
+Script started on 2020-02-21 14:00:17-0500
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ cat src/c year_codes.clj
+;;;; year_codes.clj is a driver for function yearCode.
+;;;;
+;;;; Input: An academic year, one of {freshman, sophomore,
+;;;;                                  junior, senior}.
+;;;; Output: The code for that academic year
+;;;;         (1, 2, 3, 4 for valid entries; 
+;;;;          0 for invalid entries).
+;;;;
+;;;; Usage: clojure -m year_codes
+;;;;
+;;;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;;;; Completed by: Jacob Brink
+;;;; Lab: 03
+;;;; Date: 2/21/2020
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns year_codes)                    ; name the program
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; yearCode() returns the code for a given academic year.
+;;; Receive: year, a string.
+;;; Precondition: year is one of 
+;;;   {freshman, sophomore, junior or senior}.
+;;; Return: the integer code corresponding to year.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn yearCode [year]
+  (if (= year "freshman") 1
+      (if (= year "sophomore") 2
+          (if (= year "junior") 3
+              (if (= year "senior") 4
+                  0
+                  )
+              )
+          )
+    )
+)
+
+
+;; solution using the cond function
+(defn yearCode2 [year]
+  (cond
+    (= year "freshman")  1
+    (= year "sophomore") 2
+    (= year "junior")    3
+    (= year "senior")    4
+    :else                0
+  )
+)
+
+;; solution using the case function
+(defn yearCode3 [year]
+  (case year
+    "freshman"  1
+    "sophomore" 2
+    "junior"    3
+    "senior"    4
+                0 ; default
+  )
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function -main() test-drives our yearCode() function.
+;;; Input: year: one of {freshman, sophomore, junior, or senior}.
+;;; Output: the code corresponding to year.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+ (print "\nEnter your academic year: ") (flush)
+ (let
+    [ year (read-line) ]                ; read year (a string)
+   (println (yearCode year) "\n")      ; display its code
+   (println (yearCode2 year) "\n")
+   (println (yearCode3 year) "\n")
+ )
+)
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ clojure -m year_codes
+
+Enter your academic year: freshman
+1 
+
+1 
+
+1 
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ clojure -m year_codes
+
+Enter your academic year: sophomore
+2 
+
+2 
+
+2 
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ clojure -m year_codes
+
+Enter your academic year: junior
+3 
+
+3 
+
+3 
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ clojure -m year_codes
+
+Enter your academic year: senior
+4 
+
+4 
+
+4 
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ clojure -m year_codes
+
+Enter your academic year: hayheychan ha ha i am su ooooo funny
+0 
+
+0 
+
+0 
+
+]0;jpb34@gold25: ~/Documents/214/labs/03/clojure[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03/clojure[00m$ exit
+
+Script done on 2020-02-21 14:01:10-0500
+Script started on 2020-02-21 13:56:37-0500
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby yaer   ear_codes.rb
+Enter the year: freshman
+Numeric code is: 1
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: sophomore
+Numeric code is: 2
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: junior
+Numeric code is: 3
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: senior
+Numeric code is: 4
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: hayChong       ey  heychan
+Numeric code is: 0
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: supersi enior
+Numeric code is: 4
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ ruby year_codes.rb
+Enter the year: ssenior
+Numeric code is: 4
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ cat year_codes.rb
+#! /usr/bin/ruby
+# year_codes.rb translates an academic year into a numeric code
+# Begun by: Dr. Nelesen, for CS 214 at Calvin College
+# Completed by: Jacob Brink
+# Lab: 03
+# Date: 2/21/2020
+################################################################
+
+# Input:  The name of an academic year
+# Precondition: The academic year is a string with a value of freshman, 
+#   sophomore, junior or senior
+# Output: The corresponding integer code for the given academic year
+
+def yearCode(year)
+  if year =~ /freshman/ then
+    1
+  elsif year =~ /sophomore/ then
+    2
+  else
+    if year =~ /junior/ then
+      3
+    elsif year =~ /senior/ then
+      4
+    else
+      0
+    end
+  end
+    
+end
+
+
+if __FILE__ == $0
+   print "Enter the year: "
+   year = gets
+   print "Numeric code is: "
+   puts yearCode(year)
+end
+
+]0;jpb34@gold25: ~/Documents/214/labs/03[01;32mjpb34@gold25[00m:[01;34m~/Documents/214/labs/03[00m$ exit
+
+Script done on 2020-02-21 13:58:24-0500

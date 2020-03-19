@@ -1,0 +1,134 @@
+Script started on 2020-02-28 15:22:18-0500
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ cat Factorial.java
+/* Factorial.java displays a table of logarithms.
+ *
+ * Input: start, stop and increment, three doubles.
+ * PRE: start < stop && increment > 0.
+ * Output: A table of logarithms from start to stop,
+ *         with increment as the step value.
+ * Begun by: Nelesen, for CS 214 at Calvin College.
+ * Completed by: Jacob Brink
+ * Project: 4
+ * Date: 2/28/2020
+ ********************************************************/
+import java.util.Scanner; 		// Get input
+
+class Factorial{
+
+    public static double factorial(double n) {
+	double answer = 1.0;
+	for (int i = 2; i <=n; i++) {
+	    answer *= i;
+	}
+	return answer;	
+    }
+    
+  public static void main(String[] args){
+    Scanner keyboard = new Scanner(System.in);
+    System.out.println("Enter a number: ");
+    double n = keyboard.nextDouble();
+    System.out.println(String.format("The factorial for %s is %s", n, factorial(n)));
+  }
+}
+
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ javac Factorial.java
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ ./  java Factorial
+Enter a number: 
+4
+The factorial for 4.0 is 24.0
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ java Factorial
+Enter a number: 
+5
+The factorial for 5.0 is 120.0
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ exit
+
+Script done on 2020-02-28 15:22:57-0500
+Script started on 2020-02-28 15:29:43-0500
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ ruby factorial.rb[1Pcat factorial.rb
+#! /usr/bin/ruby
+# factorial.rb calculates the factorial of a given number
+#
+# Begun by: Prof. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 2/28/2020
+# Project: 4
+##########################################################
+
+# Input: Number
+# Precondition: Number is integer
+# Output: factorial of Number
+
+def calcFactorial(number)
+  answer = 1
+  for i in 2..number
+    answer *= i
+  end
+  return answer
+end
+
+if __FILE__ == $0
+   print "Enter a number: \n"
+   number = gets.chomp.to_f
+   print "The factorial of #{number} is #{calcFactorial(number)}\n"
+end
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ cat factorial.rb[1@ruby factorial.rb
+Enter a number: 
+4
+The factorial of 4.0 is 24
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ exit
+
+Script done on 2020-02-28 15:29:55-0500
+Script started on 2020-02-28 15:30:06-0500
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ gnatmake factorial.adb
+gnatmake: "factorial" up to date.
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ cat factorial.adb
+-- log_table.adb computes a table of logarithms.
+--
+-- Input: start, stop, increment, three reals.
+-- Precondition: increment is positive.
+-- Output: A table of logarithms beginning with log(start),
+--         ending with log(stop), with intervals of increment.
+--
+-- Begun by: Prof. Adams, for CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Project: 04
+-- Date: 2/28/2020
+--------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO, Ada.Numerics.Elementary_Functions;
+use  Ada.Text_IO, Ada.Float_Text_IO, Ada.Numerics.Elementary_Functions;
+
+procedure factorial is
+
+   User_Integer : Natural;
+   
+   function FactorialFunction(Number : Natural) return Natural is
+      Counter : Natural := 1;
+      Answer : Natural := 1;
+   begin
+      for Counter in 2..Number
+      loop
+	 Answer := Answer*Counter;
+      end loop;
+      return Answer;
+   end FactorialFunction;
+   
+   
+begin                                           -- Prompt for input
+   Put_Line("Enter a number: ");
+   User_Integer := Integer'Value(Get_Line);
+   Put(Natural'Image(FactorialFunction(User_Integer)));
+
+end factorial;
+
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ ./facot  torial
+Enter a number: 
+4
+ 24
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ ./factorial
+Enter a number: 
+5
+ 120
+]0;jpb34@maroon15: ~/Documents/214/projects/04[01;32mjpb34@maroon15[00m:[01;34m~/Documents/214/projects/04[00m$ ./factorial           exit
+
+Script done on 2020-02-28 15:30:30-0500

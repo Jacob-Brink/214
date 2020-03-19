@@ -1,0 +1,92 @@
+Script started on 2020-02-26 22:27:44-0500
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ cat src/grade_converter.clj 
+;;; grade_converter.clj calculates the area of a rectangle.
+;;;;
+;;;; Input: The average grade
+;;;; Output: The letter grade
+;;;;
+;;;; Usage: clojure -m grade_converter.clj
+;;;;
+;;;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;;;; Completed by: Jacob Brink
+;;;; Date: 2/26/2020
+;;;; Project: 3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns grade_converter)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function getLetter() computes the letter grade
+;;; Receive: average grade
+;;; Precondition: average grade is between 0 and 100
+;;; Return: the letter grade matching the given average grade
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getLetter [avgGrade]
+  (let
+      [ grade (quot avgGrade 10)]
+
+    (cond
+      (= grade 10) "A"
+      (= grade 9) "A"
+      (= grade 8) "B"
+      (= grade 7) "C"
+      (= grade 6) "D"
+      :else "F"
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function testGetLetter() runs test on specific case
+;;; Receive: average grade and expected letter grade
+;;; Precondition: average grade is between 0 and 100
+;;; Return: none
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn testGetLetter [avgGrade, expectedLetterGrade]
+  (println "(getLetter" avgGrade ") =" expectedLetterGrade
+           (if (= (getLetter avgGrade) expectedLetterGrade)
+             "Passed!"
+             "Failed!"
+             )
+           )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function runTests runs tests on getLetter method
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn runTests []
+  (println "Running tests...")
+  (testGetLetter 100 "A")
+  (testGetLetter 90 "A")
+  (testGetLetter 85 "B")
+  (testGetLetter 80 "B")
+  (testGetLetter 75 "C")
+  (testGetLetter 70 "C")
+  (testGetLetter 65 "D")
+  (testGetLetter 60 "D")
+  (testGetLetter 59 "F")
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function -main is where execution begins
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (runTests)
+  )
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ cat src/grade_converter.clj [7Pnano circle_area.adb ls[K  clojure -m grade_converter
+Running tests...
+(getLetter 100 ) = A Passed!
+(getLetter 90 ) = A Passed!
+(getLetter 85 ) = B Passed!
+(getLetter 80 ) = B Passed!
+(getLetter 75 ) = C Passed!
+(getLetter 70 ) = C Passed!
+(getLetter 65 ) = D Passed!
+(getLetter 60 ) = D Passed!
+(getLetter 59 ) = F Passed!
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ exit
+
+Script done on 2020-02-26 22:28:05-0500

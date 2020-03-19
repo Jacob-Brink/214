@@ -1,0 +1,76 @@
+V "GNAT Lib v9"
+M P W=b
+P ZX
+
+RN
+RV NO_IO
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U split%b		split.adb		477ac6cb NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.fixed%s	a-strfix.adb		a-strfix.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+
+D ada.ads		20191030142400 76789da1 ada%s
+D a-charac.ads		20191030142400 2d3ec45b ada.characters%s
+D a-chlat1.ads		20191030142400 66457d31 ada.characters.latin_1%s
+D a-except.ads		20191030142400 291912d5 ada.exceptions%s
+D a-inteio.ads		20191030142400 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20191030142400 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20191030142400 119b8fb3 ada.streams%s
+D a-string.ads		20191030142400 90ac6797 ada.strings%s
+D a-strfix.ads		20191030142400 d07c346e ada.strings.fixed%s
+D a-strmap.ads		20191030142400 e8bb714a ada.strings.maps%s
+D a-tags.ads		20191030142400 491b781d ada.tags%s
+D a-textio.ads		20191030142400 881db35a ada.text_io%s
+D a-tiinio.ads		20191030142400 aa04e5d6 ada.text_io.integer_io%s
+D a-unccon.ads		20191030142400 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20191030142400 5ab55268 interfaces%s
+D i-cstrea.ads		20191030142400 e53d8b8e interfaces.c_streams%s
+D split.adb		20200306210124 e950c85b split%b
+D system.ads		20191030142400 4635ec04 system%s
+D s-crtl.ads		20191030142400 0ebbdb71 system.crtl%s
+D s-exctab.ads		20191030142400 54135002 system.exception_table%s
+D s-ficobl.ads		20191030142400 078245e4 system.file_control_block%s
+D s-parame.ads		20191030142400 48ec542b system.parameters%s
+D s-secsta.ads		20191030142400 20bbe636 system.secondary_stack%s
+D s-soflin.ads		20191030142400 a7318a92 system.soft_links%s
+D s-stache.ads		20191030142400 a37c21ec system.stack_checking%s
+D s-stalib.ads		20191030142400 09bd3940 system.standard_library%s
+D s-stoele.ads		20191030142400 2dc34a04 system.storage_elements%s
+D s-traent.ads		20191030142400 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20191030142400 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20191030142400 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 17|15r6 15r19 15r40 16r6 16r19 16r40
+X 5 a-inteio.ads
+18K13*Integer_Text_IO[13|46] 17|15w23 16r23
+X 8 a-string.ads
+16K13*Strings 35e16 17|15r44 16r44
+X 9 a-strfix.ads
+18K21*Fixed 251e22 17|15w52 16r52
+25U14*Move 17|36s7 37s7
+X 12 a-textio.ads
+49K13*Text_IO 471e16 17|15w10 16r10
+242U14*Put 17|43s4 45s4 50s4 52s4
+249U14*Get_Line 17|44s4
+263U14*Put_Line 17|51s4 53s4
+X 13 a-tiinio.ads
+56U14*Get 17|46s4[5|18]
+X 17 split.adb
+18U11*split 18b11 55l5 55t10
+20a4 EMPTY_STRING{string} 22r39
+22a4 Astring{string} 44m13 48r10
+22a13 Part1{string} 48m24 51r13
+22a20 Part2{string} 48m31 53r13
+23i4 Pos{natural} 46m8 48r19
+23i9 Chars_read{natural} 44m22
+34U14 split 34b14 34>20 34>45 34<73 34<84 38l8 38t13 48s4
+34a20 InputString{string} 36r12 36r24 37r12 37r39
+34i45 SplitPosition{natural} 36r44 37r24
+34a73 FirstPart{string} 36m63
+34a84 SecondPart{string} 37m58
+

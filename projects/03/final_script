@@ -1,0 +1,414 @@
+Script started on 2020-02-26 22:27:44-0500
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ cat src/grade_converter.clj 
+;;; grade_converter.clj calculates the area of a rectangle.
+;;;;
+;;;; Input: The average grade
+;;;; Output: The letter grade
+;;;;
+;;;; Usage: clojure -m grade_converter.clj
+;;;;
+;;;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;;;; Completed by: Jacob Brink
+;;;; Date: 2/26/2020
+;;;; Project: 3
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns grade_converter)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function getLetter() computes the letter grade
+;;; Receive: average grade
+;;; Precondition: average grade is between 0 and 100
+;;; Return: the letter grade matching the given average grade
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getLetter [avgGrade]
+  (let
+      [ grade (quot avgGrade 10)]
+
+    (cond
+      (= grade 10) "A"
+      (= grade 9) "A"
+      (= grade 8) "B"
+      (= grade 7) "C"
+      (= grade 6) "D"
+      :else "F"
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function testGetLetter() runs test on specific case
+;;; Receive: average grade and expected letter grade
+;;; Precondition: average grade is between 0 and 100
+;;; Return: none
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn testGetLetter [avgGrade, expectedLetterGrade]
+  (println "(getLetter" avgGrade ") =" expectedLetterGrade
+           (if (= (getLetter avgGrade) expectedLetterGrade)
+             "Passed!"
+             "Failed!"
+             )
+           )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function runTests runs tests on getLetter method
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn runTests []
+  (println "Running tests...")
+  (testGetLetter 100 "A")
+  (testGetLetter 90 "A")
+  (testGetLetter 85 "B")
+  (testGetLetter 80 "B")
+  (testGetLetter 75 "C")
+  (testGetLetter 70 "C")
+  (testGetLetter 65 "D")
+  (testGetLetter 60 "D")
+  (testGetLetter 59 "F")
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Function -main is where execution begins
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (runTests)
+  )
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ cat src/grade_converter.clj [7Pnano circle_area.adb ls[K  clojure -m grade_converter
+Running tests...
+(getLetter 100 ) = A Passed!
+(getLetter 90 ) = A Passed!
+(getLetter 85 ) = B Passed!
+(getLetter 80 ) = B Passed!
+(getLetter 75 ) = C Passed!
+(getLetter 70 ) = C Passed!
+(getLetter 65 ) = D Passed!
+(getLetter 60 ) = D Passed!
+(getLetter 59 ) = F Passed!
+]0;jpb34@gold15: ~/Documents/214/projects/03/clojure[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03/clojure[00m$ exit
+
+Script done on 2020-02-26 22:28:05-0500
+Script started on 2020-02-26 22:31:18-0500
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ gnatmake grade_letter.adb 
+gnatmake: "grade_letter" up to date.
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ ./grade_letter 
+
+Testing GetLetter method...
+Testing GetLetter( 100 ) = A Passed!
+Testing GetLetter( 95 ) = A Passed!
+Testing GetLetter( 90 ) = A Passed!
+Testing GetLetter( 85 ) = B Passed!
+Testing GetLetter( 80 ) = B Passed!
+Testing GetLetter( 75 ) = C Passed!
+Testing GetLetter( 70 ) = C Passed!
+Testing GetLetter( 65 ) = D Passed!
+Testing GetLetter( 60 ) = D Passed!
+Testing GetLetter( 59 ) = F Passed!
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ cat grade_letter.adb
+-- grade_letter.adb computes the letter grade
+--
+-- Input: average grade
+-- Precondition: average grade is between 0 and 100
+-- Output: letter grade
+--
+-- Begun by: Prof. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 2/26/2020
+-- Project: 3
+----------------------------------------------------
+
+with Ada.Text_IO, Ada.Float_Text_IO;
+use  Ada.Text_IO, Ada.Float_Text_IO;
+
+procedure Grade_Letter is
+   
+   -- function getLetter computes the letter grade corresponding to the given average grade
+   -- Parameter: average grade, an integer
+   -- Precondition: 100 >= avgGrade >= 0
+   -- Return: corresponding letter grade
+   ----------------------------------------------------
+   function GetLetter(AvgGrade: in Integer) return String is 
+      SimpleGrade : Integer := AvgGrade / 10;
+   begin
+      case SimpleGrade is
+	 when 9..10 => return "A";
+	 when 8 => return "B";
+	 when 7 => return "C";
+	 when 6 => return "D";
+	 when others => return "F";
+      end case;
+      
+   end GetLetter;
+   
+   -- function testGetLetter
+   -- Parameter: average grade, an integer and expected value
+   -- Precondition: none
+   -- Return: none
+   ----------------------------------------------------
+   procedure TestGetLetter(AvgGrade: in Integer; ExpectedLetter: in String) is 
+   begin
+      Put("Testing GetLetter(");
+      Put(AvgGrade'Image);
+      Put(" ) = ");
+      Put(ExpectedLetter);
+      if GetLetter(AvgGrade) = ExpectedLetter then
+	 Put(" Passed!");
+      else
+	 Put("Failed!");
+      end if;
+      New_Line;
+      
+   end TestGetLetter;
+   
+   
+   
+begin                           
+   New_Line;
+   Put("Testing GetLetter method...");
+   
+   New_Line;
+   TestGetLetter(100, "A");
+   TestGetLetter(95, "A");
+   TestGetLetter(90, "A");
+   TestGetLetter(85, "B");
+   TestGetLetter(80, "B");
+   TestGetLetter(75, "C");
+   TestGetLetter(70, "C");
+   TestGetLetter(65, "D");
+   TestGetLetter(60, "D");
+   TestGetLetter(59, "F");
+end Grade_Letter;
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ exit
+
+Script done on 2020-02-26 22:31:36-0500
+Script started on 2020-02-26 22:29:35-0500
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ javac Selection.java
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ java Selection 
+Running tests...
+Asserting getLetter(100) equals A
+Success
+Asserting getLetter(95) equals A
+Success
+Asserting getLetter(90) equals A
+Success
+Asserting getLetter(85) equals B
+Success
+Asserting getLetter(80) equals B
+Success
+Asserting getLetter(75) equals C
+Success
+Asserting getLetter(70) equals C
+Success
+Asserting getLetter(65) equals D
+Success
+Asserting getLetter(60) equals D
+Success
+Asserting getLetter(55) equals F
+Success
+Asserting getLetter(30) equals F
+Success
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ cat Selection.java
+/* Selection.java computes the letter grade given a student's average grade
+ *
+ * Input: percent grade
+ * Precondition: percent grade is nonnegative and not above 100
+ * Output: letter grade
+ *
+ * Begun by: Dr. Adams, for CS 214, at Calvin College.
+ * Completed by: Jacob Brink
+ * Date: 2/26/2020
+ * Project: 03
+ **********************************************************/
+
+
+import java.util.Scanner;  // include class for Scanner
+
+public class Selection {
+
+     /* function getLetter computes the letter grade
+      * Parameter: average, an integer
+      * Precondition: average is nonnegative and not above 100
+      * Returns: letter in string format
+      */
+     public static String getLetter(int average) {
+	 switch(average / 10) {
+	 case 10:
+	     return "A";
+	 case 9:
+	     return "A";
+	 case 8:
+	     return "B";
+	 case 7:
+	     return "C";
+	 case 6:
+	     return "D";
+	 default:
+	     return "F";
+	 }
+     }
+
+
+     /* function testGetLetter outputs clearly what is being tested and whether or not the test passed
+      * Parameter: inputAverage (integer), expectedOutput (String)
+      * Precondition: inputAverage is not negative and not greater than 100
+      * Returns: void
+      */
+    public static void testGetLetter(int inputAverage, String expectedOutput) {
+	System.out.println("Asserting getLetter(" + inputAverage + ") equals " + expectedOutput);
+	if (getLetter(inputAverage) == expectedOutput)
+	    System.out.println("Success");
+	else
+	    System.out.println("Fail");
+    }
+
+     /* function runTests runs tests on getLetter method
+      * Parameter: none
+      * Precondition: none
+      * Returns: void
+      */
+    public static void runTests() {
+	System.out.println("Running tests...");
+	testGetLetter(100, "A");
+	testGetLetter(95, "A");
+	testGetLetter(90, "A");
+	testGetLetter(85, "B");
+	testGetLetter(80, "B");
+	testGetLetter(75, "C");
+	testGetLetter(70, "C");
+	testGetLetter(65, "D");
+	testGetLetter(60, "D");
+	testGetLetter(55, "F");
+	testGetLetter(30, "F");
+    }
+	
+  // main program
+  public static void main(String[] args) {
+      runTests();
+  } // main method
+
+} // class CircleArea
+
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ exit
+
+Script done on 2020-02-26 22:30:40-0500
+Script started on 2020-02-26 22:31:49-0500
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ cat selectoin.rb      ion.rb
+#! /usr/bin/ruby
+# selection.rb determines the letter grade given a percent grade
+# 
+# Input: nonnegative number
+# Precondition: number is not negative
+# Output: the appropriate letter grade
+#
+# Begun by: Prof. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 2/25/2020
+###############################################################
+
+# function getLetter returns a the letter grade matching the given percent grade
+# Parameters: p, a number
+# Precondition: p is between 0 and 100
+# Returns: string of letter grade
+
+def getLetter(p)
+  case(p.div(10))
+  when 10, 9 then "A"
+  when 8 then "B"
+  when 7 then "C"
+  when 6 then "D"
+  else
+    "F"
+  end
+end
+
+
+def showSuccess(success)
+  if success
+    "Success"
+  else
+    "Fail"
+  end
+end
+
+# function checkAnswers checks getLetter method
+# Parameters: none
+# Precondition: getLetters method exists
+# Returns: none
+
+def checkAnswers()
+  print "Checking getLetter() method..."
+
+  #check each possible grade letter
+  puts "Checking 100 == A"
+  puts showSuccess(getLetter(100) == "A")
+
+  puts "Checking 90 == A"
+  puts showSuccess(getLetter(90) == "A")
+
+  puts "Checking 80 == B"
+  puts showSuccess(getLetter(80) == "B")
+
+  puts "Checking 70 == C"
+  puts showSuccess(getLetter(70) == "C")
+
+  puts "Checking 60 == D"
+  puts showSuccess(getLetter(60) == "D")
+
+  puts "Checking 40 == F"
+  puts showSuccess(getLetter(40) == "F")
+
+  #check that integer division works
+  puts "Checking 95 == A"
+  puts showSuccess(getLetter(95) == "A")
+
+  
+end
+
+if __FILE__ == $0
+  checkAnswers()
+   puts "Enter a percentage: "
+   percentage = gets.chomp.to_f
+   print "The letter grade is "
+   puts getLetter(percentage)
+end
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ ruby selection.rb
+Checking getLetter() method...Checking 100 == A
+Success
+Checking 90 == A
+Success
+Checking 80 == B
+Success
+Checking 70 == C
+Success
+Checking 60 == D
+Success
+Checking 40 == F
+Success
+Checking 95 == A
+Success
+Enter a percentage: 
+2
+The letter grade is F
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ ruby selection.rb
+Checking getLetter() method...Checking 100 == A
+Success
+Checking 90 == A
+Success
+Checking 80 == B
+Success
+Checking 70 == C
+Success
+Checking 60 == D
+Success
+Checking 40 == F
+Success
+Checking 95 == A
+Success
+Enter a percentage: 
+100
+The letter grade is A
+]0;jpb34@gold15: ~/Documents/214/projects/03[01;32mjpb34@gold15[00m:[01;34m~/Documents/214/projects/03[00m$ exit
+
+Script done on 2020-02-26 22:32:27-0500

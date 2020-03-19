@@ -1,0 +1,65 @@
+-- Roots.adb finds the roots for a quadratic equation if valid
+--
+-- Input: A, B, C as Floats
+-- Precondition: 
+-- Output: The roots to the quadratic equation
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 3/11/2020
+-- Project: 5
+--------------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+
+procedure Roots is
+
+   A, B, C : Float;
+
+   ------------------------------------------------
+   --  rooter() finds roots to equation           
+   -- Receive: A, B, and C as parameters of quadratic formula
+   -- Passback: Roots if they exist
+   -- Returns: true if valid quadratic formula, else false
+   ------------------------------------------------
+   function rooter(A, B, C : in Float; Root1, Root2 : out Float) return Boolean is
+      Arg : Float := B**2 - 4 * A * C;
+   begin
+      if A = 0 then
+	 Put_Line("A cannot be zero!");
+	 Root1 := 0.0;
+	 Root2 := 0.0;
+	 return False;
+      else
+	 if Arg >= 0 then
+	    Root1 := (-B + Sqrt(Arg))/(2*A);
+	    Root2 := (-B - Sqrt(Arg))/(2*A);
+	 else
+	   Put_Line("rooter(): b^2 - 4ac is negative");
+	   Root1 := Root2 := 0;
+	 end if;
+	 
+	 return True;
+	 
+      end if;
+      
+   end rooter;
+     
+
+
+begin                                           -- Prompt for input
+   Put("To split a string, enter the string: ");
+   Get_Line(Astring, Chars_Read);
+   Put("Enter the split position: ");
+   Get(Pos);
+
+   split(Astring, Pos, Part1, Part2);
+
+   Put("The first part is ");
+   Put_Line(Part1);
+   Put(" and the second part is ");
+   Put_Line(Part2);
+
+end Roots;
+

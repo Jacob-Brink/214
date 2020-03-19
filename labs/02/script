@@ -1,0 +1,100 @@
+Script started on 2020-02-14 13:26:09-0500
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ cat example6.lex
+%{
+#include <stdio.h>
+#include <stdlib.h>           /* atoi() */
+#include <string.h>           /* strcmp() */
+#include "example6.tab.h"
+%}
+%%
+[0-9]+                  yylval = atoi(yytext); return NUMBER;
+heat                    return TOKHEAT;
+on|off                  yylval = !strcmp(yytext,"on"); return STATE;
+set                     return TOKSET;
+temperature             return TOKTEMPERATURE;
+humidity                return TOKHUMIDITY;
+\n                      /* ignore end of line */;
+[ \t]+                  /* ignore whitespace */;
+%%
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ cat example6.y
+%{
+#include <stdio.h>
+#include <string.h>
+
+/* declarations */
+int yylex (void);
+void yyerror (char const *);
+int yyparse(void);
+
+/* definitions */ 
+void yyerror(const char *str) {
+        fprintf(stderr,"error: %s\n",str);
+}
+ 
+int yywrap() {
+        return 1;
+} 
+ 
+int main() {
+        yyparse();
+} 
+
+%}
+
+%token NUMBER TOKHEAT STATE TOKSET TOKTEMPERATURE TOKHUMIDITY
+%%
+
+commands: /* empty */
+        | commands command
+        ;
+
+command:
+        heat_switch
+        | temperature_set
+	| humidity_set
+        ;
+
+heat_switch:
+        TOKHEAT STATE
+        {
+                if ($2) {  /* if STATE == 1 */
+                        printf("\tHeat turned on\n");
+                } else {
+                        printf("\tHeat turned off\n");
+                }
+        }
+        ;
+
+humidity_set:
+        TOKSET TOKHUMIDITY NUMBER
+	{
+	  printf("\tHumidity set to %d\n", $3);
+	}
+        ;
+
+temperature_set: 
+        TOKSET TOKTEMPERATURE NUMBER
+        {
+                printf("\tTemperature set to %d\n",$3);
+        }
+        ;
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ flex example6.lex
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ bison -d example6.y
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ gcc lex.yy.c example6.tab.c -o example6
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ ./example6
+set temperature 420
+	Temperature set to 420
+set humidity 420
+	Humidity set to 420
+^[[A    set   temperature 6969
+	Temperature set to 6969
+^[[A    set humidity 6969
+	Humidity set to 6969
+heat on
+	Heat turned on
+heat off
+	Heat turned off
+^C
+]0;jpb34@gold09: ~/Documents/214/labs/02[01;32mjpb34@gold09[00m:[01;34m~/Documents/214/labs/02[00m$ exit
+
+Script done on 2020-02-14 13:28:40-0500
