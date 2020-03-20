@@ -6,7 +6,7 @@
  * Student Name: Jacob Brink
  * Date: 3/17/2020
  *
- * Precondition: theArray, is an array of double values.
+ * Precondition: size is positive
  * Output: the ArrayProcessing of the numbers in theArray.
  ***************************************************************/
 

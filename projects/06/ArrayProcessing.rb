@@ -16,9 +16,10 @@ def fillArray (arraySize)
   array = Array.new(arraySize)
   for i in 1..arraySize
     print "Enter element #{i}: "
-    array[i] = gets.to_f
+    array[i-1] = gets.to_f
     puts "\n"
-  end  
+  end
+  array
 end
 
 ################################################

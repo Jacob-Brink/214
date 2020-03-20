@@ -1,303 +1,335 @@
-Script started on 2020-03-20 09:12:50-0500
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ gnat[K[K[K[Kcat average.adb
--- average.adb "test-drives" function Average.
--- Precondition: theArray is an array of numbers.
--- Output: the average of the numbers.
+Script started on 2020-03-20 12:39:28-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ ./arrayprocessing [11@gnatmake arrayprocessing.adb[C[6Pcat arrayprocessing.adb
+-- ArrayProcessing.adb "test-drives" function PrintArray and InputArray.
+-- Precondition:  given size is positive
+-- Output: none
 --
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
 -- Completed by: Jacob Brink
 -- Date: 3/17/2020
+-- Project: 06
 -----------------------------------------------
 
+with Ada.Integer_Text_Io; use Ada.Integer_Text_Io;
 with Ada.Text_IO; use Ada.Text_IO;             -- Put(String)
 with Ada.Float_Text_IO; use Ada.Float_Text_IO; -- Put(Float)
 
-procedure average is
+procedure ArrayProcessing is
 
    -- Declare Vector type
    type Vector is array ( Positive range <>) of Float;
-
--- Define array0 as an array containing no values
-   array0 : Vector := (0.0, 0.0);
-   
--- Define array1 as an array containing 9, 8, 7, 6
-   array1 : Vector := (9.0, 8.0, 7.0, 6.0);
+   ArraySize : Positive;
    
 ----------------------------------------------
--- Sum() Sums the values in an array           -
--- Receive: anArray, an array of numbers     -
--- Return: the sum of the values in anArray. -
+-- Printer() prints the values in an array   -
+-- Receive: A, an array of numbers     -
+-- Return: void                              -
 ----------------------------------------------
-   function Sum(A: Vector) return Float is 
-      Total : Float := 0.0; 
+   procedure Printer(A: Vector) is 
    begin 
       for I in A'Range 
       loop 
-	 Total := Total + A(I); 
+	 Ada.Float_Text_Io.Put(Item => A(I));
+	 New_Line;
       end loop; 
-      return Total; 
-   end Sum;
+   end Printer;
+   
    
 ----------------------------------------------
--- Average() averages the values in an array         -
--- Receive: anArray, an array of numbers     -
--- Return: the average of the values in anArray. -
+-- InputArray() fills given array with input -
+-- Receive: A, an array of numbers           -
+-- Return: void                              -
 ----------------------------------------------
+   procedure InputArray(A: in out Vector) is 
+   begin 
+      for I in A'Range 
+      loop 
+	 Put(I);
+	 Put(": ");
+	 Ada.Float_Text_Io.Get(Item => A(I));
+	 New_Line;
+      end loop; 
+   end InputArray;
 
-   function Average(A: Vector) return Float is
-   begin
-      return Sum(A)/Float(A'Length);
-   end Average;
-  
+   
+   
    
 begin
-   Put(" average 0 is ");
-   Put( Average(array0) );
+   Put(" enter size of array: ");
+   Ada.Integer_Text_Io.Get(Item => ArraySize);
+   
+   declare
+      UserArray : Vector(1..ArraySize);
+   begin 
+      InputArray(UserArray);
+      Printer(UserArray);
+   end;
+    
    New_line;
-   Put(" average 1 is ");
-   Put( Average(array1) );
-   New_line;
-end average;
+end ArrayProcessing;
 
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ gnatmake average.adb
-gnatmake: "average" up to date.
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ ./average
- average 0 is  0.00000E+00
- average 1 is  7.50000E+00
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ cat arrayprocessing.adb[5P./arrayprocessing [11@gnatmake arrayprocessing.adb[C
+x86_64-linux-gnu-gcc-7 -c arrayprocessing.adb
+x86_64-linux-gnu-gnatbind-7 -x arrayprocessing.ali
+x86_64-linux-gnu-gnatlink-7 arrayprocessing.ali
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ gnatmake arrayprocessing.adb [6Pcat arrayprocessing.adb[5P./arrayprocessing 
+ enter size of array: 4
+          1: 1
 
-Script done on 2020-03-20 09:13:36-0500
-Script started on 2020-03-20 09:14:18-0500
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ c[Kcat src/average.clj
-;; average.clj "test-drives" function average().
+          2: 3
+
+          3: 2
+
+          4: 4
+
+ 1.00000E+00
+ 3.00000E+00
+ 2.00000E+00
+ 4.00000E+00
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ exit
+
+Script done on 2020-03-20 12:39:51-0500
+Script started on 2020-03-20 12:41:27-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06/clojure[00m$ clojur[K[K[K[K[Kat src/a[KA[Karrayprocessing.clj
+;; arrayprocessing.clj "test-drives" function arrayprocessing() and arrayinput().
+;; precondition: size given is nonnegative
+;; Output: the arrayprocessing of a sequence of numbers.
 ;;
-;; Output: the average of a sequence of numbers.
-;;
-;; Usage: clojure -m average
+;; Usage: clojure -m arrayprocessing
 ;;
 ;; Begun by: Dr. Adams, CS 214 at Calvin College.
 ;; Completed by: Jacob Brink
 ;; Date: 3/19/2020
+;; Project: 06
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(ns average)
+(ns arrayprocessing)
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; sum() sums the values in a vector.       
-;; Receive: aVec, a vector of numbers.
-;; Return: the sum of the values in aVec.
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; harder (recursive) solution
-(defn sum [aVec]
-  (if (vector? aVec)      ; if aVec is a vector
-    (if (empty? aVec)     ;   if aVec is empty:
-      0.0                 ;     return 0
-      (+ (peek aVec)      ;   else return the last value
-         (sum (pop aVec)) ;    + sum(all but the last value)
-         )
-      )
-    )
-  )
-
-;; easier (non-recursive) solution
-(defn sum2 [aVec]
-  (if (vector? aVec)      ; if aVec is a vector:
-    (if (empty? aVec)     ;   if aVec is empty:
-      0.0                 ;    return 0
-      (reduce + aVec)     ;   else reduce aVec using +
-      )
-    )
-  )
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; average() computes the average of a vector of numbers.
+;; arrayprocessing() prints the values of the given array
 ;; Receive: aVec, a vector of numbers. 
-;; Return: the average of the numbers in aVec.
+;; Return: the arrayprocessing of the numbers in aVec.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
    
-(defn average [array]
-  (if (vector? array)
-    (if (empty? array)
-      0.0
-      (/ (sum array) (count array))
+(defn arrayprocessing [array]
+  (loop [i 0]
+    (if (< i (count array))
+      (do
+        (printf "%.3f\n" (get array i))
+        (recur (inc i))
+        )
       )
     )
   )
 
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; main function to test functions sum() and average()
-;; Output: the sum and average of some test vectors.
+;; arrayinput inputs the values in a vector.       
+;; Receive: arraySize an integer
+;; Return: array filled with user input
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn arrayinput [arraySize]
+  (loop [i 0 array []]
+    (if (< i arraySize)
+      (do (print "Enter value: ") (flush)
+          (let [userInput (float (read))]
+            (recur (inc i) (conj array userInput))
+         )
+          )
+      array
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; main function to test functions sum() and arrayprocessing()
+;; Output: the sum and arrayprocessing of some test vectors.
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn -main []
-  (let
-    [ emptyVec []
-      testVec  [9.0 8.0 7.0 6.0]
-    ]
+  (print "\nEnter Size: ") (flush)
 
-    (print "\nThe empty vec: " emptyVec) 
-    (print "\nThe test  vec: " testVec) 
-    (println "\n")
+  (let [ arraySize (int (read)) ]
+    (arrayprocessing (arrayinput arraySize))
+    )
 
-    ;; Test sum()...
-    (printf "\nThe first sum is %.3f\n" (sum emptyVec))
-    (printf "The second sum is %.3f\n" (sum testVec))
-
-    ;; Test average()...
-    (printf "\nThe first average is %.3f\n" (average emptyVec))
-    (printf "The second average is %.3f\n" (average testVec))
-    (println "\n")
-
-    ;; Test sum2()...
-    (printf "\nThe first sum2 is %.3f\n" (sum2 emptyVec))
-    (printf "The second sum2 is %.3f\n" (sum2 testVec))
-    (println "\n")
-  )
 )
 
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ clojure -m average
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06/clojure[00m$ cat src/arrayprocessing.clj[4Pruby ArrayProcessing.rb[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kclojure -m ArrayProcessing[C[1Processingprocessing[1Prrayprocessingarrayprocessing
 
-The empty vec:  []
-The test  vec:  [9.0 8.0 7.0 6.0]
+Enter Size: 4
+Enter value: 1
+Enter value: 2
+Enter value: 3
+Enter value: 4
+1.000
+2.000
+3.000
+4.000
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06/clojure[00m$ clojure -m arrayprocessing
 
+Enter Size: 0
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06/clojure[00m$ clojure -m arrayprocessing
 
-The first sum is 0.000
-The second sum is 30.000
+Enter Size: -1
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06/clojure[00m$ exit
 
-The first average is 0.000
-The second average is 7.500
-
-
-
-The first sum2 is 0.000
-The second sum2 is 30.000
-
-
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ exit
-
-Script done on 2020-03-20 09:14:47-0500
-Script started on 2020-03-20 09:12:22-0500
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ cat Average.java
-/* Average.java is a driver for method avg().
+Script done on 2020-03-20 12:42:28-0500
+Script started on 2020-03-20 12:34:06-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ cat ArrayProcessing.java
+/* ArrayProcessing.java is a driver for method avg().
  *
  * Started by: Prof. Adams, for CS 214 at Calvin College
- *
+ * 
+ * Project: 06
  * Student Name: Jacob Brink
  * Date: 3/17/2020
  *
- * Precondition: theArray, is an array of double values.
- * Output: the average of the numbers in theArray.
+ * Precondition: size is positive
+ * Output: the ArrayProcessing of the numbers in theArray.
  ***************************************************************/
 
 import java.io.*;
+import java.util.Scanner;
 
-public class Average
+public class ArrayProcessing
 {
+    public static Scanner keyboard;
+    
   public static void main(String[] args) {
+      keyboard = new Scanner(System.in);
+      System.out.println("Enter size of array: "); 
+      if (keyboard ==null)
+	  System.out.println("hello");
+      int size = keyboard.nextInt();
+      double[] anArray = new double[size];
+      arrayFiller(anArray);
+      printer(anArray);
+  }
 
-      double[] array1 = {9.0, 8.0, 7.0, 6.0};
-      double[] array0 = new double[0];
-
-      // output the average of the values in the arrays
-      System.out.println("The first average is " + avg(array0));
-      System.out.println("The second average is " + avg(array1));
+  
+  /* arrayFiller() is a method that reads user input into the values of the array
+   * in an array.
+   * Receive: anArray, an array of doubles.
+   * Return: void
+   **************************************************************/
+  public static void arrayFiller(double anArray[]) {
+     for (int i = 1; i <= anArray.length; i++) {
+	  System.out.println(String.format("Enter value for element %s", i));
+	  double value = keyboard.nextDouble();
+	  anArray[i-1] = value;
+      }
   }
   
 
-  /* sum() is a method that computes the sum of all the values
-   * in an array of doubles.
-   * Receive: anArray, an array of doubles.
-   * Return: the sum of the values in anArray.
-   ************************************************************/
-
-    public static double sum(double[] numbers) {
-	double total = 0.0;
-	for (int i = 0; i < numbers.length; i++){
-	    total += numbers[i];
-	}
-	return total;
-    }
-  
-
-  /* avg() is a method that computes the average of the values
+  /* printer() is a method that prints the values of the array
    * in an array.
    * Receive: anArray, an array of doubles.
-   * Return: the average of the values in anArray.
+   * Return: void (prints the values separated by new lines)
    **************************************************************/
-
-    public static double avg(double[] numbers)  {
-	if (numbers == null || numbers.length <= 0)
-        return 0.0;
-     else
-        return sum(numbers) / numbers.length;
-    }
+  public static void printer(double anArray[]) {
+      System.out.println("Values you entered are:");
+      for (double value : anArray)
+	  System.out.println(value);
+  }
     
 }
 
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ javac Average.java
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ java Average
-The first average is 0.0
-The second average is 7.5
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ javac ArrayProcessing.java 
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ java ArrayProcessing 
+Enter size of array: 
+5
+Enter value for element 1
+1
+Enter value for element 2
+5
+Enter value for element 3
+2
+Enter value for element 4
+3
+Enter value for element 5
+4
+Values you entered are:
+1.0
+5.0
+2.0
+3.0
+4.0
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ java ArrayProcessing 
+Enter size of array: 
+0
+Values you entered are:
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ java ArrayProcessing 
+Enter size of array: 
+-1
+Exception in thread "main" java.lang.NegativeArraySizeException: -1
+	at ArrayProcessing.main(ArrayProcessing.java:26)
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ exit
 
-Script done on 2020-03-20 09:12:45-0500
-Script started on 2020-03-20 09:13:40-0500
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ cat average.rb
-# average.rb averages the values of an array of doubles.
-# Precondition: theArray is an array of numbers
-# Output: the average of the values in theArray
+Script done on 2020-03-20 12:34:40-0500
+Script started on 2020-03-20 12:40:35-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ cat ArrayProcessing.rb
+# ArrayProcessing.rb creates a string of numbers from the user and prints them
+# Precondition: size input is greater than or equal to 0
 #
 # Begun by: Dr. Adams, for CS 214 at Calvin College.
 # Completed by: Jacob Brink
 # Date: 3/20/2020
+# Project: 06
 ########################################################
 
-
 ###############################################
-# sum() sums the values in an array
+# fillarray() fills the array with user input
 # Receive: anArray, an array of numbers
-# Return: the sum of the values in anArray.
+# Return: array populated with user input
 ################################################
-def sum (array)
-  total = 0.0
-  array.each { |elem| total += elem }
-  total
+def fillArray (arraySize)
+  array = Array.new(arraySize)
+  for i in 1..arraySize
+    print "Enter element #{i}: "
+    array[i-1] = gets.to_f
+    puts "\n"
+  end
+  array
 end
 
 ################################################
-# average() returns the average of elements in given array
+# process() prints the elements of the given array
 # Receive: an array of numeric values 
-# Return: average of elements in array
+# Return: void
 ######################################################
-def average (array)
-  if array.empty? then
-    0
-  else
-    (sum(array)/array.size)
-  end
+def process (array)
+  array.each { |elem| print "#{elem}\n" }
 end
 
 
 if __FILE__ == $0
-  array0 = Array.new(0)
-  array1 = [ 9.0, 8.0, 7.0, 6.0 ]
-
-  puts "sum 0 is: #{ sum(array0) }\n"
-  puts "sum 1 is: #{ sum(array1) }\n"
-
-  puts "average 0 is: #{ average(array0) }\n"
-  puts "average 1 is: #{ average(array1) }\n"
-
-  
+  print "Enter size: ";
+  size = gets.to_i
+  puts "\n";
+  process(fillArray(size));
 end
 
 
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ riub[K[K[Kuby average.rb
-sum 0 is: 0.0
-sum 1 is: 30.0
-average 0 is: 0
-average 1 is: 7.5
-]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ gnatmake[K[K[K[K[K[K[K[Kruby ArrayProcessing.rb
+Enter size: 4
 
-Script done on 2020-03-20 09:14:11-0500
+Enter element 1: 4
+
+Enter element 2: 2
+
+Enter element 3: 1
+
+Enter element 4: 3
+
+4.0
+2.0
+1.0
+3.0
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/06[00m$ exit
+
+Script done on 2020-03-20 12:41:04-0500

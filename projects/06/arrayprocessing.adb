@@ -1,5 +1,5 @@
 -- ArrayProcessing.adb "test-drives" function PrintArray and InputArray.
--- Precondition:  given size is nonnegative
+-- Precondition:  given size is positive
 -- Output: none
 --
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
@@ -55,6 +55,7 @@ procedure ArrayProcessing is
 begin
    Put(" enter size of array: ");
    Ada.Integer_Text_Io.Get(Item => ArraySize);
+   
    declare
       UserArray : Vector(1..ArraySize);
    begin 
