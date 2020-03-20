@@ -1,0 +1,303 @@
+Script started on 2020-03-20 09:12:50-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ gnat[K[K[K[Kcat average.adb
+-- average.adb "test-drives" function Average.
+-- Precondition: theArray is an array of numbers.
+-- Output: the average of the numbers.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 3/17/2020
+-----------------------------------------------
+
+with Ada.Text_IO; use Ada.Text_IO;             -- Put(String)
+with Ada.Float_Text_IO; use Ada.Float_Text_IO; -- Put(Float)
+
+procedure average is
+
+   -- Declare Vector type
+   type Vector is array ( Positive range <>) of Float;
+
+-- Define array0 as an array containing no values
+   array0 : Vector := (0.0, 0.0);
+   
+-- Define array1 as an array containing 9, 8, 7, 6
+   array1 : Vector := (9.0, 8.0, 7.0, 6.0);
+   
+----------------------------------------------
+-- Sum() Sums the values in an array           -
+-- Receive: anArray, an array of numbers     -
+-- Return: the sum of the values in anArray. -
+----------------------------------------------
+   function Sum(A: Vector) return Float is 
+      Total : Float := 0.0; 
+   begin 
+      for I in A'Range 
+      loop 
+	 Total := Total + A(I); 
+      end loop; 
+      return Total; 
+   end Sum;
+   
+----------------------------------------------
+-- Average() averages the values in an array         -
+-- Receive: anArray, an array of numbers     -
+-- Return: the average of the values in anArray. -
+----------------------------------------------
+
+   function Average(A: Vector) return Float is
+   begin
+      return Sum(A)/Float(A'Length);
+   end Average;
+  
+   
+begin
+   Put(" average 0 is ");
+   Put( Average(array0) );
+   New_line;
+   Put(" average 1 is ");
+   Put( Average(array1) );
+   New_line;
+end average;
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ gnatmake average.adb
+gnatmake: "average" up to date.
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ ./average
+ average 0 is  0.00000E+00
+ average 1 is  7.50000E+00
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+
+Script done on 2020-03-20 09:13:36-0500
+Script started on 2020-03-20 09:14:18-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ c[Kcat src/average.clj
+;; average.clj "test-drives" function average().
+;;
+;; Output: the average of a sequence of numbers.
+;;
+;; Usage: clojure -m average
+;;
+;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 3/19/2020
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns average)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; sum() sums the values in a vector.       
+;; Receive: aVec, a vector of numbers.
+;; Return: the sum of the values in aVec.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; harder (recursive) solution
+(defn sum [aVec]
+  (if (vector? aVec)      ; if aVec is a vector
+    (if (empty? aVec)     ;   if aVec is empty:
+      0.0                 ;     return 0
+      (+ (peek aVec)      ;   else return the last value
+         (sum (pop aVec)) ;    + sum(all but the last value)
+         )
+      )
+    )
+  )
+
+;; easier (non-recursive) solution
+(defn sum2 [aVec]
+  (if (vector? aVec)      ; if aVec is a vector:
+    (if (empty? aVec)     ;   if aVec is empty:
+      0.0                 ;    return 0
+      (reduce + aVec)     ;   else reduce aVec using +
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; average() computes the average of a vector of numbers.
+;; Receive: aVec, a vector of numbers. 
+;; Return: the average of the numbers in aVec.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   
+(defn average [array]
+  (if (vector? array)
+    (if (empty? array)
+      0.0
+      (/ (sum array) (count array))
+      )
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; main function to test functions sum() and average()
+;; Output: the sum and average of some test vectors.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (let
+    [ emptyVec []
+      testVec  [9.0 8.0 7.0 6.0]
+    ]
+
+    (print "\nThe empty vec: " emptyVec) 
+    (print "\nThe test  vec: " testVec) 
+    (println "\n")
+
+    ;; Test sum()...
+    (printf "\nThe first sum is %.3f\n" (sum emptyVec))
+    (printf "The second sum is %.3f\n" (sum testVec))
+
+    ;; Test average()...
+    (printf "\nThe first average is %.3f\n" (average emptyVec))
+    (printf "The second average is %.3f\n" (average testVec))
+    (println "\n")
+
+    ;; Test sum2()...
+    (printf "\nThe first sum2 is %.3f\n" (sum2 emptyVec))
+    (printf "The second sum2 is %.3f\n" (sum2 testVec))
+    (println "\n")
+  )
+)
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ clojure -m average
+
+The empty vec:  []
+The test  vec:  [9.0 8.0 7.0 6.0]
+
+
+The first sum is 0.000
+The second sum is 30.000
+
+The first average is 0.000
+The second average is 7.500
+
+
+
+The first sum2 is 0.000
+The second sum2 is 30.000
+
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06/clojure[00m$ exit
+
+Script done on 2020-03-20 09:14:47-0500
+Script started on 2020-03-20 09:12:22-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ cat Average.java
+/* Average.java is a driver for method avg().
+ *
+ * Started by: Prof. Adams, for CS 214 at Calvin College
+ *
+ * Student Name: Jacob Brink
+ * Date: 3/17/2020
+ *
+ * Precondition: theArray, is an array of double values.
+ * Output: the average of the numbers in theArray.
+ ***************************************************************/
+
+import java.io.*;
+
+public class Average
+{
+  public static void main(String[] args) {
+
+      double[] array1 = {9.0, 8.0, 7.0, 6.0};
+      double[] array0 = new double[0];
+
+      // output the average of the values in the arrays
+      System.out.println("The first average is " + avg(array0));
+      System.out.println("The second average is " + avg(array1));
+  }
+  
+
+  /* sum() is a method that computes the sum of all the values
+   * in an array of doubles.
+   * Receive: anArray, an array of doubles.
+   * Return: the sum of the values in anArray.
+   ************************************************************/
+
+    public static double sum(double[] numbers) {
+	double total = 0.0;
+	for (int i = 0; i < numbers.length; i++){
+	    total += numbers[i];
+	}
+	return total;
+    }
+  
+
+  /* avg() is a method that computes the average of the values
+   * in an array.
+   * Receive: anArray, an array of doubles.
+   * Return: the average of the values in anArray.
+   **************************************************************/
+
+    public static double avg(double[] numbers)  {
+	if (numbers == null || numbers.length <= 0)
+        return 0.0;
+     else
+        return sum(numbers) / numbers.length;
+    }
+    
+}
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ javac Average.java
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ java Average
+The first average is 0.0
+The second average is 7.5
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+
+Script done on 2020-03-20 09:12:45-0500
+Script started on 2020-03-20 09:13:40-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ cat average.rb
+# average.rb averages the values of an array of doubles.
+# Precondition: theArray is an array of numbers
+# Output: the average of the values in theArray
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 3/20/2020
+########################################################
+
+
+###############################################
+# sum() sums the values in an array
+# Receive: anArray, an array of numbers
+# Return: the sum of the values in anArray.
+################################################
+def sum (array)
+  total = 0.0
+  array.each { |elem| total += elem }
+  total
+end
+
+################################################
+# average() returns the average of elements in given array
+# Receive: an array of numeric values 
+# Return: average of elements in array
+######################################################
+def average (array)
+  if array.empty? then
+    0
+  else
+    (sum(array)/array.size)
+  end
+end
+
+
+if __FILE__ == $0
+  array0 = Array.new(0)
+  array1 = [ 9.0, 8.0, 7.0, 6.0 ]
+
+  puts "sum 0 is: #{ sum(array0) }\n"
+  puts "sum 1 is: #{ sum(array1) }\n"
+
+  puts "average 0 is: #{ average(array0) }\n"
+  puts "average 1 is: #{ average(array1) }\n"
+
+  
+end
+
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ riub[K[K[Kuby average.rb
+sum 0 is: 0.0
+sum 1 is: 30.0
+average 0 is: 0
+average 1 is: 7.5
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+
+Script done on 2020-03-20 09:14:11-0500

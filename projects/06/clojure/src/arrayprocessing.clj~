@@ -1,0 +1,64 @@
+;; arrayprocessing.clj "test-drives" function arrayprocessing() and arrayinput().
+;;
+;; Output: the arrayprocessing of a sequence of numbers.
+;;
+;; Usage: clojure -m arrayprocessing
+;;
+;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 3/19/2020
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns arrayprocessing)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; sum() sums the values in a vector.       
+;; Receive: aVec, a vector of numbers.
+;; Return: the sum of the values in aVec.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn arrayinput [arraySize]
+  (loop [i 0 array ()]
+    (if (< i arraySize)
+      (do (print "Enter value: ") (flush)
+          (let [userInput (float (read))]
+            (printf "%f" userInput)
+            (recur (inc i) (concat [1.0 2.0 3.0] array))
+         )
+          )
+      array
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; arrayprocessing() computes the arrayprocessing of a vector of numbers.
+;; Receive: aVec, a vector of numbers. 
+;; Return: the arrayprocessing of the numbers in aVec.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+   
+(defn arrayprocessing [array]
+  (loop [i 0]
+    (if (< i (count array))
+      (do
+        (printf "\n %.3f" (get array i))
+        (recur (inc i))
+        )
+      )
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; main function to test functions sum() and arrayprocessing()
+;; Output: the sum and arrayprocessing of some test vectors.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (print "\nEnter Size: ") (flush)
+
+  (let [ arraySize (int (read)) ]
+    (arrayprocessing (arrayinput arraySize))
+    )
+
+)
+
