@@ -1,5 +1,5 @@
-Script started on 2020-03-17 21:37:47-0400
-]0;jpb34@maroon33: ~/Documents/214/labs/06[01;32mjpb34@maroon33[00m:[01;34m~/Documents/214/labs/06[00m$ cat Average.java
+Script started on 2020-03-20 09:12:22-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ cat Average.java
 /* Average.java is a driver for method avg().
  *
  * Started by: Prof. Adams, for CS 214 at Calvin College
@@ -56,8 +56,10 @@ public class Average
     
 }
 
-]0;jpb34@maroon33: ~/Documents/214/labs/06[01;32mjpb34@maroon33[00m:[01;34m~/Documents/214/labs/06[00m$ javac Average.java
-]0;jpb34@maroon33: ~/Documents/214/labs/06[01;32mjpb34@maroon33[00m:[01;34m~/Documents/214/labs/06[00m$ java Average
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ javac Average.java
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ java Average
 The first average is 0.0
 The second average is 7.5
-]0;jpb34@maroon33: ~/Documents/214/labs/06[01;32mjpb34@maroon33[00m:[01;34m~/Documents/214/labs/06[00m$ exit
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/06[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/06[00m$ exit
+
+Script done on 2020-03-20 09:12:45-0500
