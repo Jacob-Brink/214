@@ -5,8 +5,9 @@
 ;;;; Usage: clojure -m nameTester
 ;;;;
 ;;;; Begun by: Dr. Adams, CS 214 at Calvin College.
-;;;; Completed by:
-;;;; Date:
+;;;; Completed by: Jacob Brink
+;;;; Date: 3/20/2020
+;;;; Lab: 07
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (ns nameTester)   ; program name
