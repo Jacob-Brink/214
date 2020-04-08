@@ -1,0 +1,98 @@
+V "GNAT Lib v7"
+M P W=b
+A -gnata
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_SECONDARY_STACK
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U name_tester%b		name_tester.adb		4001f83a NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W system.assertions%s	s-assert.adb		s-assert.ali
+W system.concat_5%s	s-conca5.adb		s-conca5.ali
+W system.concat_6%s	s-conca6.adb		s-conca6.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D name_tester.adb	20200408184405 786c0dee name_tester%b
+D system.ads		20170510173650 4635ec04 system%s
+D s-assert.ads		20140225151544 cd8d2c94 system.assertions%s
+D s-conca5.ads		20140225151544 875e432e system.concat_5%s
+D s-conca6.ads		20140225151544 d2c72db2 system.concat_6%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-secsta.ads		20170112134946 9751b57e system.secondary_stack%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 10|8r6 8r23
+X 6 a-textio.ads
+49K13*Text_IO 471e16 10|8w10 8r27
+166U14*New_Line 10|198s39 210s4 211s32 212s25 218s4 219s21 220s67 222s16
+. 225s4 226s30
+242U14*Put 10|156s6 170s6 173s6 176s6 198s4 211s4 212s4 220s4 226s4
+249U14*Get_Line 10|171s6 174s6 177s6
+X 10 name_tester.adb
+10U11*name_tester 10b11 228l5 228t16
+12i3 NAME_SIZE{natural} 16r47 167r38 168r28
+14R8 Name 17e16 19r11 32r33 48r36 62r37 75r35 87r33 103r34 116r35 129r33
+. 142r37 154r30 166r39
+16a9 MyFirst{string} 34m14 50m14 90r45 105r21 144r21
+16a18 MyMiddle{string} 35m14 64m14 88r40 88r57 88r81 118r21 144r45
+16a28 MyLast{string} 36m14 77m14 90r21 131r21 144r70
+19r3 aName{14R8} 188m9 190r28 191r29 192r27 193r31 199m13 200r28 202m14 203r29
+. 205m12 206r27 212r16 214r27 219m13 219r13 222r8
+32U13 Init 32b13 32<19 32>39 32>46 32>54 37l7 37t11 188s4
+32r19 TheName{14R8} 34m6 35m6 36m6
+32a39 First{string} 34r25
+32a46 Middle{string} 35r26
+32a54 Last{string} 36r24
+48U13 setFirst 48b13 48<22 48>42 51l7 51t15 179s6 199s4
+48r22 TheName{14R8} 50m6
+48a42 First{string} 50r25
+62U13 setMiddle 62b13 62<23 62>43 65l7 65t16 180s6 202s4
+62r23 TheName{14R8} 64m6
+62a43 Middle{string} 64r26
+75U13 setLast 75b13 75<21 75>41 78l7 78t14 181s6 205s4
+75r21 TheName{14R8} 77m6
+75a41 Last{string} 77r24
+87V12 getLfmi{string} 87b12 87>20 91l7 91t14 212s8 214s19
+87r20 TheName{14R8} 88r32 88r49 88r73 90r13 90r37
+88a6 MiddleInitial{string} 90r61
+103V12 getFirst{string} 103b12 103>21 106l7 106t15 190s19 200s19
+103r21 TheName{14R8} 105r13
+116V12 getMiddle{string} 116b12 116>22 119l7 119t16 191s19 203s19
+116r22 TheName{14R8} 118r13
+129V12 getLast{string} 129b12 129>20 132l7 132t14 192s19 206s19
+129r20 TheName{14R8} 131r13
+142V12 getFullName{string} 142b12 142>24 145l7 145t18 156s10 193s19
+142r24 TheName{14R8} 144r13 144r37 144r62
+154U13 Put 154b13 154>17 157l7 157t10 222s4
+154r17 Thename{14R8} 156r22
+166U13 readName 166b13 166=22 183l7 183t15 219s4
+166r22 Thename{14R8} 179m15 180m16 181m14
+167a6 First{string} 171m15 179r24
+167a13 Middle{string} 174m15 180r25
+167a21 Last{string} 177m15 181r23
+168i6 NameSize{natural} 171m22 174m23 177m21
+
