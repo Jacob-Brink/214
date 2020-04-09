@@ -85,6 +85,6 @@ package Name_Package is
          myMiddle,
          MyLast : String(1..NAME_SIZE);
       end record;
-   
+  
 end Name_Package;
 

@@ -1,0 +1,63 @@
+V "GNAT Lib v7"
+M P W=b
+A -gnata
+A -mtune=generic
+A -march=x86-64
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_SECONDARY_STACK
+RV SPARK_05
+
+U name_tester%b		name_tester.adb		aedf1763 NE OO SU IL
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W name_package%s	name_package.adb	name_package.ali
+W system.assertions%s	s-assert.adb		s-assert.ali
+W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D name_package.ads	20200409203813 cd1c4077 name_package%s
+D name_tester.adb	20200409202716 5baea2c0 name_tester%b
+D system.ads		20170510173650 4635ec04 system%s
+D s-assert.ads		20140225151544 cd8d2c94 system.assertions%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-secsta.ads		20170112134946 9751b57e system.secondary_stack%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 11|9r6 10r5
+X 6 a-textio.ads
+49K13*Text_IO 471e16 11|9w10 10r9
+166U14*New_Line 11|25s16 26s30
+242U14*Put 11|26s4
+X 10 name_package.ads
+10K9*Name_Package 89e17 11|9w24 10r22 13r12
+12R8*Name 87e17 11|13r25
+24U13*Init 11|15s4
+34U13*Put 11|25s4
+44V12*getFirst{string} 11|17s19
+54V12*getMiddle{string} 11|19s19
+64V12*getLast{string} 11|21s19
+74V12*getFullName{string} 11|23s19
+X 11 name_tester.adb
+12U11*name_tester 12b11 27l5 27t16
+13r4 aName{10|12R8} 15m9 17r28 19r29 21r27 23r31 25r8
+
