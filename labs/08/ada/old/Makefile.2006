@@ -1,0 +1,28 @@
+# Makefile for GNAT (Ada) compilation
+# Thanks to Ken Hilverda!
+
+TARGET = namer
+PACKAGE = name_package
+
+PATH = /usr/
+BIN = $(PATH)bin/
+LIB = $(PATH)lib/
+CC = $(BIN)gcc
+CFLAGS = -c -I$(LIB)gcc-lib/i586-suse-linux/3.3.1/adainclude -B$(BIN) -gnatf
+BFLAGS = -I$(LIB)gcc-lib/i586-suse-linux/3.3.1/adalib/
+LFLAGS = --GCC=$(CC) -B/usr/lib/gcc-lib/i586-suse-linux/3.3.1/
+
+$(TARGET): $(TARGET).ali $(PACKAGE).o
+	$(BIN)gnatbind $(BFLAGS) $(TARGET).ali
+	$(BIN)gnatlink $(LFLAGS) $(TARGET).ali
+	/bin/rm -f $(TARGET).ali $(TARGET).c $(TARGET).o $(PACKAGE).o $(PACKAGE).ali $(PACKAGE).c
+
+$(TARGET).ali: $(TARGET).adb $(PACKAGE).ads
+	$(CC) $(CFLAGS) $(TARGET).adb
+
+$(PACKAGE).o: $(PACKAGE).adb $(PACKAGE).ads
+	$(CC) $(CFLAGS) $(PACKAGE).adb
+
+clean:
+	/bin/rm -f $(TARGET) *~ *# *.o *.ali *.c
+
