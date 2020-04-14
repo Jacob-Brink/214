@@ -1,0 +1,153 @@
+;; Temperature.clj is a module for our 'Temperature' type-abstraction.
+;;
+;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 4/10/2020
+;; Project: 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Create a record/struct type named Temperature
+(defrecord Temperature [degrees scale])
+
+;; Minimum degrees for each scale
+(def minDegree (hash-map
+                [:f :F] −459.67
+                [:c :C] −273.15
+                [:k :K] 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; make-Temperature constructs a Temperature object from degrees and scale
+;; Receive: degrees a double, scale a string
+;; Return: the Temperature (degrees scale). 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn make-Temperature [^Double degrees ^String scale]
+  (if (not (check-Temperature degrees scale))
+    (throw (Exception. "Invalid parameters or invalid temperature occurred.")))
+  (->Temperature degrees scale)
+)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; check-Temperature checks temperature to see if it is valid
+;; Receive: degrees and scale
+;; Return: true if valid, else false 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn check-Temperature [^Double degrees ^String scale]
+  (let [thisMin (get minDegree scale)]
+      (and (not= thisMin nil) (>= thisMin 0))
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getDegrees returns the degrees of the temperature object
+;; Receive: aTemperature, a Temperature.
+;; Return: degrees of given temperature
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getDegrees [aTemperature]
+  (:degrees aTemperature)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getScale extracts the scale type of a temperature object.
+;; Receive: aTemperature, a Temperature. 
+;; Return: the scale in aTemperature.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getScale [aTemperature]
+  (:scale aTemperature)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getFahrenheit converts the given temperature to Fahrenheit
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in fahrenheit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getFahrenheit [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) temperature
+      (or (= scale "c") (= scale "C")) (make-Temperature (+ (* (/ 9.0 5) degrees) 32) "f")
+      (or (= scale "k") (= scale "K")) (make-Temperature ( +(* (- degrees 273.15) (/ 9.0 5)) 32) "f")
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getCelsius converts the given temperature to celsius
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in celsius
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getCelsius [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) (make-Temperature (* (- degrees 32) (/ 5 9)) "c")
+      (or (= scale "c") (= scale "C")) temperature
+      (or (= scale "k") (= scale "K")) (make-Temperature (- degrees 273.15) "c")
+      )
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getKelvin converts the given temperature to Kelvin
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in kelvin
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getKelvin [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) (make-Temperature (+ (* (- degrees 32) (/ 5 9)) 273.15) "k")
+      (or (= scale "c") (= scale "C")) (make-Temperature (- degrees 273.15) "k")
+      (or (= scale "k") (= scale "K")) temperature
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; read-Temperature reads in a temperature
+;; Receive: aTemperature, a Temperature
+;; Return: the lastTemperature string in aTemperature.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn read-Temperature []
+  (let [aString (clojure.string/split read-line #" ")
+        degrees (Double. (get aString 0))
+        scale (get aString 1)]
+    (make-Temperature degrees scale)    
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getLast extracts the last name of a name object.
+;; Receive: aTemperature, a Temperature. 
+;; Return: the lastTemperature string in aTemperature.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn read-Temperature []
+  (let [aString (clojure.string/split read-line #" ")
+        degrees (Double. (get aString 0))
+        scale (get aString 1)]
+    (make-Temperature degrees scale)    
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; toString converts a Temperature to a string
+;; Receive: aTemperature, a Temperature. 
+;; Return: a string containing firstTemperature, middleTemperature, lastTemperature,
+;;           separated by spaces. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn toString [aTemperature]
+  (str (getFirst aTemperature) " " (getMiddle aTemperature) " " (getLast aTemperature))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; printTemperature displays a name object. 
+;; Receive: aTemperature, a Temperature, 
+;; Output: the string representation of aTemperature. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn printTemperature [aTemperature]
+  (print (toString aTemperature) )
+)
+
