@@ -92,7 +92,7 @@ public class Temperature
     @Override
     public boolean equals(Object o) {
 	if (o instanceof Temperature)
-	    return getKelvin((Temperature) o) == getKelvin(this);
+	    return Double.valueOf(getKelvin((Temperature) o).getDegrees()).equals(getKelvin(this).getDegrees());
 	return false;
     }
 

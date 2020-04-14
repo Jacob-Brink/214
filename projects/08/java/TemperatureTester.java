@@ -43,7 +43,7 @@ public class TemperatureTester
 	System.out.println(String.format("Enter stepValue in scale %s", baseTemp.getScale()));
 	double stepValue = keyboard.nextDouble();
 
-	while (Temperature.lessThan(baseTemp, limitTemp)) {
+	while ((stepValue > 0 ? Temperature.lessThan(baseTemp, limitTemp) : Temperature.lessThan(limitTemp, baseTemp)) || baseTemp.equals(limitTemp)) {
 	    System.out.println(String.format("%8s\t%8s\t%8s", Temperature.getFahrenheit(baseTemp), Temperature.getCelsius(baseTemp), Temperature.getKelvin(baseTemp)));
 	    try {
 		baseTemp = baseTemp.raise(stepValue);
