@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.Scanner;
 
 
-public class NameTester  
+public class TemperatureTester  
 {
 
     public static Scanner keyboard;
@@ -18,22 +18,39 @@ public class NameTester
     public static void main(String[] args)
     {
 	keyboard = new Scanner(System.in);
-
+	Temperature baseTemp, limitTemp;
 
 	System.out.println("Enter baseTemp: ");
-	Temperature baseTemp = Temperature.read(keyboard);
+	try {
+	    baseTemp = Temperature.read(keyboard);
+	} catch (Exception e) {
+	    System.out.println("Invalid Temperature");
+	    e.printStackTrace();
+	    return;
+	}
 
 
 	System.out.println("Enter limitTemp: ");
-	Temperature limitTemp = Temperature.read(keyboard);
+	try {
+	    limitTemp = Temperature.read(keyboard);
+	} catch (Exception e) {
+	    System.out.println("Invalid Temperature");
+	    e.printStackTrace();
+	    return;
+	}
 
 	
-	System.out.println(String.format("Enter stepValue in scale %s", baseTemp.getScale.toString()));
+	System.out.println(String.format("Enter stepValue in scale %s", baseTemp.getScale()));
 	double stepValue = keyboard.nextDouble();
 
 	while (Temperature.lessThan(baseTemp, limitTemp)) {
-	    System.out.println(String.format("%s\t%s\t%s", Temperature.getFahrenheit(baseTemp), Temperature.getCelsius(baseTemp), Temperature.getKelvin(baseTemp)));
-	    baseTemp = baseTemp.raise(stepValue);
+	    System.out.println(String.format("%8s\t%8s\t%8s", Temperature.getFahrenheit(baseTemp), Temperature.getCelsius(baseTemp), Temperature.getKelvin(baseTemp)));
+	    try {
+		baseTemp = baseTemp.raise(stepValue);
+	    } catch (Exception e) {
+		System.out.println("The change in temperature resulted in an invalid temperature");
+		return;
+	    };
 	}
 	    
 

@@ -7,7 +7,7 @@
 
 import java.io.*;
 import java.util.Scanner;
-
+import java.util.HashMap;
 
 public class Temperature
 {
@@ -16,19 +16,19 @@ public class Temperature
     }
 
     private static HashMap<Scale, Double> scaleMinTemp;
-    private static HashMap<Scale, Function<Temperature, Temperature>> otherToKelvin;
-    private static HashMap<Scale, Function<Temperature, Temperature>> kelvinToOther;
+    private static HashMap<Scale, ThrowingFunction<Temperature, Temperature>> otherToKelvin;
+    private static HashMap<Scale, ThrowingFunction<Temperature, Temperature>> kelvinToOther;
 
     
     static {
 	scaleMinTemp = new HashMap<>();
-	scaleMinTemp.put(Scale.F, −459.67);
-	scaleMinTemp.put(Scale.C, −273.15);
+	scaleMinTemp.put(Scale.F, (-459.67));
+	scaleMinTemp.put(Scale.C, (-273.15));
 	scaleMinTemp.put(Scale.K, 0.0);
 
 	otherToKelvin = new HashMap<>();
 	otherToKelvin.put(Scale.F, (fahrenheitTemp) -> {
-		return new Temperature((fahrenheitTemp.getDegrees() + 459.67)× 5/9, "K"); 
+		return new Temperature((fahrenheitTemp.getDegrees() + 459.67) * 5/9, "K"); 
 	    });
 	otherToKelvin.put(Scale.C, (celsiusTemp) -> {
 		return new Temperature((celsiusTemp.getDegrees() + 273.15), "K");
@@ -39,7 +39,7 @@ public class Temperature
 	
 	kelvinToOther = new HashMap<>();
 	kelvinToOther.put(Scale.F, (kelvin) -> {
-		return new Temperature((kelvin.getDegrees() − 273.15) × 9/5 + 32, "F");
+		return new Temperature((kelvin.getDegrees() - 273.15) * 9/5 + 32, "F");
 	    });
 	kelvinToOther.put(Scale.C, (kelvin) -> {
 		return new Temperature((kelvin.getDegrees() - 273.15), "C");
@@ -51,8 +51,14 @@ public class Temperature
     }
 
     private static Temperature convertTemp(Temperature original, Scale newTemperatureScale) {
-	Temperature kelvinTemp = otherToKelvin.get(original.getScale()).apply(original);
-	Temperature newTemp = kelvinToOther.get(newTemperatureScale).apply(newTemperatureScale);
+	try {
+	    Temperature kelvinTemp = otherToKelvin.get(original.getScale()).apply(original);
+	    Temperature newTemp = kelvinToOther.get(newTemperatureScale).apply(kelvinTemp);
+	    return newTemp;
+	} catch (Exception e) {
+	    //This should never run but you know
+	    return null;
+	}
     }
 
     public static Temperature getFahrenheit(Temperature original) {
@@ -90,13 +96,13 @@ public class Temperature
 	return false;
     }
 
-    public boolean lessThan(Temperature left, Temperature right) {
-	return getKelvin(left) < getKelvin(right);
-	
+    public static boolean lessThan(Temperature left, Temperature right) {
+	return getKelvin(left).getDegrees() < getKelvin(right).getDegrees();
+    }
     
     @Override
     public String toString() {
-	System.out.println(String.format("%s° %s", this.degrees, this.scale.toString()));
+	return String.format("%.3f° %s", this.degrees, this.scale.toString());
     }
     
     
@@ -105,7 +111,7 @@ public class Temperature
 	//check Scale type
 	Scale scale;
 	try {
-	    scale = Scale.fromString(scaleChar.toUpperCase());
+	    scale = Scale.valueOf(scaleChar.toUpperCase());
 	} catch (Exception e) {
 	    System.out.println("The given scale character does not match accepted values");
 	    return false;
@@ -131,7 +137,7 @@ public class Temperature
 	if (!isValid(degrees, scaleString))
 	     throw new Exception("Parameters create an invalid temperature");
 	    	    
-	this.scale = Scale.fromString(scaleString);
+	this.scale = Scale.valueOf(scaleString);
 	this.degrees = degrees;
     }
 
