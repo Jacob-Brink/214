@@ -1,0 +1,152 @@
+/* Temperature.java is a class representing Temperature
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ * Student: Jacob Brink
+ * Date: 4/15/2020
+ * Project: 08
+ ************************************************************/
+
+import java.io.*;
+import java.util.Scanner;
+
+
+public class Temperature
+{
+    private static enum Scale {
+	F, C, K	
+    }
+
+    private static HashMap<Scale, Double> scaleMinTemp;
+    private static HashMap<Scale, Function<Temperature, Temperature>> otherToKelvin;
+    private static HashMap<Scale, Function<Temperature, Temperature>> kelvinToOther;
+
+    
+    static {
+	scaleMinTemp = new HashMap<>();
+	scaleMinTemp.put(Scale.F, −459.67);
+	scaleMinTemp.put(Scale.C, −273.15);
+	scaleMinTemp.put(Scale.K, 0.0);
+
+	otherToKelvin = new HashMap<>();
+	otherToKelvin.put(Scale.F, (fahrenheitTemp) -> {
+		return new Temperature((fahrenheitTemp.getDegrees() + 459.67)× 5/9, "K"); 
+	    });
+	otherToKelvin.put(Scale.C, (celsiusTemp) -> {
+		return new Temperature((celsiusTemp.getDegrees() + 273.15), "K");
+	    });
+	otherToKelvin.put(Scale.K, (kelvinTemp) -> {
+		return kelvinTemp;
+	    });
+	
+	kelvinToOther = new HashMap<>();
+	kelvinToOther.put(Scale.F, (kelvin) -> {
+		return new Temperature((kelvin.getDegrees() − 273.15) × 9/5 + 32, "F");
+	    });
+	kelvinToOther.put(Scale.C, (kelvin) -> {
+		return new Temperature((kelvin.getDegrees() - 273.15), "C");
+	    });
+	kelvinToOther.put(Scale.K, (kelvin) -> {
+		return kelvin;
+	    });
+	
+    }
+
+    private static Temperature convertTemp(Temperature original, Scale newTemperatureScale) {
+	Temperature kelvinTemp = otherToKelvin.get(original.getScale()).apply(original);
+	Temperature newTemp = kelvinToOther.get(newTemperatureScale).apply(newTemperatureScale);
+    }
+
+    public static Temperature getFahrenheit(Temperature original) {
+	return convertTemp(original, Scale.F);
+    }
+
+    public static Temperature getCelsius(Temperature original) {
+	return convertTemp(original, Scale.C);
+    }
+
+    public static Temperature getKelvin(Temperature original) {
+	return convertTemp(original, Scale.K);
+    }
+
+
+    public static Temperature read(Scanner scanner) throws Exception {
+	String rawString = scanner.nextLine();
+	String[] pieces = rawString.split(" ");
+	double degrees = Double.parseDouble(pieces[0]);
+	return new Temperature(degrees, pieces[1]);
+    }
+
+    public Temperature raise(double delta) throws Exception {
+	return new Temperature(this.degrees + delta, scale.toString());
+    }
+
+    public Temperature lower(double delta) throws Exception {
+	return new Temperature(this.degrees - delta, scale.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+	if (o instanceof Temperature)
+	    return getKelvin((Temperature) o) == getKelvin(this);
+	return false;
+    }
+
+    public boolean lessThan(Temperature left, Temperature right) {
+	return getKelvin(left) < getKelvin(right);
+	
+    
+    
+    public void output() {
+	System.out.println(String.format("%s° %s", this.degrees, this.scale.toString()));
+    }
+    
+    
+    public static boolean isValid(final double degrees, String scaleChar) {
+
+	//check Scale type
+	Scale scale;
+	try {
+	    scale = Scale.fromString(scaleChar.toUpperCase());
+	} catch (Exception e) {
+	    System.out.println("The given scale character does not match accepted values");
+	    return false;
+	}
+
+	
+	//check that temperature is not below absolute zero
+	if (degrees < scaleMinTemp.get(scale)) {
+	    System.out.println("The given temperature is not valid");
+	    return false;
+	}
+	
+	
+	return true;
+	
+    }
+	
+
+    private Scale scale;
+    private double degrees;
+
+    public Temperature(final double degrees, String scaleString) throws Exception {
+	if (!isValid(degrees, scaleString))
+	     throw new Exception("Parameters create an invalid temperature");
+	    	    
+	this.scale = Scale.fromString(scaleString);
+	this.degrees = degrees;
+    }
+
+
+    public Scale getScale() {
+	return this.scale;
+    }
+
+    public double getDegrees() {
+	return this.degrees;
+    }
+        
+    
+    
+    
+}
+
+

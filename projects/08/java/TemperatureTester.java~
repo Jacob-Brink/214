@@ -1,0 +1,26 @@
+/* NameTester.java is a 'driver' to test class Name.
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ * Student: Jacob Brink
+ * Date: 3/20/2020
+ * Project: 07
+ ************************************************************/
+
+import java.io.*;
+import java.util.Scanner;
+
+
+public class NameTester  
+{
+
+    public static Scanner keyboard;
+    
+    
+    public static void main(String[] args)
+    {
+	asdf
+
+    }
+}
+
+
+
