@@ -1,0 +1,1436 @@
+Script started on 2020-04-15 18:37:29-0400
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ cat temp_package.adb[Ks
+-- name_package.ads declares the Name_Package type and its operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/15/2020
+-- Project: 8
+--------------------------------------------------------------
+
+
+package Temp_Package is
+   
+   type ScaleType is (F, C, K);
+   
+   Invalid_Temperature : exception;
+   Invalid_Scale : exception;
+   
+   type Temperature is private;
+   
+   
+  ----------------------------------------------
+  -- IsValidValue returns true if not below 0 K
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+   function IsValidValue(Degree : in Float; ThisScale : in ScaleType) return Boolean;
+   
+  ----------------------------------------------
+  -- IsValid returns true if valid temperature
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+   procedure IsValid(Degree : in Float; Scale : in String);
+   
+   
+  ----------------------------------------------
+  -- Init initializes a Temperature variable          
+  -- Receive: TheTemperature , the Temperature variable;          
+  --          Degree, a Float
+  --          Scale, a String
+  -- Return: TheTemperature , its fields set to First, 
+  --               Middle, and Last.     
+  ----------------------------------------------
+  procedure Init(TheTemperature : out Temperature; Degree : in Float; Scale : in String);
+
+  ----------------------------------------------
+  -- getDegree(Temperature) retrieves Temperature.myDegree        
+  -- Receive: TheTemperature , a Temperature.                      
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature .Degree.                     
+  ----------------------------------------------
+  function getDegree( TheTemperature : in Temperature) return Float;
+
+  ----------------------------------------------
+  -- getScale(Temperature) retrieves Temperature as a String 
+  -- Receive: TheTemperature , a Temperature.        
+  -- PRE: TheTemperature  has been initialized.
+  -- Return: TheTemperature .Scale. 
+  ----------------------------------------------
+  function getScale( TheTemperature : in Temperature) return ScaleType;
+
+  ----------------------------------------------
+  -- getFahrenheit(Temperature) retrieves Temperature in Fahrenheit       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Fahrenheit.                        
+  ----------------------------------------------
+  function getFahrenheit(TheTemperature : in Temperature) return Temperature;
+
+  ----------------------------------------------
+  -- getCelsius(Temperature) retrieves Temperature in Celsius       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Celsius.                        
+  ----------------------------------------------
+  function getCelsius(TheTemperature : in Temperature) return Temperature;
+
+  ----------------------------------------------
+  -- getKelvin(Temperature) retrieves Temperature in Kelvin       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Kelvin.                        
+  ----------------------------------------------
+  function getKelvin(TheTemperature : in Temperature) return Temperature;
+  
+  
+  ----------------------------------------------
+  -- getKelvin(Temperature) retrieves Temperature in Kelvin       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Kelvin.                        
+  ----------------------------------------------
+  procedure ReadTemperature(TheTemperature : out Temperature);
+
+  ----------------------------------------------
+  -- Put(Temperature) displays a Temperature value.        
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature.               
+  -- Output: TheTemperature , to the screen.                
+  ----------------------------------------------
+  procedure Put(TheTemperature : in Temperature);
+
+  ----------------------------------------------
+  -- increase(Temperature) increases temperature!
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature, amount a Number.               
+  -- POST: TheTemperature is modified to have risen temperature                
+  ----------------------------------------------
+  procedure increase(TheTemperature : out Temperature; Amount : Float);
+  
+  ----------------------------------------------
+  -- lower(Temperature) lowers temperature!
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature, amount a Number.               
+  -- POST: TheTemperature is modified to have risen temperature                
+  ----------------------------------------------
+  procedure lower(TheTemperature : out Temperature; Amount : Float);
+  
+  ----------------------------------------------
+  -- equals(aTemperature, bTemperature)
+  -- PRE: aTemperature and bTemperature are intitialized             
+  -- Receive: aTemperature and bTemperature               
+  -- Returns: true if equal, else false                
+  ----------------------------------------------
+  function equals(ATemperature, BTemperature : in Temperature) return Boolean;
+
+  ----------------------------------------------
+  -- lessthan(aTemperature, bTemperature)
+  -- PRE: aTemperature and bTemperature are intitialized             
+  -- Receive: aTemperature and bTemperature               
+  -- Returns: true if less-than, else false                
+  ----------------------------------------------
+  function lessthan(ATemperature, BTemperature : in Temperature) return Boolean;  
+  
+  private
+  
+  type Temperature is
+     record
+	Degree : Float;
+	Scale : ScaleType;
+     end record;
+	
+  
+end Temp_Package;
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ cat temp_package.adb[Kb[K[K[K[K.ads[Kd[Kb
+-- Temperature_package.adb defines operations for the Temperature type.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/10/2020
+-- Project: 8
+---------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed, Ada.Float_Text_Io;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed, Ada.Float_Text_Io;
+
+package body Temp_Package is
+   
+   ----------------------------------------------
+   -- IsValidValue returns true if not below 0 K
+   -- Receive: Degree in Float, Scale in String                     .            
+   -- Return: true if valid, else false
+   ----------------------------------------------
+   function IsValidValue(Degree : in Float; ThisScale : in ScaleType) return Boolean is
+   begin
+      if ThisScale = F then
+	 return Degree >= -459.67;
+      elsif ThisScale = C then
+	 return Degree >= -273.15;
+      else
+	return Degree >= 0.0;
+      end if;
+   
+   end;
+   
+  
+  ----------------------------------------------
+  -- IsValid returns true if valid temperature
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+   procedure IsValid(Degree : in Float; Scale : in String) is
+      ThisScale : ScaleType;
+   begin
+      begin
+	 ThisScale := ScaleType'Value(Scale);
+      exception
+	 when others => raise Invalid_Scale;
+      end;
+      
+      if not IsValidValue(Degree, ThisScale) then
+	 raise Invalid_Temperature;
+      end if;
+     
+   end;  
+   
+  ----------------------------------------------
+  -- Init initializes a Temperature variable          
+  -- Receive: TheTemperature , the Temperature variable;          
+  --          Degree, a Float
+  --          Scale, a String
+  -- Return: TheTemperature , its fields set to First, 
+  --               Middle, and Last.     
+  ----------------------------------------------
+  procedure Init(TheTemperature : out Temperature; Degree : in Float; Scale : in String) is
+  begin
+     IsValid(Degree, Scale);
+     
+     TheTemperature.Degree := Degree;
+     TheTemperature.Scale := ScaleType'Value(Scale);
+  end Init;
+
+  ----------------------------------------------
+  -- getDegree(Temperature) retrieves Temperature.myDegree        
+  -- Receive: TheTemperature , a Temperature.                      
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature .Degree.                     
+  ----------------------------------------------
+  function getDegree( TheTemperature : in Temperature) return Float is
+  begin
+    return TheTemperature.Degree;
+  end getDegree;
+
+  ----------------------------------------------
+  -- getScale(Temperature) retrieves Temperature as a String 
+  -- Receive: TheTemperature , a Temperature.        
+  -- PRE: TheTemperature  has been initialized.
+  -- Return: TheTemperature .Scale. 
+  ----------------------------------------------
+  function getScale( TheTemperature : in Temperature) return ScaleType is
+  begin
+     return TheTemperature.Scale;
+  end getScale;
+
+  ----------------------------------------------
+  -- getFahrenheit(Temperature) retrieves Temperature in Fahrenheit       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Fahrenheit.                        
+  ----------------------------------------------
+  function getFahrenheit(TheTemperature : in Temperature) return Temperature is
+     OldScale : ScaleType := GetScale(TheTemperature);
+     OldDegrees : Float := GetDegree(TheTemperature);     
+     NewTemperature : Temperature;
+  begin
+     if OldScale = F then
+	Init(NewTemperature, GetDegree(TheTemperature), "f");
+     elsif OldScale = C then
+	Init(NewTemperature, (OldDegrees * (9.0/5.0) + 32.0), "f");
+     elsif OldScale = K then
+	Init(NewTemperature, (OldDegrees - 273.15) * (9.0/5.0) + 32.0, "f"); 
+     end if;
+     return NewTemperature;
+  end getFahrenheit;
+
+  ----------------------------------------------
+  -- getCelsius(Temperature) retrieves Temperature in Celsius       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Celsius.                        
+  ----------------------------------------------
+  function getCelsius(TheTemperature : in Temperature) return Temperature is
+     OldScale : ScaleType := GetScale(TheTemperature);
+     OldDegrees : Float := GetDegree(TheTemperature);     
+     NewTemperature : Temperature;
+  begin
+     if OldScale = F then
+	Init(NewTemperature, (OldDegrees - 32.0) * (5.0/9.0), "c");
+     elsif OldScale = C then
+	Init(NewTemperature, GetDegree(TheTemperature), "c");
+     elsif OldScale = K then
+	Init(NewTemperature, OldDegrees - 273.15, "c"); 
+     end if;
+     return NewTemperature;
+  end getCelsius;
+
+  ----------------------------------------------
+  -- getKelvin(Temperature) retrieves Temperature in Kelvin       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Kelvin.                        
+  ----------------------------------------------
+  function getKelvin(TheTemperature : in Temperature) return Temperature is
+     OldScale : ScaleType := GetScale(TheTemperature);
+     OldDegrees : Float := GetDegree(TheTemperature);     
+     NewTemperature : Temperature;
+  begin
+     if OldScale = F then
+	Init(NewTemperature, (OldDegrees - 32.0) * (5.0/9.0) + 273.15, "k");
+     elsif OldScale = C then
+	Init(NewTemperature, OldDegrees + 273.15, "k");
+     elsif OldScale = K then
+	Init(NewTemperature, GetDegree(TheTemperature), "k"); 
+     end if;
+     return NewTemperature;
+  end getKelvin;
+  
+  
+  ----------------------------------------------
+  -- getKelvin(Temperature) retrieves Temperature in Kelvin       
+  -- Receive: TheTemperature , a Temperature.                    
+  -- PRE: TheTemperature  has been initialized.            
+  -- Return: TheTemperature in Kelvin.                        
+  ----------------------------------------------
+  procedure ReadTemperature(TheTemperature : out Temperature) is
+     C : Character;
+     SpacePosition : Integer := -1;
+     Raw : String(1..8) := "        ";
+     
+     FirstString, SecondString : String(1..8);
+     
+     Degrees : Float;
+     Last : Natural;
+  begin
+     
+     Get_Line(Raw, Last);
+     
+     for I in Raw'Range
+     loop
+        C := Raw(I);
+	if C = ' ' then
+	   SpacePosition := I;
+	end if;
+	
+	exit when C = ' ';
+     end loop;
+     
+     Move(Raw(Raw'First..(SpacePosition-1)), FirstString);
+     Move(Raw((SpacePosition+1)..Raw'Last), SecondString);
+     
+     Degrees := Float'Value(FirstString);
+     
+     Init(TheTemperature, Degrees, SecondString);     
+     
+  end ReadTemperature;
+
+  ----------------------------------------------
+  -- Put(Temperature) displays a Temperature value.        
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature.               
+  -- Output: TheTemperature , to the screen.                
+  ----------------------------------------------
+  procedure Put(TheTemperature : in Temperature) is
+  begin
+     Ada.Float_Text_Io.Put(Item => GetDegree(TheTemperature), Aft => 2, Exp => 0);
+     Put(" " & ScaleType'Image(GetScale(TheTemperature)));
+  end Put;
+
+  ----------------------------------------------
+  -- increase(Temperature) raises temperature!
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature, amount a Number.               
+  -- POST: TheTemperature is modified to have risen temperature                
+  ----------------------------------------------
+  procedure increase(TheTemperature : out Temperature; Amount : Float)  is
+  begin
+     Init(TheTemperature, GetDegree(TheTemperature) + Amount, ScaleType'Image(GetScale(TheTemperature)));
+  end increase;
+  
+  ----------------------------------------------
+  -- lower(Temperature) lowers temperature!
+  -- PRE: TheTemperature  has been initialized.             
+  -- Receive: TheTemperature , a Temperature, amount a Number.               
+  -- POST: TheTemperature is modified to have risen temperature                
+  ----------------------------------------------
+  procedure lower(TheTemperature : out Temperature; Amount : Float)  is
+  begin
+     Init(TheTemperature, GetDegree(TheTemperature) - Amount, ScaleType'Image(GetScale(TheTemperature)));
+  end lower;
+  
+  ----------------------------------------------
+  -- equals(aTemperature, bTemperature)
+  -- PRE: aTemperature and bTemperature are intitialized             
+  -- Receive: aTemperature and bTemperature               
+  -- Returns: true if equal, else false                
+  ----------------------------------------------
+  function equals(ATemperature, BTemperature : in Temperature) return Boolean is
+  begin
+     return GetDegree(GetKelvin(ATemperature)) = GetDegree(GetKelvin(BTemperature));
+  end equals;
+
+  ----------------------------------------------
+  -- lessthan(aTemperature, bTemperature)
+  -- PRE: aTemperature and bTemperature are intitialized             
+  -- Receive: aTemperature and bTemperature               
+  -- Returns: true if less-than, else false                
+  ----------------------------------------------
+  function lessthan(ATemperature, BTemperature : in Temperature) return Boolean is
+  begin
+     return GetDegree(GetKelvin(ATemperature)) < GetDegree(GetKelvin(BTemperature));
+  end lessthan;
+  
+  
+end Temp_Package;
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ cat tempt[K_tester.adb
+-- name_tester.adb "test-drives" the Name type.
+--
+-- Begun by: Dr. Adams, CPSC 280, October 1999.
+-- Completed by: Jacob Brink
+-- Date: 4/15/2020
+-- Project: 8
+----------------------------------------------
+
+with Ada.Text_IO; with Ada.Float_Text_IO; With Temp_Package;
+use Ada.Text_IO; use Ada.Float_Text_IO; Use Temp_Package;
+
+procedure temp_tester is
+   BaseTemp, LimitTemp : Temp_Package.Temperature;
+   StepValue : Float;
+begin
+   -- get user input
+   Put("Enter BaseTemp: "); ReadTemperature(BaseTemp);
+   Put("Enter LimitTemp: "); ReadTemperature(LimitTemp);
+   Put("Enter StepValue: "); Get(StepValue);
+   
+   New_Line;
+   
+   -- if StepValue is greater than 0 loop up else loop down
+   if StepValue > 0.0 then
+      while (lessthan(BaseTemp, LimitTemp) or Equals(BaseTemp, LimitTemp))
+      loop
+	 Put(GetFahrenheit(BaseTemp)); Put (" "); Put(GetCelsius(BaseTemp)); Put(" "); Put(GetKelvin(BaseTemp)); New_Line;
+	 increase(BaseTemp, StepValue);
+      end loop;
+   elsif StepValue < 0.0 then -- if step value is negative loop down
+      while (lessthan(LimitTemp, BaseTemp) or Equals(BaseTemp, LimitTemp))
+      loop
+	 Put(GetFahrenheit(BaseTemp)); Put (" "); Put(GetCelsius(BaseTemp)); Put(" "); Put(GetKelvin(BaseTemp)); New_Line;
+	 increase(BaseTemp, StepValue);
+      end loop;
+   else
+      Put("StepValue cannot be 0");
+   end if;
+   
+exception
+   when Invalid_Scale =>
+      begin
+	 Put("Given scale is invalid");
+      end;
+   when Invalid_Temperature => 
+      begin
+	 Put("Given temperature cannot exist");
+      end;
+	
+      
+   
+end temp_tester;
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ make
+make: 'temp_tester' is up to date.
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ cat Makefile 
+# Makefile for GNAT (Ada) compilation
+
+TARGET = temp_tester
+PACKAGE = temp_package
+
+CC = gcc
+CFLAGS = -c -gnata
+
+# linking step
+$(TARGET): $(TARGET).ali $(PACKAGE).o
+	gnatbind $(TARGET).ali
+	gnatlink $(TARGET).ali
+
+# compile program
+$(TARGET).ali: $(TARGET).adb $(PACKAGE).ads
+	$(CC) $(CFLAGS) $(TARGET).adb
+
+# compile package
+$(PACKAGE).o: $(PACKAGE).adb $(PACKAGE).ads
+	$(CC) $(CFLAGS) $(PACKAGE).adb
+
+clean:
+	rm -f $(TARGET) *~ *# *.o *.ali *.c
+
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: 10 f
+Enter LimitTemp: 20 F
+Enter StepValue: 2
+
+10.00 F -12.22 C 260.93 K
+12.00 F -11.11 C 262.04 K
+14.00 F -10.00 C 263.15 K
+16.00 F -8.89 C 264.26 K
+18.00 F -7.78 C 265.37 K
+20.00 F -6.67 C 266.48 K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: 10 c
+Enter LimitTemp: 20 K
+Enter StepValue: -5 10  20
+
+50.00 F 10.00 C 283.15 K
+14.00 F -10.00 C 263.15 K
+-22.00 F -30.00 C 243.15 K
+-58.00 F -50.00 C 223.15 K
+-94.00 F -70.00 C 203.15 K
+-130.00 F -90.00 C 183.15 K
+-166.00 F -110.00 C 163.15 K
+-202.00 F -130.00 C 143.15 K
+-238.00 F -150.00 C 123.15 K
+-274.00 F -170.00 C 103.15 K
+-310.00 F -190.00 C 83.15 K
+-346.00 F -210.00 C 63.15 K
+-382.00 F -230.00 C 43.15 K
+-418.00 F -250.00 C 23.15 K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: 20 k
+Enter LimitTemp: 44 C
+Enter StepValue: 30
+
+-423.67 F -253.15 C 20.00 K
+-369.67 F -223.15 C 50.00 K
+-315.67 F -193.15 C 80.00 K
+-261.67 F -163.15 C 110.00 K
+-207.67 F -133.15 C 140.00 K
+-153.67 F -103.15 C 170.00 K
+-99.67 F -73.15 C 200.00 K
+-45.67 F -43.15 C 230.00 K
+ 8.33 F -13.15 C 260.00 K
+62.33 F 16.85 C 290.00 K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: 123 f w
+Given scale is invalid
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: -2000 f
+Given temperature cannot exist
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: -2 k
+Given temperature cannot exist
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ ./temp_tester 
+Enter BaseTemp: -1000 C
+Given temperature cannot exist
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ada[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ada[00m$ exit
+
+Script done on 2020-04-15 18:40:05-0400
+Script started on 2020-04-15 17:35:21-0400
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ cat src/T[KtemperatureTester.clj
+;; temperatureTester.clj tests a Clojure Temperature type,
+;;  stored in Temperature.clj (in the src directory).
+;;
+;; Output: the results of testing the Name functions.
+;;
+;; Usage: clojure -m temperatureTester
+;;
+;; Begun by: Prof. Adams, CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 4/15/2020
+;; Project: 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns temperatureTester)
+
+
+(load "Temperature")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; A simple driver to test our Temperature functions. 
+;; Output: the table results of testing our Temperature functions.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (try
+    (do
+      (print "Enter baseTemp, limitTemp, then stepValue: \n") (flush)
+      (let
+          
+          [                                          ; 3 ways to construct an object:
+           baseTemp (read-Temperature)
+           limitTemp (read-Temperature)
+           stepValue (Double/parseDouble (read-line))
+           ]
+        ;; ----- SECTION 1 -----
+        (println)
+
+        ;; if step value is positive loop up otherwise loop down
+
+        (loop [currentTemp baseTemp]
+          (if (or
+               (if (> stepValue 0) (less-than currentTemp limitTemp) (less-than limitTemp currentTemp))
+               (equals currentTemp limitTemp)
+               )
+            (do
+              (print (printTemperature (getFahrenheit currentTemp)) " "
+                     (printTemperature (getCelsius currentTemp)) " "
+                     (printTemperature (getKelvin currentTemp)))
+              (println) (flush)
+              (recur (raise currentTemp stepValue))
+              )
+            )
+          )        
+        )
+      )
+
+
+    
+
+  (catch Exception e (print "An error occurred: " (.getMessage e) "\n"))
+  )    
+  )
+
+
+
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ cat src/Temperature.clj
+;; Temperature.clj is a module for our 'Temperature' type-abstraction.
+;;
+;; Begun by: Prof. Adams, for CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 4/15/2020
+;; Project: 8
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Create a record/struct type named Temperature
+(defrecord Temperature [degrees scale])
+
+;; Minimum degrees for each scale
+(def minDegree (hash-map
+                :f (- 0 459.67)
+                :F (- 0 459.67)
+                :c (- 0 273.15)
+                :C (- 0 273.15)
+                :k 0
+                :K 0))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; check-Temperature checks temperature to see if it is valid
+;; Receive: degrees and scale
+;; Return: exception if invalid, else nothing 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn check-Temperature [^Double degrees ^String scale]
+  (if (= (get minDegree (keyword scale)) nil)
+    (throw (Exception. "Invalid Temperature scale"))
+    (do
+      (if (< degrees (get minDegree (keyword scale)))
+        (throw (Exception. "Temperature cannot be below zero"))
+        )
+      )
+    )
+ )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; make-Temperature constructs a Temperature object from degrees and scale
+;; Receive: degrees a double, scale a string
+;; Return: the Temperature (degrees scale). 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn make-Temperature [^Double degrees ^String scale]
+  (check-Temperature degrees scale)
+  (->Temperature degrees scale)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getDegrees returns the degrees of the temperature object
+;; Receive: aTemperature, a Temperature.
+;; Return: degrees of given temperature
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getDegrees [aTemperature]
+  (:degrees aTemperature)
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getScale extracts the scale type of a temperature object.
+;; Receive: aTemperature, a Temperature. 
+;; Return: the scale in aTemperature.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getScale [aTemperature]
+  (:scale aTemperature)
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getFahrenheit converts the given temperature to Fahrenheit
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in fahrenheit
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getFahrenheit [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) temperature
+      (or (= scale "c") (= scale "C")) (make-Temperature (+ (* (/ 9.0 5.0) degrees) 32) "f")
+      (or (= scale "k") (= scale "K")) (make-Temperature (+ (* (- degrees 273.15) (/ 9.0 5)) 32) "f")
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getCelsius converts the given temperature to celsius
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in celsius
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getCelsius [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) (make-Temperature (* (- degrees 32) (/ 5 9)) "c")
+      (or (= scale "c") (= scale "C")) temperature
+      (or (= scale "k") (= scale "K")) (make-Temperature (- degrees 273.15) "c")
+      )
+    )
+  )
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; getKelvin converts the given temperature to Kelvin
+;; Receive: aTemperature, a Temperature.
+;; Return: the temperature in kelvin
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn getKelvin [^Temperature temperature]
+  (let [scale (getScale temperature)
+        degrees (getDegrees temperature)]
+    (cond
+      (or (= scale "f") (= scale "F")) (make-Temperature (+ (* (- degrees 32) (/ 5 9)) 273.15) "k")
+      (or (= scale "c") (= scale "C")) (make-Temperature (+ degrees 273.15) "k")
+      (or (= scale "k") (= scale "K")) temperature
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; read-Temperature reads in a temperature
+;; Receive: aTemperature, a Temperature
+;; Return: temperature if valid from user
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn read-Temperature []
+  (let [aString (clojure.string/split (read-line) #" ")
+        degrees (Double. (get aString 0))
+        scale (get aString 1)]
+    (make-Temperature degrees scale)    
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; printTemperature displays a name object. 
+;; Receive: aTemperature, a Temperature, 
+;; Output: the string representation of aTemperature. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn printTemperature [aTemperature]
+  (format "%.2f %s" (getDegrees aTemperature) (getScale aTemperature))
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; raise raises temperature
+;; Receive: aTemperature, a Temperature, 
+;; Output: temperature with added degrees
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn raise [^Temperature aTemperature ^Double delta]
+  (make-Temperature (+ (getDegrees aTemperature) delta) (getScale aTemperature)) 
+)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; lower lowers temperature
+;; Receive: aTemperature, a Temperature, 
+;; Output: temperature with less degrees
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn lower [^Temperature aTemperature ^Double delta]
+  (make-Temperature (- (getDegrees aTemperature) delta) (getScale aTemperature)) 
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; equals shows equality between two temperatures
+;; Receive: aTemperature, a Temperature; bTemperature, a Temperature
+;; Output: true if equal, else false
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn equals [^Temperature aTemperature ^Temperature bTemperature]
+  (= (getDegrees (getKelvin aTemperature)) (getDegrees (getKelvin bTemperature)))
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; less-than shows inequality
+;; Receive: aTemperature, a Temperature; bTemperature, a Temperature
+;; Output: true if a is less than b, else false
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn less-than [^Temperature aTemperature ^Temperature bTemperature]
+  (< (getDegrees (getKelvin aTemperature)) (getDegrees (getKelvin bTemperature)))
+  )
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ lc[K[Kclojru[K[Kure -m temperatureTester
+Enter baseTemp, limitTemp, then stepValue: 
+0 F
+10 F
+1 4
+
+0.00 F   -17.78 c   255.37 k
+4.00 F   -15.56 c   257.59 k
+8.00 F   -13.33 c   259.82 k
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+20 Enter baseTemp, limitTemp, then stepValue: 
+C
+-10 C
+-2
+
+68.00 f   20.00 C   293.15 k
+64.40 f   18.00 C   291.15 k
+60.80 f   16.00 C   289.15 k
+57.20 f   14.00 C   287.15 k
+53.60 f   12.00 C   285.15 k
+50.00 f   10.00 C   283.15 k
+46.40 f   8.00 C   281.15 k
+42.80 f   6.00 C   279.15 k
+39.20 f   4.00 C   277.15 k
+35.60 f   2.00 C   275.15 k
+32.00 f   0.00 C   273.15 k
+28.40 f   -2.00 C   271.15 k
+24.80 f   -4.00 C   269.15 k
+21.20 f   -6.00 C   267.15 k
+17.60 f   -8.00 C   265.15 k
+14.00 f   -10.00 C   263.15 k
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+10 kEnter baseTemp, limitTemp, then stepValue: 
+^C]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+Enter baseTemp, limitTemp, then stepValue: 
+10 k
+20 K
+2
+
+-441.67 f   -263.15 c   10.00 k
+-438.07 f   -261.15 c   12.00 k
+-434.47 f   -259.15 c   14.00 k
+-430.87 f   -257.15 c   16.00 k
+-427.27 f   -255.15 c   18.00 k
+-423.67 f   -253.15 c   20.00 k
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+Enter baseTemp, limitTemp, then stepValue: 
+-20 k
+An error occurred:  Temperature cannot be below zero 
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+-Enter baseTemp, limitTemp, then stepValue: 
+-200    ^C]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+Enter baseTemp, limitTemp, then stepValue: 
+-2000 f
+An error occurred:  Temperature cannot be below zero 
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ clojure -m temperatureTester
+Enter baseTemp, limitTemp, then stepValue: 
+- 20 r R
+An error occurred:  Invalid Temperature scale 
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/clojure[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/clojure[00m$ exit
+
+Script done on 2020-04-15 17:37:17-0400
+Script started on 2020-04-15 17:17:17-0400
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ cat TemperatureTester.java
+/* NameTester.java is a 'driver' to test class Name.
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ * Student: Jacob Brink
+ * Date: 3/20/2020
+ * Project: 08
+ ************************************************************/
+
+import java.io.*;
+import java.util.Scanner;
+
+
+public class TemperatureTester  
+{
+
+    public static Scanner keyboard;
+    
+    public static void main(String[] args)
+    {
+	keyboard = new Scanner(System.in);
+	Temperature baseTemp, limitTemp;
+
+	//get first temperature
+	System.out.println("Enter baseTemp: ");
+	try {
+	    baseTemp = Temperature.read(keyboard);
+	} catch (Exception e) {
+	    System.out.println("Invalid Temperature");
+	    return;
+	}
+
+	//get limit temperature
+	System.out.println("Enter limitTemp: ");
+	try {
+	    limitTemp = Temperature.read(keyboard);
+	} catch (Exception e) {
+	    System.out.println("Invalid Temperature");
+	    return;
+	}
+
+	
+	System.out.println(String.format("Enter stepValue in scale %s", baseTemp.getScale()));
+	double stepValue = keyboard.nextDouble();
+
+	//loop either up or down depending on whether or not stepValue is negative or positive
+	while ((stepValue > 0 ? Temperature.lessThan(baseTemp, limitTemp) : Temperature.lessThan(limitTemp, baseTemp)) || baseTemp.equals(limitTemp)) {
+	    System.out.println(String.format("%8s\t%8s\t%8s", Temperature.getFahrenheit(baseTemp), Temperature.getCelsius(baseTemp), Temperature.getKelvin(baseTemp)));
+	    try {
+		baseTemp = baseTemp.raise(stepValue);
+	    } catch (Exception e) {
+		System.out.println("The change in temperature resulted in an invalid temperature");
+		return;
+	    };
+	}
+	    
+
+    }
+}
+
+
+
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ cat te[K[KTemperature.java
+/* Temperature.java is a class representing Temperature
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
+ * Student: Jacob Brink
+ * Date: 4/15/2020
+ * Project: 08
+ ************************************************************/
+
+import java.io.*;
+import java.util.Scanner;
+import java.util.HashMap;
+
+public class Temperature
+{
+    private static enum Scale {
+	F, C, K	
+    }
+
+    private static HashMap<Scale, Double> scaleMinTemp;
+    private static HashMap<Scale, ThrowingFunction<Temperature, Temperature>> otherToKelvin;
+    private static HashMap<Scale, ThrowingFunction<Temperature, Temperature>> kelvinToOther;
+
+    /* static runs code for static methods on first use
+     * @precondition: none
+     * @postcondition: scaleMinTemp, otherToKelvin, and kelvinToOther are populated
+     */
+    static {
+	//set minimum temperatures
+	scaleMinTemp = new HashMap<>();
+	scaleMinTemp.put(Scale.F, (-459.67));
+	scaleMinTemp.put(Scale.C, (-273.15));
+	scaleMinTemp.put(Scale.K, 0.0);
+
+	//A little hacky, but makes for clean code later XD
+	//sets functions for converting from other to Kelvin
+	otherToKelvin = new HashMap<>();
+	otherToKelvin.put(Scale.F, (fahrenheitTemp) -> {
+		return new Temperature((fahrenheitTemp.getDegrees() + 459.67) * 5/9, "K"); 
+	    });
+	otherToKelvin.put(Scale.C, (celsiusTemp) -> {
+		return new Temperature((celsiusTemp.getDegrees() + 273.15), "K");
+	    });
+	otherToKelvin.put(Scale.K, (kelvinTemp) -> {
+		return kelvinTemp;
+	    });
+
+	//sets functions for converting from kelvin to other
+	kelvinToOther = new HashMap<>();
+	kelvinToOther.put(Scale.F, (kelvin) -> {
+		return new Temperature((kelvin.getDegrees() - 273.15) * 9/5 + 32, "F");
+	    });
+	kelvinToOther.put(Scale.C, (kelvin) -> {
+		return new Temperature((kelvin.getDegrees() - 273.15), "C");
+	    });
+	kelvinToOther.put(Scale.K, (kelvin) -> {
+		return kelvin;
+	    });
+	
+    }
+
+    private Scale scale;
+    private double degrees;
+
+    /* Temperature constructs a temperature object
+     * @precondition: none
+     * @returns: Temperature object if valid, else throws exception
+     */    
+    public Temperature(final double degrees, String scaleString) throws Exception {
+	scaleString = scaleString.toUpperCase();
+	if (!isValid(degrees, scaleString))
+	     throw new Exception("Parameters create an invalid temperature");
+	    	    
+	this.scale = Scale.valueOf(scaleString);
+	this.degrees = degrees;
+    }
+
+    /* getScale()
+     * @precondition: none
+     * @returns: scale
+     */    
+    public Scale getScale() {
+	return this.scale;
+    }
+
+    /* getDegrees()
+     * @precondition: none
+     * @returns: degrees
+     */    
+    public double getDegrees() {
+	return this.degrees;
+    }
+    
+    /* convertTemp converts temperature to any other scale
+     * @precondition: none
+     * @returns: same temperature with different scale
+     */
+    private static Temperature convertTemp(Temperature original, Scale newTemperatureScale) {
+	try {
+	    Temperature kelvinTemp = otherToKelvin.get(original.getScale()).apply(original);
+	    Temperature newTemp = kelvinToOther.get(newTemperatureScale).apply(kelvinTemp);
+	    return newTemp;
+	} catch (Exception e) {
+	    //This should never run since the original temperature is valid
+	    return null;
+	}
+    }
+
+    /* getFahrenheit gets Fahrenheit value of temperature
+     * @precondition: none
+     * @returns: new Temperature with same value in different scale
+     */
+    public static Temperature getFahrenheit(Temperature original) {
+	return convertTemp(original, Scale.F);
+    }
+
+    /* getCelsius gets Celsius value of temperature
+     * @precondition: none
+     * @returns: new Temperature with same value in different scale
+     */    
+    public static Temperature getCelsius(Temperature original) {
+	return convertTemp(original, Scale.C);
+    }
+
+    /* getKelvin gets Kelvin value of temperature
+     * @precondition: none
+     * @returns: new Temperature with same value in different scale
+     */    
+    public static Temperature getKelvin(Temperature original) {
+	return convertTemp(original, Scale.K);
+    }
+
+    /* read reads and returns new Temperature
+     * @precondition: none
+     * @returns: new Temperature with same value in different scale
+     *           if Temperature is invalid, throws exception
+     */    
+    public static Temperature read(Scanner scanner) throws Exception {
+	String rawString = scanner.nextLine();
+	String[] pieces = rawString.split(" ");
+	double degrees = Double.parseDouble(pieces[0]);
+	return new Temperature(degrees, pieces[1]);
+    }
+
+    /* raise raises temperature
+     * @precondition: none
+     * @returns: new Temperature with same degrees + delta
+     *           if Temperature is invalid, throws exception
+     */    
+    public Temperature raise(double delta) throws Exception {
+	return new Temperature(this.degrees + delta, scale.toString());
+    }
+
+    /* lower lowers temperature
+     * @precondition: none
+     * @returns: new Temperature with same degrees - delta
+     *           if Temperature is invalid, throws exception
+     */    
+    public Temperature lower(double delta) throws Exception {
+	return new Temperature(this.degrees - delta, scale.toString());
+    }
+
+    /* equals overrides equals operator
+     * @precondition: none
+     * @returns: true if equal, else false
+     */    
+    @Override
+    public boolean equals(Object o) {
+	if (o instanceof Temperature)
+	    return Double.valueOf(getKelvin((Temperature) o).getDegrees()).equals(getKelvin(this).getDegrees());
+	return false;
+    }
+
+    /* lessthan()
+     * @precondition: none
+     * @returns: true if left is less than, else false
+     */    
+    public static boolean lessThan(Temperature left, Temperature right) {
+	return getKelvin(left).getDegrees() < getKelvin(right).getDegrees();
+    }
+
+    /* toString overrides stringify operation
+     * @precondition: none
+     * @returns: nicely formatted string
+     */    
+    @Override
+    public String toString() {
+	return String.format("%.3f° %s", this.degrees, this.scale.toString());
+    }
+
+    /* isValid checks if parameters and temperature is valid
+     * @precondition: none
+     * @returns: true if valid, else false
+     */    
+    public static boolean isValid(final double degrees, String scaleChar) {
+
+	//check Scale type
+	Scale scale;
+	try {
+	    scale = Scale.valueOf(scaleChar.toUpperCase());
+	} catch (Exception e) {
+	    System.out.println("The given scale character does not match accepted values");
+	    return false;
+	}
+
+	
+	//check that temperature is not below absolute zero
+	if (degrees < scaleMinTemp.get(scale)) {
+	    System.out.println("The given temperature is not valid");
+	    return false;
+	}
+	
+	
+	return true;
+	
+    } 
+    
+}
+
+
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ javac TemperatureTester.java
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TEm[K[KemperatureTester
+Enter baseTemp: 
+12 F
+Enter limitTemp: 
+20 F
+Enter stepValue in scale F
+1
+12.000° F	-11.111° C	262.039° K
+13.000° F	-10.556° C	262.594° K
+14.000° F	-10.000° C	263.150° K
+15.000° F	-9.444° C	263.706° K
+16.000° F	-8.889° C	264.261° K
+17.000° F	-8.333° C	264.817° K
+18.000° F	-7.778° C	265.372° K
+19.000° F	-7.222° C	265.928° K
+20.000° F	-6.667° C	266.483° K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TemperatureTester
+Enter baseTemp: 
+0 C
+Enter limitTemp: 
+20 c
+Enter stepValue in scale C
+5
+32.000° F	0.000° C	273.150° K
+41.000° F	5.000° C	278.150° K
+50.000° F	10.000° C	283.150° K
+59.000° F	15.000° C	288.150° K
+68.000° F	20.000° C	293.150° K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TemperatureTester
+Enter baseTemp: 
+20 k
+Enter limitTemp: 
+10 K
+Enter stepValue in scale K
+-2
+-423.670° F	-253.150° C	20.000° K
+-427.270° F	-255.150° C	18.000° K
+-430.870° F	-257.150° C	16.000° K
+-434.470° F	-259.150° C	14.000° K
+-438.070° F	-261.150° C	12.000° K
+-441.670° F	-263.150° C	10.000° K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TemperatureTester
+Enter baseTemp: 
+20 O
+The given scale character does not match accepted values
+Invalid Temperature
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TemperatureTester
+Enter baseTemp: 
+-200 K
+The given temperature is not valid
+Invalid Temperature
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ java TemperatureTester
+Enter baseTemp: 
+-200 C
+Enter limitTemp: 
+-500 F
+The given temperature is not valid
+Invalid Temperature
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/java[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/java[00m$ exit
+
+Script done on 2020-04-15 17:18:58-0400
+Script started on 2020-04-15 17:04:04-0400
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ cat temp_tester.rb
+# temp_tester.rb tests class Temperature and its operations
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 4/15/2020
+# Project: 8
+####################################################
+
+require "./temperature.rb"   
+
+def temp_tester
+  
+   puts "Enter baseTemp: "
+   baseTemp = Weather::Temperature.read()
+
+   puts "Enter limitTemp: "
+   limitTemp = Weather::Temperature.read()
+
+   puts "Enter stepValue: "
+   stepValue = gets.to_f
+
+   while (baseTemp.equals(limitTemp)) or (stepValue > 0 ? baseTemp.lessthan(limitTemp) : limitTemp.lessthan(baseTemp))
+     print "#{baseTemp.getFahrenheit()}  #{baseTemp.getCelsius()}  #{baseTemp.getKelvin()}\n"
+     baseTemp = baseTemp.raise(stepValue)
+   end
+
+# Handle user failure in a nice way
+rescue StandardError => error
+  puts error
+   
+end
+
+if __FILE__ == $0
+  temp_tester()
+end
+
+
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ cat temperature.rb
+# temperature.rb tests class Name and its operations
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 4/15/2020
+# Project: 8
+####################################################
+
+module Weather
+ 
+  class Temperature
+
+    # Invalid_Temperature is a custom Standard Error for invalid temperatures
+    ########################################################################
+    class Invalid_Temperature < StandardError
+    end
+    
+    # Invalid_Scale is a custom Standard Error for invalid scales
+    ########################################################################
+    class Invalid_Scale < StandardError
+    end
+
+    # isValid() checks if given parameters are valid
+    # Input: degrees, a float; scale, a string
+    # Output: throws Invalid_Temperature if below 0 K
+    #         throws Invalid_Scale if given scale does
+    #         exist
+    ######################################################
+    def isValid(degrees, scale)
+      invalid_temp = "#{degrees} #{scale} is below 0 K"
+      invalid_scale = "Temperature Scale #{scale} is invalid"
+      if scale =~ /f/ then
+        Kernel::raise Invalid_Temperature, invalid_temp if degrees < -459.67
+      elsif scale =~ /c/ then
+        Kernal::raise Invalid_Temperature, invalid_temp if degrees < -273.15
+      elsif scale =~ /k/ then
+        Kernel::raise Invalid_Temperature, invalid_temp if degrees < 0
+      else
+        Kernel::raise Invalid_Scale, invalid_scale
+      end      
+    end
+
+    # initialize() intializes Temperature object
+    # Input: degrees, a float; scale, a string
+    # Returns: Temperature object if valid parameters
+    #         else exception
+    ######################################################
+    def initialize(degrees, scale)
+      scale = scale.downcase
+      isValid(degrees, scale)
+      @degrees, @scale = degrees, scale
+    end
+
+    attr_reader :degrees, :scale
+
+    # raise()
+    # Input: delta, a float
+    # Returns: new Temperature with risen degrees
+    ######################################################
+    def raise(delta)
+      Temperature.new(@degrees + delta, @scale)
+    end
+
+    # lower()
+    # Input: delta, a float
+    # Returns: new Temperature with delta degrees less
+    #          or exception if new temperature is lower
+    #          than 0 K
+    ######################################################
+    def lower(delta)
+      Temperature.new(@degrees - delta, @scale)
+    end
+
+    # getFahrenheit() returns Fahrenheit temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################
+    def getFahrenheit()
+      if scale =~ /f/ then
+        Temperature.new(@degrees, @scale)
+      elsif scale =~ /c/ then
+        Temperature.new(@degrees * (9.0/5) + 32, "f")
+      else
+        Temperature.new((@degrees + 273.15) * (9.0/5) + 32, "f")
+      end
+    end
+    
+    # getCelsius() returns Celsius temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################
+    def getCelsius()
+      if scale =~ /f/ then
+        Temperature.new((@degrees-32)*(5.0/9), "c")
+      elsif scale =~ /c/ then
+        Temperature.new(@degrees, @scale)
+      else
+        Temperature.new(@degrees - 273.15, "c")
+      end
+    end
+
+    # getKelvin() returns Kelvin temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################    
+    def getKelvin()
+      if scale =~ /f/ then
+        Temperature.new((@degrees-32)*(5.0/9)+273.15, "k")
+      elsif scale =~ /c/ then
+        Temperature.new(@degrees + 273.15, "k")
+      else
+        Temperature.new(@degrees, @scale)   
+      end
+    end
+
+    # read() reads in user input
+    # Input: none
+    # Returns: new Temperature according to user input
+    #          if not valid, an exception
+    ######################################################
+    def self.read()
+      rawText = gets
+      splitText = rawText.split
+
+      degrees = splitText[0].to_f
+      scale = splitText[1]
+
+      Temperature.new(degrees, scale)
+    end    
+
+    # to_s() allows for pretty printing of object
+    # Input: none
+    # Returns: formatted String with degrees and scale
+    ######################################################
+    def to_s
+      "#{@degrees.round(2)} #{@scale}"
+    end
+
+    # equals() shows equality
+    # Input: other_object
+    # Returns: true if equal, else false
+    ######################################################
+    def equals(other_object)
+      if !(other_object.instance_of? Temperature) then
+        false
+      else
+        (other_object.getKelvin().degrees == self.getKelvin().degrees)
+      end
+    end
+
+    # lessthan() shows inequality
+    # Input: other_object
+    # Returns: true if self is less than other
+    ######################################################
+    def lessthan(other_object)
+      if !(other_object.instance_of? Temperature) then
+        false
+      else
+        (self.getKelvin().degrees < other_object.getKelvin().degrees)
+      end
+    end
+      
+    
+  end
+
+end
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ ruby temp_tester.rb
+Enter baseTemp: 
+12 F
+Enter limitTemp: 
+40 F
+Enter stepValue: 
+2
+12.0 f  -11.11 c  262.04 k
+14.0 f  -10.0 c  263.15 k
+16.0 f  -8.89 c  264.26 k
+18.0 f  -7.78 c  265.37 k
+20.0 f  -6.67 c  266.48 k
+22.0 f  -5.56 c  267.59 k
+24.0 f  -4.44 c  268.71 k
+26.0 f  -3.33 c  269.82 k
+28.0 f  -2.22 c  270.93 k
+30.0 f  -1.11 c  272.04 k
+32.0 f  0.0 c  273.15 k
+34.0 f  1.11 c  274.26 k
+36.0 f  2.22 c  275.37 k
+38.0 f  3.33 c  276.48 k
+40.0 f  4.44 c  277.59 k
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ ruby temp_tester.rb
+Enter baseTemp: 
+40 F
+Enter limitTemp: 
+20  20 F
+Enter stepValue: 
+-5
+40.0 f  4.44 c  277.59 k
+35.0 f  1.67 c  274.82 k
+30.0 f  -1.11 c  272.04 k
+25.0 f  -3.89 c  269.26 k
+20.0 f  -6.67 c  266.48 k
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ ruby temp_tester.rb
+Enter baseTemp: 
+- -2 K
+-2.0 k is below 0 K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ ruby temp_tester.rb
+Enter baseTemp: 
+-2000 F
+-2000.0 f is below 0 K
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ ruby temp_tester.rb
+Enter baseTemp: 
+200 Y
+Temperature Scale y is invalid
+]0;jacob@DESKTOP-TMA4I98: ~/214/projects/08/ruby[01;32mjacob@DESKTOP-TMA4I98[00m:[01;34m~/214/projects/08/ruby[00m$ exit
+
+Script done on 2020-04-15 17:08:10-0400

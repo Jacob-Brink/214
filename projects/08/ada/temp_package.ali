@@ -10,31 +10,31 @@ RV NO_EXCEPTION_HANDLERS
 RV NO_EXCEPTIONS
 RV NO_FLOATING_POINT
 RV NO_IO
-RV NO_IMPLICIT_CONDITIONALS
 RV NO_STANDARD_STORAGE_POOLS
 RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U temp_package%b	temp_package.adb	dcb9acfb NE OO PK
+U temp_package%b	temp_package.adb	222b2584 NE OO PK
 W ada%s			ada.ads			ada.ali
 W ada.exceptions%s	a-except.adb		a-except.ali
 W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
 W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
 W ada.strings%s		a-string.ads		a-string.ali
 W ada.strings.fixed%s	a-strfix.adb		a-strfix.ali
-W ada.tags%s		a-tags.adb		a-tags.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W interfaces%s		interfac.ads		interfac.ali
 W system%s		system.ads		system.ali
 W system.concat_2%s	s-conca2.adb		s-conca2.ali
-W system.exception_table%s  s-exctab.adb	s-exctab.ali
 W system.img_enum_new%s	s-imenne.adb		s-imenne.ali
-W system.standard_library%s  s-stalib.adb	s-stalib.ali
 W system.val_enum%s	s-valenu.adb		s-valenu.ali
 W system.val_real%s	s-valrea.adb		s-valrea.ali
 
-U temp_package%s	temp_package.ads	a8b2913e EE NE OO PK
+U temp_package%s	temp_package.ads	c2b0d80c EE OO PK
 W ada.tags%s		a-tags.adb		a-tags.ali
+W system%s		system.ads		system.ali
+W system.exception_table%s  s-exctab.adb	s-exctab.ali
+W system.standard_library%s  s-stalib.adb	s-stalib.ali
 
 D ada.ads		20170106103348 76789da1 ada%s
 D a-charac.ads		20070912115821 2d3ec45b ada.characters%s
@@ -70,96 +70,100 @@ D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
 D s-valenu.ads		20090409150019 bb1a4295 system.val_enum%s
 D s-valrea.ads		20150106102044 fe297711 system.val_real%s
 D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
-D temp_package.ads	20200415145148 a8b2913e temp_package%s
-D temp_package.adb	20200415152315 8bdb327b temp_package%b
+D temp_package.ads	20200415215507 c2b0d80c temp_package%s
+D temp_package.adb	20200415223659 1f4bf236 temp_package%b
 X 1 ada.ads
-16K9*Ada 20e8 36|9r6 9r19 9r40 9r59 10r6 10r19 10r40 10r59 192r6
+16K9*Ada 20e8 36|9r6 9r19 9r40 9r59 10r6 10r19 10r40 10r59 200r6
 X 5 a-flteio.ads
-20K13*Float_Text_IO[14|46] 36|9w63 10r63 192r10
+20K13*Float_Text_IO[14|46] 36|9w63 10r63 200r10
 X 6 a-inteio.ads
 18K13*Integer_Text_IO[15|46] 36|9w23 10r23
 X 9 a-string.ads
 16K13*Strings 35e16 36|9r44 10r44
 X 10 a-strfix.ads
 18K21*Fixed 251e22 36|9w52 10r52
-25U14*Move 36|175s6 176s6
+25U14*Move 36|183s6 184s6
 X 13 a-textio.ads
 49K13*Text_IO 471e16 36|9w10 10r10
 73I12*Field{integer}
-242U14*Put 36|193s6
-249U14*Get_Line 36|163s6
+242U14*Put 36|201s6
+249U14*Get_Line 36|171s6
 X 14 a-tiflio.ads
-68U14*Put 36|192s24[5|20]
-69f7 Item{float} 36|192r28[5|20]
-71i7 Aft{13|73I12} 36|192r63[5|20]
-72i7 Exp{13|73I12} 36|192r73[5|20]
+68U14*Put 36|200s24[5|20]
+69f7 Item{float} 36|200r28[5|20]
+71i7 Aft{13|73I12} 36|200r63[5|20]
+72i7 Exp{13|73I12} 36|200r73[5|20]
 X 35 temp_package.ads
-10K9*Temp_Package 126E8 133l5 133e17 36|12b14 241l5 241t17
-12E9*ScaleType 12e31 49r62 129r17 36|23r19 26r23 57r29 77r62 89r17 110r17
-. 131r17 193r16 204r63 215r63
-12n23*F{12E9} 36|31r22 93r20 114r20 135r20
-12n26*C{12E9} 36|33r25 95r23 116r23 137r23
-12n29*K{12E9} 36|97r23 118r23 139r23
-14R9*Temperature 33r39 41r43 49r42 57r46 57r66 65r43 65r63 73r42 73r62 82r50
-. 90r37 98r43 106r40 114r51 122r53 126c8 130e16 36|49r39 66r43 77r42 88r46
-. 88r66 91r23 109r43 109r63 112r23 130r42 130r62 133r23 152r50 190r37 202r43
-. 213r40 224r51 235r53
-22V12*IsValid{boolean} 22>20 22>39 36|22b13 39t7 52s9
-22f20 Degree{float} 36|22b21 32r17 34r17 36r16
-22a39 Scale{string} 36|22b40 26r39
-33U13*Init 33<18 33>52 33>71 36|49b13 58l7 58t11 94s9 96s9 98s9 115s9 117s9
-. 119s9 136s9 138s9 140s9 180s6 204s6 215s6
-33r18 TheTemperature{14R9} 36|49b18 56m6 57m5
-33f52 Degree{float} 36|49b52 52r17 56r31
-33a71 Scale{string} 36|49b71 52r25 57r45
-41V12*getDegree{float} 41>23 36|66b12 69l7 69t16 90s28 94s30 111s28 117s30
-. 132s28 140s30 192s36 204s27 215s27 226s13 226s50 237s13 237s50
-41r23 TheTemperature{14R9} 36|66b23 68r12
-49V12*getScale{12E9} 49>22 36|77b12 80l7 80t15 89s30 110s30 131s30 193s32
-. 204s79 215s79
-49r22 TheTemperature{14R9} 36|77b22 79r13
-57V12*getFahrenheit{14R9} 57>26 36|88b12 101l7 101t20
-57r26 TheTemperature{14R9} 36|88b26 89r39 90r38 94r40
-65V12*getCelsius{14R9} 65>23 36|109b12 122l7 122t17
-65r23 TheTemperature{14R9} 36|109b23 110r39 111r38 117r40
-73V12*getKelvin{14R9} 73>22 36|130b12 143l7 143t16 226s23 226s60 237s23 237s60
-73r22 TheTemperature{14R9} 36|130b22 131r39 132r38 140r40
-82U13*ReadTemperature 82<29 36|152b13 182l7 182t22
-82r29 TheTemperature{14R9} 36|152b29 180m11
-90U13*Put 90>17 36|190b13 194l7 194t10
-90r17 TheTemperature{14R9} 36|190b17 192r46 193r41
-98U13*increase 98<22 98>56 36|202b13 205l7 205t15
-98r22 TheTemperature{14R9} 36|202b22 204m11 204r37 204r88
-98f56 Amount{float} 36|202b56 204r55
-106U13*lower 106<19 106>53 36|213b13 216l7 216t12
-106r19 TheTemperature{14R9} 36|213b19 215m11 215r37 215r88
-106f53 Amount{float} 36|213b53 215r55
-114V12*equals{boolean} 114>19 114>33 36|224b12 227l7 227t13
-114r19 ATemperature{14R9} 36|224b19 226r33
-114r33 BTemperature{14R9} 36|224b33 226r70
-122V12*lessthan{boolean} 122>21 122>35 36|235b12 238l7 238t15
-122r21 ATemperature{14R9} 36|235b21 237r33
-122r35 BTemperature{14R9} 36|235b35 237r70
-128f9*Degree{float} 36|56m21 68r27
-129e9*Scale{12E9} 36|57m20 79r28
+10K9*Temp_Package 136E8 143l5 143e17 36|12b14 249l5 249t17
+12E9*ScaleType 12e31 25r60 59r62 139r17 36|19r60 38r19 41r23 65r30 85r62
+. 97r17 118r17 139r17 201r16 212r63 223r63
+12n23*F{12E9} 36|21r22 101r20 122r20 143r20
+12n26*C{12E9} 36|23r25 103r23 124r23 145r23
+12n29*K{12E9} 36|105r23 126r23 147r23
+14X4*Invalid_Temperature 36|47r16
+15X4*Invalid_Scale 36|43r31
+17R9*Temperature 43r39 51r43 59r42 67r46 67r66 75r43 75r63 83r42 83r62 92r50
+. 100r37 108r43 116r40 124r51 132r53 136c8 140e16 36|60r39 74r43 85r42 96r46
+. 96r66 99r23 117r43 117r63 120r23 138r42 138r62 141r23 160r50 198r37 210r43
+. 221r40 232r51 243r53
+25V13*IsValidValue{boolean} 25>26 25>45 36|19b13 29t7 46s14
+25f26 Degree{float} 36|19b26 22r17 24r17 26r16
+25e45 ThisScale{12E9} 36|19b45 21r10 23r13
+32U14*IsValid 32>22 32>41 36|37b14 50t7 62s6
+32f22 Degree{float} 36|37b22 46r27
+32a41 Scale{string} 36|37b41 41r39
+43U13*Init 43<18 43>52 43>71 36|60b13 66l7 66t11 102s9 104s9 106s9 123s9
+. 125s9 127s9 144s9 146s9 148s9 188s6 212s6 223s6
+43r18 TheTemperature{17R9} 36|60b18 64m6 65m6
+43f52 Degree{float} 36|60b52 62r14 64r31
+43a71 Scale{string} 36|60b71 62r22 65r46
+51V12*getDegree{float} 51>23 36|74b12 77l7 77t16 98s28 102s30 119s28 125s30
+. 140s28 148s30 200s36 212s27 223s27 234s13 234s50 245s13 245s50
+51r23 TheTemperature{17R9} 36|74b23 76r12
+59V12*getScale{12E9} 59>22 36|85b12 88l7 88t15 97s30 118s30 139s30 201s32
+. 212s79 223s79
+59r22 TheTemperature{17R9} 36|85b22 87r13
+67V12*getFahrenheit{17R9} 67>26 36|96b12 109l7 109t20
+67r26 TheTemperature{17R9} 36|96b26 97r39 98r38 102r40
+75V12*getCelsius{17R9} 75>23 36|117b12 130l7 130t17
+75r23 TheTemperature{17R9} 36|117b23 118r39 119r38 125r40
+83V12*getKelvin{17R9} 83>22 36|138b12 151l7 151t16 234s23 234s60 245s23 245s60
+83r22 TheTemperature{17R9} 36|138b22 139r39 140r38 148r40
+92U13*ReadTemperature 92<29 36|160b13 190l7 190t22
+92r29 TheTemperature{17R9} 36|160b29 188m11
+100U13*Put 100>17 36|198b13 202l7 202t10
+100r17 TheTemperature{17R9} 36|198b17 200r46 201r41
+108U13*increase 108<22 108>56 36|210b13 213l7 213t15
+108r22 TheTemperature{17R9} 36|210b22 212m11 212r37 212r88
+108f56 Amount{float} 36|210b56 212r55
+116U13*lower 116<19 116>53 36|221b13 224l7 224t12
+116r19 TheTemperature{17R9} 36|221b19 223m11 223r37 223r88
+116f53 Amount{float} 36|221b53 223r55
+124V12*equals{boolean} 124>19 124>33 36|232b12 235l7 235t13
+124r19 ATemperature{17R9} 36|232b19 234r33
+124r33 BTemperature{17R9} 36|232b33 234r70
+132V12*lessthan{boolean} 132>21 132>35 36|243b12 246l7 246t15
+132r21 ATemperature{17R9} 36|243b21 245r33
+132r35 BTemperature{17R9} 36|243b35 245r70
+138f9*Degree{float} 36|64m21 76r27
+139e9*Scale{12E9} 36|65m21 87r28
 X 36 temp_package.adb
-23e7 ThisScale{35|12E9} 26m10 31r10 33r13
-50X6 Invalid_Temperature 53r15
-89e6 OldScale{35|12E9} 93r9 95r12 97r12
-90f6 OldDegrees{float} 96r31 98r31
-91r6 NewTemperature{35|14R9} 94m14 96m14 98m14 100r13
-110e6 OldScale{35|12E9} 114r9 116r12 118r12
-111f6 OldDegrees{float} 115r31 119r30
-112r6 NewTemperature{35|14R9} 115m14 117m14 119m14 121r13
-131e6 OldScale{35|12E9} 135r9 137r12 139r12
-132f6 OldDegrees{float} 136r31 138r30
-133r6 NewTemperature{35|14R9} 136m14 138m14 140m14 142r13
-153e6 C{character} 167m9 168r12 172r19
-154i6 SpacePosition{integer} 169m12 175r27 176r16
-155a6 Raw{string} 163m15 165r15 167r14 175r11 175r15 176r11 176r34
-157a6 FirstString{string} 175m46 178r29
-157a19 SecondString{string} 176m45 180r36
-159f6 Degrees{float} 178m6 180r27
-160i6 Last{natural} 163m20
-165i10 I{integer} 167r18 169r29
+38e7 ThisScale{35|12E9} 41m10 46r35
+97e6 OldScale{35|12E9} 101r9 103r12 105r12
+98f6 OldDegrees{float} 104r31 106r31
+99r6 NewTemperature{35|17R9} 102m14 104m14 106m14 108r13
+118e6 OldScale{35|12E9} 122r9 124r12 126r12
+119f6 OldDegrees{float} 123r31 127r30
+120r6 NewTemperature{35|17R9} 123m14 125m14 127m14 129r13
+139e6 OldScale{35|12E9} 143r9 145r12 147r12
+140f6 OldDegrees{float} 144r31 146r30
+141r6 NewTemperature{35|17R9} 144m14 146m14 148m14 150r13
+161e6 C{character} 175m9 176r12 180r19
+162i6 SpacePosition{integer} 177m12 183r27 184r16
+163a6 Raw{string} 171m15 173r15 175r14 183r11 183r15 184r11 184r34
+165a6 FirstString{string} 183m46 186r29
+165a19 SecondString{string} 184m45 188r36
+167f6 Degrees{float} 186m6 188r27
+168i6 Last{natural} 171m20
+173i10 I{integer} 175r18 177r29
 

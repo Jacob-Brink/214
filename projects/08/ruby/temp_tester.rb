@@ -24,7 +24,7 @@ def temp_tester
      baseTemp = baseTemp.raise(stepValue)
    end
 
-# Handle bad input from user
+# Handle user failure in a nice way
 rescue StandardError => error
   puts error
    

@@ -2,8 +2,8 @@
 --
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
 -- Completed by: Jacob Brink
--- Date: 4/10/2020
--- Lab: 8
+-- Date: 4/15/2020
+-- Project: 8
 --------------------------------------------------------------
 
 
@@ -11,15 +11,25 @@ package Temp_Package is
    
    type ScaleType is (F, C, K);
    
+   Invalid_Temperature : exception;
+   Invalid_Scale : exception;
+   
    type Temperature is private;
    
+   
+  ----------------------------------------------
+  -- IsValidValue returns true if not below 0 K
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+   function IsValidValue(Degree : in Float; ThisScale : in ScaleType) return Boolean;
    
   ----------------------------------------------
   -- IsValid returns true if valid temperature
   -- Receive: Degree in Float, Scale in String                     .            
   -- Return: true if valid, else false
   ----------------------------------------------
-  function IsValid(Degree : in Float; Scale : in String) return Boolean;
+   procedure IsValid(Degree : in Float; Scale : in String);
    
    
   ----------------------------------------------

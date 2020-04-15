@@ -25,7 +25,6 @@ public class TemperatureTester
 	    baseTemp = Temperature.read(keyboard);
 	} catch (Exception e) {
 	    System.out.println("Invalid Temperature");
-	    e.printStackTrace();
 	    return;
 	}
 
@@ -35,7 +34,6 @@ public class TemperatureTester
 	    limitTemp = Temperature.read(keyboard);
 	} catch (Exception e) {
 	    System.out.println("Invalid Temperature");
-	    e.printStackTrace();
 	    return;
 	}
 

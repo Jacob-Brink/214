@@ -46,6 +46,7 @@ module Weather
     #         else exception
     ######################################################
     def initialize(degrees, scale)
+      scale = scale.downcase
       isValid(degrees, scale)
       @degrees, @scale = degrees, scale
     end

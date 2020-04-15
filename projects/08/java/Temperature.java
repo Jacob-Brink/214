@@ -65,6 +65,7 @@ public class Temperature
      * @returns: Temperature object if valid, else throws exception
      */    
     public Temperature(final double degrees, String scaleString) throws Exception {
+	scaleString = scaleString.toUpperCase();
 	if (!isValid(degrees, scaleString))
 	     throw new Exception("Parameters create an invalid temperature");
 	    	    

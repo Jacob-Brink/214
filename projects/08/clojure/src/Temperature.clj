@@ -2,7 +2,7 @@
 ;;
 ;; Begun by: Prof. Adams, for CS 214 at Calvin College.
 ;; Completed by: Jacob Brink
-;; Date: 4/10/2020
+;; Date: 4/15/2020
 ;; Project: 8
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -18,15 +18,20 @@
                 :k 0
                 :K 0))
 
-
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; check-Temperature checks temperature to see if it is valid
 ;; Receive: degrees and scale
-;; Return: true if valid, else false 
+;; Return: exception if invalid, else nothing 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn check-Temperature [^Double degrees ^String scale]
-  (and (not= (get minDegree (keyword scale)) nil) (>= degrees (get minDegree (keyword scale))))
+  (if (= (get minDegree (keyword scale)) nil)
+    (throw (Exception. "Invalid Temperature scale"))
+    (do
+      (if (< degrees (get minDegree (keyword scale)))
+        (throw (Exception. "Temperature cannot be below zero"))
+        )
+      )
+    )
  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -35,8 +40,7 @@
 ;; Return: the Temperature (degrees scale). 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn make-Temperature [^Double degrees ^String scale]
-  (if (not (check-Temperature degrees scale))
-    (throw (Exception. "Invalid parameters or invalid temperature occurred.")))
+  (check-Temperature degrees scale)
   (->Temperature degrees scale)
 )
 
