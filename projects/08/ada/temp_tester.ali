@@ -10,7 +10,7 @@ RV NO_FLOATING_POINT
 RV NO_IO
 RV SPARK_05
 
-U temp_tester%b		temp_tester.adb		49d2b5a5 NE OO SU IL
+U temp_tester%b		temp_tester.adb		76845167 NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
@@ -39,8 +39,8 @@ D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
 D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
-D temp_package.ads	20200415142514 2f1822d9 temp_package%s
-D temp_tester.adb	20200415140438 bf2d2508 temp_tester%b
+D temp_package.ads	20200415145148 a8b2913e temp_package%s
+D temp_tester.adb	20200415151353 07d1722d temp_tester%b
 X 1 ada.ads
 16K9*Ada 20e8 25|9r6 9r24 10r5 10r22
 X 3 a-flteio.ads
@@ -52,17 +52,18 @@ X 7 a-textio.ads
 X 8 a-tiflio.ads
 57U14*Get 25|18s30[3|20]
 X 24 temp_package.ads
-10K9*Temp_Package 125e17 25|9w48 10r45 13r26
-14R9*Temperature 122e16 25|13r39
-49V12*getFahrenheit{14R9} 25|22s11
-57V12*getCelsius{14R9} 25|22s41
-65V12*getKelvin{14R9} 25|22s68
-74U13*ReadTemperature 25|16s29 17s30
-82U13*Put 25|22s7 22s37 22s64
-114V12*lessthan{boolean} 25|20s11
+10K9*Temp_Package 133e17 25|9w48 10r45 13r26
+14R9*Temperature 130e16 25|13r39
+57V12*getFahrenheit{14R9} 25|22s11
+65V12*getCelsius{14R9} 25|22s41
+73V12*getKelvin{14R9} 25|22s68
+82U13*ReadTemperature 25|16s29 17s30
+90U13*Put 25|22s7 22s37 22s64
+98U13*increase 25|23s7
+122V12*lessthan{boolean} 25|20s11
 X 25 temp_tester.adb
 12U11*temp_tester 12b11 26l5 26t16
-13r4 BaseTemp{24|14R9} 16m45 20r20 22r25 22r52 22r78
+13r4 BaseTemp{24|14R9} 16m45 20r20 22r25 22r52 22r78 23m16
 13r14 LimitTemp{24|14R9} 17m46 20r30
-14f4 StepValue{float} 18m34
+14f4 StepValue{float} 18m34 23r26
 

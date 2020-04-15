@@ -11,6 +11,33 @@ use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
 
 package body Temp_Package is
    
+   
+   
+   
+  ----------------------------------------------
+  -- IsValid returns true if valid temperature
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+   function IsValid(Degree : in Float; Scale : in String) return Boolean is
+      ThisScale : ScaleType;
+   begin
+      begin
+	 ThisScale := ScaleType'Value(Scale);
+      exception
+	 when others => return False;
+      end;
+      
+      if ThisScale = F then
+	 return Degree > -459.67;
+      elsif ThisScale = C then
+	 return Degree > -273.15;
+      else
+	return Degree > 0.0;
+      end if;
+           
+   end;  
+   
   ----------------------------------------------
   -- Init initializes a Temperature variable          
   -- Receive: TheTemperature , the Temperature variable;          
@@ -19,10 +46,14 @@ package body Temp_Package is
   -- Return: TheTemperature , its fields set to First, 
   --               Middle, and Last.     
   ----------------------------------------------
-
   procedure Init(TheTemperature : out Temperature; Degree : in Float; Scale : in String) is
+     Invalid_Temperature : exception;
   begin
-    TheTemperature.Degree := Degree;
+     if IsValid(Degree, Scale) /= True then
+	raise Invalid_Temperature with "Parameters create invalid temperature";
+     end if;
+     
+     TheTemperature.Degree := Degree;
     TheTemperature.Scale := ScaleType'Value(Scale);
     Put(TheTemperature);
   end Init;

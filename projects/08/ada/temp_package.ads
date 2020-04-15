@@ -13,6 +13,15 @@ package Temp_Package is
    
    type Temperature is private;
    
+   
+  ----------------------------------------------
+  -- IsValid returns true if valid temperature
+  -- Receive: Degree in Float, Scale in String                     .            
+  -- Return: true if valid, else false
+  ----------------------------------------------
+  function IsValid(Degree : in Float; Scale : in String) return Boolean;
+   
+   
   ----------------------------------------------
   -- Init initializes a Temperature variable          
   -- Receive: TheTemperature , the Temperature variable;          
@@ -21,7 +30,6 @@ package Temp_Package is
   -- Return: TheTemperature , its fields set to First, 
   --               Middle, and Last.     
   ----------------------------------------------
-
   procedure Init(TheTemperature : out Temperature; Degree : in Float; Scale : in String);
 
   ----------------------------------------------

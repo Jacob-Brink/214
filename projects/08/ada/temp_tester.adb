@@ -20,7 +20,7 @@ begin
    while (lessthan(BaseTemp, LimitTemp))
    loop
       Put(GetFahrenheit(BaseTemp)); Put(GetCelsius(BaseTemp)); Put(GetKelvin(BaseTemp)); New_Line;
-      -- Temperature_Package.raise(BaseTemp, StepValue);
+      increase(BaseTemp, StepValue);
    end loop;
    
 end temp_tester;
