@@ -6,12 +6,12 @@
 # Project: 8
 ####################################################
 
-require "./Temperature.rb"
-include Test::Unit::Assertions
+require "./temperature.rb"   
 
 def temp_tester
-   baseTemp, limitTemp = Weather::Temperature.new(0, "F");
-
+   baseTemp = Weather::Temperature.new(0.0, "f");
+   limitTemp = Weather::Temperature.new(0.0, "f");
+   
    puts "Enter baseTemp: "
    baseTemp.read()
 
@@ -20,11 +20,15 @@ def temp_tester
 
    puts "Enter stepValue: "
    stepValue = gets.to_f
-   
-   while (baseTemp.equals(limitTemp)) or (baseTemp.lessthan(limitTemp))
-     print "#{baseTemp.getFahrenheit()} #{baseTemp.getCelsius()} #{baseTemp.getKelvin()}"
+
+   while (baseTemp.equals(limitTemp)) or (stepValue > 0 ? baseTemp.lessthan(limitTemp) : limitTemp.lessthan(baseTemp))
+     print "#{baseTemp.getFahrenheit()}  #{baseTemp.getCelsius()}  #{baseTemp.getKelvin()}\n"
      baseTemp = baseTemp.raise(stepValue)
    end
+
+# Handle bad input from user
+rescue StandardError => error
+  puts error
    
 end
 

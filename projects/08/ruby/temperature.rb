@@ -11,75 +11,71 @@ module Weather
   class Temperature
 
     class Invalid_Temperature < StandardError
-      def message
-        "Temperature is invalid"
-      end
     end
 
     class Invalid_Scale < StandardError
-      def message
-        "Temperature Scale is invalid"
-      end
     end
     
     def isValid(degrees, scale)
+      invalid_temp = "#{degrees} #{scale} is below 0 K"
+      invalid_scale = "Temperature Scale #{scale} is invalid"
       if scale =~ /f/ then
-        raise Invalid_Temperature if degrees < -459.67        
+        Kernel::raise Invalid_Temperature, invalid_temp if degrees < -459.67
       elsif scale =~ /c/ then
-        raise Invalid_Temperature if degrees < -273.15
+        Kernal::raise Invalid_Temperature, invalid_temp if degrees < -273.15
       elsif scale =~ /k/ then
-        raise Invalid_Temperature if degrees < 0
+        Kernel::raise Invalid_Temperature, invalid_temp if degrees < 0
       else
-        raise Invalid_Scale;
+        Kernel::raise Invalid_Scale, invalid_scale
       end      
     end
 
     def setup(degrees, scale)
       isValid(degrees, scale)
-      @degrees, @scale = degrees, scale;
+      @degrees, @scale = degrees, scale
     end
     
     def initialize(degrees, scale)
-      setup(degrees, scale)
+      self.setup(degrees, scale)
     end
 
     attr_reader :degrees, :scale
 
-    def raise(old_temp, delta)
-      Temperature.new(old_temp.degrees + delta, old_temp.scale)
+    def raise(delta)
+      Temperature.new(@degrees + delta, @scale)
     end
 
-    def lower(old_temp, delta)
-      Temperature.new(old_temp.degrees - delta, old_temp.scale)
+    def lower(delta)
+      Temperature.new(@degrees - delta, @scale)
     end
     
-    def getFahrenheit(old_temp)
+    def getFahrenheit()
       if scale =~ /f/ then
-        old_temp
+        Temperature.new(@degrees, @scale)
       elsif scale =~ /c/ then
-        Temperature.new(old_temp.degrees * (9.0/5) + 32, "f")
+        Temperature.new(@degrees * (9.0/5) + 32, "f")
       else
-        Temperature.new((old_temp.degrees + 273.15) * (9.0/5) + 32, "f")
+        Temperature.new((@degrees + 273.15) * (9.0/5) + 32, "f")
       end
     end
 
-    def getCelsius(old_temp)
+    def getCelsius()
       if scale =~ /f/ then
-        Temperature.new((old_temp.degrees-32)*(5.0/9), "c")
+        Temperature.new((@degrees-32)*(5.0/9), "c")
       elsif scale =~ /c/ then
-        old_temp
+        Temperature.new(@degrees, @scale)
       else
-        Temperature.new(old_temp.degrees - 273.15, "c")
+        Temperature.new(@degrees - 273.15, "c")
       end
     end
 
-    def getKelvin(old_temp)
+    def getKelvin()
       if scale =~ /f/ then
-        Temperature.new((old_temp.degrees-32)*(5.0/9)+273.15, "k")
+        Temperature.new((@degrees-32)*(5.0/9)+273.15, "k")
       elsif scale =~ /c/ then
-        Temperature.new(old_temp.degrees + 273.15, "k")
+        Temperature.new(@degrees + 273.15, "k")
       else
-        old_temp                         
+        Temperature.new(@degrees, @scale)   
       end
     end
     
@@ -93,25 +89,23 @@ module Weather
       setup(degrees, scale)
     end    
     
-    def print
-      printOut = "#{@degrees.round(2)} #{@scale}"
-      puts printOut
-      printOut
+    def to_s
+      "#{@degrees.round(2)} #{@scale}"
     end
 
     def equals(other_object)
-      if ~(other_object.instanceof? Temperature) then
+      if !(other_object.instance_of? Temperature) then
         false
       else
-        (getKelvin(other_object).degrees == self.getKelvin(other_object).degrees)
+        (other_object.getKelvin().degrees == self.getKelvin().degrees)
       end
     end
 
     def lessthan(other_object)
-      if ~(other_object.instanceof? Temperature) then
+      if !(other_object.instance_of? Temperature) then
         false
       else
-        (self.getKelvin(other_object).degrees < getKelvin(other_object).degrees)
+        (self.getKelvin().degrees < other_object.getKelvin().degrees)
       end
     end
       
