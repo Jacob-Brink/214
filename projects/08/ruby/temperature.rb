@@ -10,12 +10,22 @@ module Weather
  
   class Temperature
 
+    # Invalid_Temperature is a custom Standard Error for invalid temperatures
+    ########################################################################
     class Invalid_Temperature < StandardError
     end
-
+    
+    # Invalid_Scale is a custom Standard Error for invalid scales
+    ########################################################################
     class Invalid_Scale < StandardError
     end
-    
+
+    # isValid() checks if given parameters are valid
+    # Input: degrees, a float; scale, a string
+    # Output: throws Invalid_Temperature if below 0 K
+    #         throws Invalid_Scale if given scale does
+    #         exist
+    ######################################################
     def isValid(degrees, scale)
       invalid_temp = "#{degrees} #{scale} is below 0 K"
       invalid_scale = "Temperature Scale #{scale} is invalid"
@@ -30,25 +40,41 @@ module Weather
       end      
     end
 
-    def setup(degrees, scale)
+    # initialize() intializes Temperature object
+    # Input: degrees, a float; scale, a string
+    # Returns: Temperature object if valid parameters
+    #         else exception
+    ######################################################
+    def initialize(degrees, scale)
       isValid(degrees, scale)
       @degrees, @scale = degrees, scale
-    end
-    
-    def initialize(degrees, scale)
-      self.setup(degrees, scale)
     end
 
     attr_reader :degrees, :scale
 
+    # raise()
+    # Input: delta, a float
+    # Returns: new Temperature with risen degrees
+    ######################################################
     def raise(delta)
       Temperature.new(@degrees + delta, @scale)
     end
 
+    # lower()
+    # Input: delta, a float
+    # Returns: new Temperature with delta degrees less
+    #          or exception if new temperature is lower
+    #          than 0 K
+    ######################################################
     def lower(delta)
       Temperature.new(@degrees - delta, @scale)
     end
-    
+
+    # getFahrenheit() returns Fahrenheit temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################
     def getFahrenheit()
       if scale =~ /f/ then
         Temperature.new(@degrees, @scale)
@@ -58,7 +84,12 @@ module Weather
         Temperature.new((@degrees + 273.15) * (9.0/5) + 32, "f")
       end
     end
-
+    
+    # getCelsius() returns Celsius temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################
     def getCelsius()
       if scale =~ /f/ then
         Temperature.new((@degrees-32)*(5.0/9), "c")
@@ -69,6 +100,11 @@ module Weather
       end
     end
 
+    # getKelvin() returns Kelvin temperature
+    # Input: none
+    # Returns: new Temperature with same temperature
+    #          in new scale
+    ######################################################    
     def getKelvin()
       if scale =~ /f/ then
         Temperature.new((@degrees-32)*(5.0/9)+273.15, "k")
@@ -78,21 +114,34 @@ module Weather
         Temperature.new(@degrees, @scale)   
       end
     end
-    
-    def read()
+
+    # read() reads in user input
+    # Input: none
+    # Returns: new Temperature according to user input
+    #          if not valid, an exception
+    ######################################################
+    def self.read()
       rawText = gets
       splitText = rawText.split
 
       degrees = splitText[0].to_f
       scale = splitText[1]
 
-      setup(degrees, scale)
+      Temperature.new(degrees, scale)
     end    
-    
+
+    # to_s() allows for pretty printing of object
+    # Input: none
+    # Returns: formatted String with degrees and scale
+    ######################################################
     def to_s
       "#{@degrees.round(2)} #{@scale}"
     end
 
+    # equals() shows equality
+    # Input: other_object
+    # Returns: true if equal, else false
+    ######################################################
     def equals(other_object)
       if !(other_object.instance_of? Temperature) then
         false
@@ -101,6 +150,10 @@ module Weather
       end
     end
 
+    # lessthan() shows inequality
+    # Input: other_object
+    # Returns: true if self is less than other
+    ######################################################
     def lessthan(other_object)
       if !(other_object.instance_of? Temperature) then
         false

@@ -9,14 +9,12 @@
 require "./temperature.rb"   
 
 def temp_tester
-   baseTemp = Weather::Temperature.new(0.0, "f");
-   limitTemp = Weather::Temperature.new(0.0, "f");
-   
+  
    puts "Enter baseTemp: "
-   baseTemp.read()
+   baseTemp = Weather::Temperature.read()
 
    puts "Enter limitTemp: "
-   limitTemp.read()
+   limitTemp = Weather::Temperature.read()
 
    puts "Enter stepValue: "
    stepValue = gets.to_f
