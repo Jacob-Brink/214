@@ -1,0 +1,143 @@
+V "GNAT Lib v7"
+A -gnata
+A -mtune=generic
+A -march=x86-64
+P ZX
+
+RN
+RV NO_ENUMERATION_MAPS
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV SPARK_05
+
+U temp_package%b	temp_package.adb	5c2521ec NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.integer_text_io%s	a-inteio.ads		a-inteio.ali
+W ada.strings%s		a-string.ads		a-string.ali
+W ada.strings.fixed%s	a-strfix.adb		a-strfix.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W interfaces%s		interfac.ads		interfac.ali
+W system%s		system.ads		system.ali
+W system.concat_3%s	s-conca3.adb		s-conca3.ali
+W system.img_enum_new%s	s-imenne.adb		s-imenne.ali
+W system.img_real%s	s-imgrea.adb		s-imgrea.ali
+W system.val_enum%s	s-valenu.adb		s-valenu.ali
+W system.val_real%s	s-valrea.adb		s-valrea.ali
+
+U temp_package%s	temp_package.ads	2f1822d9 EE NE OO PK
+W ada.tags%s		a-tags.adb		a-tags.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-charac.ads		20070912115821 2d3ec45b ada.characters%s
+D a-chlat1.ads		20140225151544 66457d31 ada.characters.latin_1%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-inteio.ads		20070406091342 f64b89a4 ada.integer_text_io%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-string.ads		20070406091342 90ac6797 ada.strings%s
+D a-strfix.ads		20101008130255 d07c346e ada.strings.fixed%s
+D a-strmap.ads		20140611123156 e8bb714a ada.strings.maps%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-tiinio.ads		20140717063513 aa04e5d6 ada.text_io.integer_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D system.ads		20170510173650 4635ec04 system%s
+D s-conca3.ads		20140225151544 0b705ca5 system.concat_3%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-imenne.ads		20140225151139 614c06c0 system.img_enum_new%s
+D s-imgrea.ads		20090409150019 c7a851e2 system.img_real%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-valenu.ads		20090409150019 bb1a4295 system.val_enum%s
+D s-valrea.ads		20150106102044 fe297711 system.val_real%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+D temp_package.ads	20200415142514 2f1822d9 temp_package%s
+D temp_package.adb	20200415144613 6d674b2b temp_package%b
+X 1 ada.ads
+16K9*Ada 20e8 35|9r6 9r19 9r40 10r6 10r19 10r40
+X 5 a-inteio.ads
+18K13*Integer_Text_IO[13|46] 35|9w23 10r23
+X 8 a-string.ads
+16K13*Strings 35e16 35|9r44 10r44
+X 9 a-strfix.ads
+18K21*Fixed 251e22 35|9w52 10r52
+25U14*Move 35|145s6 146s6
+X 12 a-textio.ads
+49K13*Text_IO 471e16 35|9w10 10r10
+242U14*Put 35|162s6
+249U14*Get_Line 35|133s6
+X 34 temp_package.ads
+10K9*Temp_Package 118E8 125l5 125e17 35|12b14 210l5 210t17
+12E9*ScaleType 12e31 41r62 121r17 35|26r29 47r62 59r17 80r17 101r17 162r57
+. 173r63 184r63
+12n23*F{12E9} 35|63r20 84r20 105r20
+12n26*C{12E9} 35|65r23 86r23 107r23
+12n29*K{12E9} 35|67r23 88r23 109r23
+14R9*Temperature 25r39 33r43 41r42 49r46 49r66 57r43 57r63 65r42 65r62 74r50
+. 82r37 90r43 98r40 106r51 114r53 118c8 122e16 35|23r39 36r43 47r42 58r46
+. 58r66 61r23 79r43 79r63 82r23 100r42 100r62 103r23 122r50 160r37 171r43
+. 182r40 193r51 204r53
+25U13*Init 25<18 25>52 25>71 35|23b13 28l7 28t11 64s9 66s9 68s9 85s9 87s9
+. 89s9 106s9 108s9 110s9 150s6 173s6 184s6
+25r18 TheTemperature{14R9} 35|23b18 25m5 26m5 27r9
+25f52 Degree{float} 35|23b52 25r30
+25a71 Scale{string} 35|23b71 26r45
+33V12*getDegree{float} 33>23 35|36b12 39l7 39t16 60s28 64s30 81s28 87s30
+. 102s28 110s30 162s22 173s27 184s27 195s13 195s50 206s13 206s50
+33r23 TheTemperature{14R9} 35|36b23 38r12
+41V12*getScale{12E9} 41>22 35|47b12 50l7 50t15 59s30 80s30 101s30 162s73
+. 173s79 184s79
+41r22 TheTemperature{14R9} 35|47b22 49r13
+49V12*getFahrenheit{14R9} 49>26 35|58b12 71l7 71t20
+49r26 TheTemperature{14R9} 35|58b26 59r39 60r38 64r40
+57V12*getCelsius{14R9} 57>23 35|79b12 92l7 92t17
+57r23 TheTemperature{14R9} 35|79b23 80r39 81r38 87r40
+65V12*getKelvin{14R9} 65>22 35|100b12 113l7 113t16 195s23 195s60 206s23 206s60
+65r22 TheTemperature{14R9} 35|100b22 101r39 102r38 110r40
+74U13*ReadTemperature 74<29 35|122b13 152l7 152t22
+74r29 TheTemperature{14R9} 35|122b29 150m11
+82U13*Put 82>17 35|27s5 160b13 163l7 163t10
+82r17 TheTemperature{14R9} 35|160b17 162r32 162r82
+90U13*increase 90<22 90>56 35|171b13 174l7 174t15
+90r22 TheTemperature{14R9} 35|171b22 173m11 173r37 173r88
+90f56 Amount{float} 35|171b56 173r55
+98U13*lower 98<19 98>53 35|182b13 185l7 185t12
+98r19 TheTemperature{14R9} 35|182b19 184m11 184r37 184r88
+98f53 Amount{float} 35|182b53 184r55
+106V12*equals{boolean} 106>19 106>33 35|193b12 196l7 196t13
+106r19 ATemperature{14R9} 35|193b19 195r33
+106r33 BTemperature{14R9} 35|193b33 195r70
+114V12*lessthan{boolean} 114>21 114>35 35|204b12 207l7 207t15
+114r21 ATemperature{14R9} 35|204b21 206r33
+114r35 BTemperature{14R9} 35|204b35 206r70
+120f9*Degree{float} 35|25m20 38r27
+121e9*Scale{12E9} 35|26m20 49r28
+X 35 temp_package.adb
+59e6 OldScale{34|12E9} 63r9 65r12 67r12
+60f6 OldDegrees{float} 66r31 68r31
+61r6 NewTemperature{34|14R9} 64m14 66m14 68m14 70r13
+80e6 OldScale{34|12E9} 84r9 86r12 88r12
+81f6 OldDegrees{float} 85r31 89r30
+82r6 NewTemperature{34|14R9} 85m14 87m14 89m14 91r13
+101e6 OldScale{34|12E9} 105r9 107r12 109r12
+102f6 OldDegrees{float} 106r31 108r30
+103r6 NewTemperature{34|14R9} 106m14 108m14 110m14 112r13
+123e6 C{character} 137m9 138r12 142r19
+124i6 SpacePosition{integer} 139m12 145r27 146r16
+125a6 Raw{string} 133m15 135r15 137r14 145r11 145r15 146r11 146r34
+127a6 FirstString{string} 145m46 148r29
+127a19 SecondString{string} 146m45 150r36
+129f6 Degrees{float} 148m6 150r27
+130i6 Last{natural} 133m20
+135i10 I{integer} 137r18 139r29
+
