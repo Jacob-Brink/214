@@ -6,11 +6,12 @@ A -march=x86-64
 P ZX
 
 RN
+RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_FLOATING_POINT
 RV NO_IO
 RV SPARK_05
 
-U temp_tester%b		temp_tester.adb		76845167 NE OO SU IL
+U temp_tester%b		temp_tester.adb		2b782bea NE OO SU IL
 W ada%s			ada.ads			ada.ali
 W ada.float_text_io%s	a-flteio.ads		a-flteio.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
@@ -40,30 +41,32 @@ D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
 D temp_package.ads	20200415145148 a8b2913e temp_package%s
-D temp_tester.adb	20200415151353 07d1722d temp_tester%b
+D temp_tester.adb	20200415153748 5a2d08a0 temp_tester%b
 X 1 ada.ads
 16K9*Ada 20e8 25|9r6 9r24 10r5 10r22
 X 3 a-flteio.ads
 20K13*Float_Text_IO[8|46] 25|9w28 10r26
 X 7 a-textio.ads
 49K13*Text_IO 471e16 25|9w10 10r9
-166U14*New_Line 25|16s56 17s58 22s90
-242U14*Put 25|16s4 17s4 18s4
+166U14*New_Line 25|20s4 26s114 32s114
+242U14*Put 25|16s4 17s4 18s4 26s40 26s78 32s40 32s78 36s7
 X 8 a-tiflio.ads
 57U14*Get 25|18s30[3|20]
 X 24 temp_package.ads
 10K9*Temp_Package 133e17 25|9w48 10r45 13r26
 14R9*Temperature 130e16 25|13r39
-57V12*getFahrenheit{14R9} 25|22s11
-65V12*getCelsius{14R9} 25|22s41
-73V12*getKelvin{14R9} 25|22s68
+57V12*getFahrenheit{14R9} 25|26s14 32s14
+65V12*getCelsius{14R9} 25|26s55 32s55
+73V12*getKelvin{14R9} 25|26s92 32s92
 82U13*ReadTemperature 25|16s29 17s30
-90U13*Put 25|22s7 22s37 22s64
-98U13*increase 25|23s7
-122V12*lessthan{boolean} 25|20s11
+90U13*Put 25|26s10 26s51 26s88 32s10 32s51 32s88
+98U13*increase 25|27s10 33s10
+114V12*equals{boolean} 25|24s47 30s47
+122V12*lessthan{boolean} 25|24s14 30s14
 X 25 temp_tester.adb
-12U11*temp_tester 12b11 26l5 26t16
-13r4 BaseTemp{24|14R9} 16m45 20r20 22r25 22r52 22r78 23m16
-13r14 LimitTemp{24|14R9} 17m46 20r30
-14f4 StepValue{float} 18m34 23r26
+12U11*temp_tester 12b11 40l5 40t16
+13r4 BaseTemp{24|14R9} 16m45 24r23 24r54 26r28 26r66 26r102 27m19 30r34 30r54
+. 32r28 32r66 32r102 33m19
+13r14 LimitTemp{24|14R9} 17m46 24r33 24r64 30r23 30r64
+14f4 StepValue{float} 18m34 23r7 27r29 29r10 33r29
 

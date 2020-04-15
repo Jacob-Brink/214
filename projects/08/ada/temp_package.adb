@@ -6,8 +6,8 @@
 -- Project: 8
 ---------------------------------------------------------
 
-with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
-use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed;
+with Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed, Ada.Float_Text_Io;
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Strings.Fixed, Ada.Float_Text_Io;
 
 package body Temp_Package is
    
@@ -55,7 +55,6 @@ package body Temp_Package is
      
      TheTemperature.Degree := Degree;
     TheTemperature.Scale := ScaleType'Value(Scale);
-    Put(TheTemperature);
   end Init;
 
   ----------------------------------------------
@@ -190,7 +189,8 @@ package body Temp_Package is
   ----------------------------------------------
   procedure Put(TheTemperature : in Temperature) is
   begin
-     Put(Float'Image(GetDegree(TheTemperature)) & " " & ScaleType'Image(GetScale(TheTemperature)));
+     Ada.Float_Text_Io.Put(Item => GetDegree(TheTemperature), Aft => 2, Exp => 0);
+     Put(" " & ScaleType'Image(GetScale(TheTemperature)));
   end Put;
 
   ----------------------------------------------

@@ -13,14 +13,28 @@ procedure temp_tester is
    BaseTemp, LimitTemp : Temp_Package.Temperature;
    StepValue : Float;
 begin
-   Put("Enter BaseTemp: "); ReadTemperature(BaseTemp); New_Line;
-   Put("Enter LimitTemp: "); ReadTemperature(LimitTemp); New_Line;
+   Put("Enter BaseTemp: "); ReadTemperature(BaseTemp);
+   Put("Enter LimitTemp: "); ReadTemperature(LimitTemp);
    Put("Enter StepValue: "); Get(StepValue);
    
-   while (lessthan(BaseTemp, LimitTemp))
-   loop
-      Put(GetFahrenheit(BaseTemp)); Put(GetCelsius(BaseTemp)); Put(GetKelvin(BaseTemp)); New_Line;
-      increase(BaseTemp, StepValue);
-   end loop;
+   New_Line;
+   
+   -- if StepValue is greater than 0 loop up else loop down
+   if StepValue > 0.0 then
+      while (lessthan(BaseTemp, LimitTemp) or Equals(BaseTemp, LimitTemp))
+      loop
+	 Put(GetFahrenheit(BaseTemp)); Put (" "); Put(GetCelsius(BaseTemp)); Put(" "); Put(GetKelvin(BaseTemp)); New_Line;
+	 increase(BaseTemp, StepValue);
+      end loop;
+   elsif StepValue < 0.0 then
+      while (lessthan(LimitTemp, BaseTemp) or Equals(BaseTemp, LimitTemp))
+      loop
+	 Put(GetFahrenheit(BaseTemp)); Put (" "); Put(GetCelsius(BaseTemp)); Put(" "); Put(GetKelvin(BaseTemp)); New_Line;
+	 increase(BaseTemp, StepValue);
+      end loop;
+   else
+      Put("StepValue cannot be 0");
+   end if;
+   
    
 end temp_tester;
