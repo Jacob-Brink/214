@@ -9,20 +9,19 @@
 with Ada.Text_IO; with Name_Package;
 use Ada.Text_IO; use Name_Package;
 
-procedure name_tester is
-   aName : Name_Package.Name;
+procedure Name_Tester is
+   AName : Name_Package.Name;
 begin
-   Init(aName, "John    ", "Paul    ", "Jones   ");
-
-   pragma Assert( getFirst(aName) = "John    ",
-                   "getFirst() failed");
-   pragma Assert( getMiddle(aName) = "Paul    ", 
-                   "getMiddle() failed");
-   pragma Assert( getLast(aName) = "Jones   ", 
-                   "getLast() failed");
-   pragma Assert( getFullName(aName) = "John     Paul     Jones   ",
-                    "getFullName() failed");
-   Put(aName); New_line;
-   Put("All tests passed!"); New_line;
-end name_tester;
-
+   Init(AName, "John    ", "Paul    ", "Jones   ");
+   
+   pragma Assert( GetFirst(AName) = "John    ",
+		  "getFirst() failed");
+   pragma Assert( GetMiddle(AName) = "Paul    ", 
+		  "getMiddle() failed");
+   pragma Assert( GetLast(AName) = "Jones   ", 
+		  "getLast() failed");
+   pragma Assert( GetFullName(AName) = "John     Paul     Jones   ",
+		  "getFullName() failed");
+   Put(AName); New_Line;
+   Put("All tests passed!"); New_Line;
+end Name_Tester;
