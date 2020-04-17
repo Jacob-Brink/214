@@ -1,8 +1,10 @@
 # max.rb tests a Ruby linked list.
 #
 # Begun by: Dr. Adams for CS 214 at Calvin College.
-# Completed by: 
-# Date: 
+# Completed by: Jacob Brink
+# Date: 4/17/2020
+# Lab: 09
+###################################################
 
 require './List'
 
@@ -16,13 +18,13 @@ list3.append(55).append(77).append(99).append(88).append(66)
 
 list1.print 
 puts
-#puts "Maximum of list1: #{list1.max}"
+ puts "Maximum of list1: #{list1.max}"
 
 list2.print 
 puts
-#puts "Maximum of list2: #{list2.max}"
+puts "Maximum of list2: #{list2.max}"
 
 list3.print 
 puts
-#puts "Maximum of list3: #{list3.max}"
+puts "Maximum of list3: #{list3.max}"
 
