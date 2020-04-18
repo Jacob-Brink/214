@@ -1,0 +1,670 @@
+Script started on 2020-04-18 11:09:17-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ gnatmake search.adb[5Pcat[C[C[C[C[C[C[C[C[C[C[Clist_package.adbs
+-- list_package.ads declares an Ada linked list and its operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/22/2020
+-- Project: 09
+------------------------------------------------------------------
+
+package List_Package is
+
+   -- the list-type itself (public)
+   type List is private;
+
+   -----------------------------------------------------
+   -- Initialize a list                                -
+   -- Receive: aList, a List.                          -
+   -- Pre: aList is uninitialized.                     -
+   -- Post: aList%itsFirst == aList%itsLast == NULL && -
+   --        aList%itsLength == 0.                     -
+   -----------------------------------------------------
+   procedure Init(A_List: out List);
+
+
+   ------------------------------------------------
+   -- Is a list empty?                            -
+   -- Receive: aList, a List.                     -
+   -- Return: true, iff aList contains no values. -
+   ------------------------------------------------
+   function Empty(A_List: in List) return Boolean;
+
+   -------------------------------------
+   -- How many values are in a list?   -
+   -- Receive: aList, a List.          -
+   -- Return: aList%itsLength.         -
+   -------------------------------------
+   function Length(A_List : in List) return Integer;
+
+
+   ----------------------------------------
+   -- Append a value to a list.           -
+   -- Receive: aValue, an integer,        -
+   -- Passback: aList, containing aValue. -
+   ----------------------------------------
+   procedure Append(A_Value : in Integer; A_List: in out List);
+
+
+   -------------------------------------
+   -- Display the values in a list.    -
+   -- Receive: aList, a List.          -
+   -- Output: the values in aList.     -
+   -------------------------------------
+   procedure Put(A_List : in List);
+
+   ---------------------------------------
+   -- Find the maximum value in a list.  -
+   -- Receive: aList, a List.            -
+   -- Return: the maximum value in aList.-
+   ---------------------------------------
+   function Max(A_List : in List) return Integer;
+   
+   ---------------------------------------
+   -- Find the position of a value in a list.  -
+   -- Receive: aList, a List, Item, an integer  -
+   -- Return: the position if exists, else -1
+   ---------------------------------------
+   function Search(A_List : in List; Item : in Integer) return Integer;
+
+private
+   
+   type List_Node;
+   
+   type Node_Ptr is access List_Node;
+   
+   type List_Node is
+      record
+	 Its_Value : Integer;
+	 Its_Next : Node_Ptr;
+      end record;
+   
+   type List is
+      record
+	 Its_First : Node_Ptr;
+	 Its_Last : Node_Ptr;
+	 Its_Length : Integer;
+      end record;
+   
+
+end List_Package;
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ cat list_package.ads[1Pgnatmake search.adbcat list_package.ads[Kb
+-- list_package.adb defines Ada linked list operations.
+--
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/22/2020
+-- Project: 09
+-------------------------------------------------------
+
+with Ada.Text_IO, Ada.Integer_Text_IO;
+use Ada.Text_IO, Ada.Integer_Text_IO;
+
+package body List_Package is
+
+   -----------------------------------------------------
+   -- Initialize a list                                -
+   -- Receive: aList, a List.                          -
+   -- Pre: aList is uninitialized.                     -
+   -- Post: aList%itsFirst == aList%itsLast == NULL && -
+   --        aList%itsLength == 0.                     -
+   -----------------------------------------------------
+   procedure Init(A_List : out List) is
+   begin
+      A_List.Its_First := null;
+      A_List.Its_Last := null;
+      A_List.Its_Length := 0;
+   end Init;
+
+   ------------------------------------------------
+   -- Is a list empty?                            -
+   -- Receive: aList, a List.                     -
+   -- Return: true, iff aList contains no values. -
+   ------------------------------------------------
+   function Empty(A_List : in List) return Boolean is
+   begin
+      return A_List.Its_Length = 0;
+   end Empty;
+
+   -------------------------------------
+   -- How many values are in a list?   -
+   -- Receive: aList, a List.          -
+   -- Return: aList%itsLength.         -
+   -------------------------------------
+   function Length(A_List : in List) return Integer is
+   begin
+      return A_List.Its_Length;
+   end Length;
+
+   ----------------------------------------
+   -- Append a value to a list.           -
+   -- Receive: aValue, an integer,        -
+   -- Passback: aList, containing aValue. -
+   ----------------------------------------
+   procedure Append(A_Value : in Integer; A_List : in out List) is
+      Temp_Ptr : constant Node_Ptr := new List_Node;
+   begin
+      Temp_Ptr.Its_Value := A_Value;
+      Temp_Ptr.Its_Next := null;
+
+      if A_List.Its_Length = 0 then
+	 A_List.Its_First := Temp_Ptr;
+      else
+	 A_List.Its_Last.Its_Next := Temp_Ptr;
+      end if;
+
+      A_List.Its_Last := Temp_Ptr;
+
+      A_List.Its_Length := A_List.Its_Length + 1;
+   end Append;
+
+   -------------------------------------
+   -- Display the values in a list.    -
+   -- Receive: aList, a List.          -
+   -- Output: the values in aList.     -
+   -------------------------------------
+
+   procedure Put(A_List : in List) is
+      Temp_Ptr : Node_Ptr := A_List.Its_First;   
+   begin
+      while Temp_Ptr /= null loop
+	 Put(' '); Put(Temp_Ptr.Its_Value);
+        Temp_Ptr := Temp_Ptr.Its_Next;
+      end loop;
+   end Put;
+
+   ---------------------------------------
+   -- Find the maximum value in a list.  -
+   -- Receive: aList, a List.            -
+   -- Return: the maximum value in aList.-
+   ---------------------------------------
+
+   function Max(A_List : in List) return Integer is
+      Temp_Ptr : Node_Ptr := A_List.Its_First;
+      Max_Value : Integer := -999999;
+   begin
+      while Temp_Ptr /= null loop
+	 if Temp_Ptr.Its_Value > Max_Value then
+	    Max_Value := Temp_Ptr.Its_Value;
+	 end if;
+	 Temp_Ptr := Temp_Ptr.Its_Next;
+      end loop;
+      return Max_Value;      
+   end Max;
+   
+      ---------------------------------------
+   -- Find the position of a value in a list.  -
+   -- Receive: aList, a List, Item, an integer  -
+   -- Return: the position if exists, else -1
+   ---------------------------------------
+   function Search(A_List : in List; Item : in Integer) return Integer is
+      Count : Integer := 0;
+      Temp_Ptr : Node_Ptr := A_List.Its_First;
+   begin
+      while Temp_Ptr /= null loop
+	 if Temp_Ptr.Its_Value = Item then
+	    return Count;
+	 end if;
+	 Count := Count + 1;
+	 Temp_Ptr := Temp_Ptr.Its_Next;
+      end loop;
+      return -1;
+   end Search;
+   
+
+   
+end List_Package;
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ cat list_package.adbs[1Pgnatmake search.adb[5Pcat[C[C[C[C[C[C[C[C[C[C[C
+-- max.adb finds the max of a list of integers. 
+-- 
+-- Begun by: Dr. Adams, CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/22/2020
+-- Project: 09
+-------------------------------------------------
+
+
+with Ada.Text_IO, Ada.Integer_Text_IO, List_Package; 
+use Ada.Text_IO, Ada.Integer_Text_IO, List_Package; 
+
+procedure Search is 
+   -- define 3 lists 
+   List1, List2, List3, List4 : List; 
+   
+begin 
+   Init(List1);                -- initialize them 
+   Init(List2); 
+   Init(List3); 
+   
+   Append(99, List1);          -- 99, 88, 77, 66, 55 
+   Append(88, List1);          -- max is first 
+   Append(77, List1); 
+   Append(66, List1); 
+   Append(55, List1); 
+   
+   Append(55, List2);          -- 55, 66, 77, 88, 99 
+   Append(66, List2);          -- max is last 
+   Append(77, List2); 
+   Append(88, List2); 
+   Append(99, List2); 
+   
+   Append(55, List3);          -- 55, 77, 99, 88, 66 
+   Append(77, List3);          -- max is in the middle 
+   Append(99, List3); 
+   Append(88, List3); 
+   Append(66, List3); 
+   
+   Append(55, List4);          -- 55, 77, 99, 88, 66 
+   Append(77, List4);          -- max is in the middle 
+   Append(0, List4); 
+   Append(88, List4); 
+   Append(66, List4); 
+   
+   
+   Put(List1); New_Line;       -- output the 3 lists 
+   Put(List2); New_Line; 
+   Put(list3); New_Line; 
+   Put(List4); New_Line;
+   -- display their maxima 
+   Put("The position of 99 in list 1 is ");  
+   Put( Search(List1, 99) ); 
+   New_Line; 
+   Put("The position of 99 in list 2 is ");  
+   Put( Search(List2, 99) ); 
+   New_Line; 
+   Put("The position of 99 in list 3 is ");  
+   Put( Search(List3, 99) ); 
+   New_Line; 
+   Put("The position of 99 in list 4 is ");  
+   Put( Search(List4, 99) ); 
+   New_Line;    
+   
+end Search; 
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ cat search.adblist_package.adbs[1Pgnatmake search.adb
+gnatmake: "search" up to date.
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ ./search
+          99          88          77          66          55
+          55          66          77          88          99
+          55          77          99          88          66
+          55          77           0          88          66
+The position of 99 in list 1 is           0
+The position of 99 in list 2 is           4
+The position of 99 in list 3 is           2
+The position of 99 in list 4 is          -1
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ada[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ada[00m$ exit
+
+Script done on 2020-04-18 11:09:39-0500
+Script started on 2020-04-18 11:23:33-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/clojure[00m$ cat src/listOps.clj
+;; listOps.clj is a Clojure "module" for list operations.
+;;
+;; Begun by: Prof. Adams, CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 4/22/2020
+;; Project: 09
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; maxOf2() finds the maximum of two values.  
+;; Receive: val1, val2, two values.  
+;; PRE: val1 and val2 can be compared using >.
+;; Return: the maximum of val1 and val2. 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn maxOf2 [val1 val2]
+  (println val1 " " val2)
+  (if (> val1 val2)      ; if val1 > val2
+    val1                 ;   return val1
+    val2                 ; else return val2
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; listMax() finds the maximum value in a list.
+;; Receive: aList, a list of values.    
+;; PRE: aList is a list 
+;;      values in aList can be compared using >.
+;; Return: the maximum value in aList.         
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn listMax [aList]
+  (if (and (list? aList) (not (empty? aList)))   
+    (let [firstVal (first aList)]
+      (if (= (count aList) 1)
+        firstVal
+        (maxOf2 firstVal (listMax (rest aList)))
+        )
+      )
+    nil
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; searchList() finds the position of item in list
+;; Receive: aList, a list of values; item to search, an integer    
+;; PRE: aList is a list 
+;;      values in aList can be compared using >.
+;; Return: position of item in list
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn searchList [aList, item, position]
+  (if (list? aList)
+    (if (empty? aList)
+      -1
+      (if (= (first aList) item)
+        position
+        (searchList (rest aList) item (+ position 1))
+        )
+      )
+    nil
+    )
+  )
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/clojure[00m$ cat src/search.clj
+;; search.clj tests a function to search a list for its maximum value.
+;;
+;; Output: three lists, and 
+;;          the results of calling a maxList() function on them.
+;;
+;; Usage: clojure -m max
+;;
+;; Begun by: Dr. Adams, CS 214 at Calvin College.
+;; Completed by: Jacob Brink
+;; Date: 4/22/2020
+;; Project: 09
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns search)
+
+(load "listOps")                      ; load module
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Function -main tests function listMax(). 
+;; Output: the results of testing listMax() on various lists.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main []
+  (let
+      [ 
+       list1 '(99 88 77 66 55)        ; max is first value
+       list2 (list 55 66 77 88 99)    ; max is last value
+       list3 (list 55 77 99 88 66)    ; max is middle value
+       list4 '(88 77 66 55 44)
+       emptyList '()                  ; list is empty
+       ]
+
+    (println)
+    (println "list1: " list1)        ; print list1,
+    (println "list2: " list2)        ;   list2,
+    (println "list3: " list3)
+    (println "list4: " list4)                                    ;  list3,
+    (println "empty: " emptyList)    ;   list3,
+    (println)                        ;   and their maxima
+    (println "The position of 99 in list1 is: " (searchList list1 99 0))
+    (println "The position of 99 in list2 is: " (searchList list2 99 0))
+    (println "The position of 99 in list3 is: " (searchList list3 99 0))
+    (println "The position of 99 in list4 is: " (searchList list4 99 0))
+    
+    (println)
+    (println "The max of an empty list is: " (listMax emptyList))
+    (println)
+    )
+  )
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/clojure[00m$ clojure -m search
+
+list1:  (99 88 77 66 55)
+list2:  (55 66 77 88 99)
+list3:  (55 77 99 88 66)
+list4:  (88 77 66 55 44)
+empty:  ()
+
+The position of 99 in list1 is:  0
+The position of 99 in list2 is:  4
+The position of 99 in list3 is:  2
+The position of 99 in list4 is:  -1
+
+The max of an empty list is:  nil
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/clojure[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/clojure[00m$ exit
+
+Script done on 2020-04-18 11:24:12-0500
+Script started on 2020-04-18 10:54:40-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/java[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/java[00m$ cat Search.java
+/* Search.java finds the position of values in Java linked lists.
+ *
+ * Begun by: Dr. Adams, CS 214 at Calvin College.
+ * Completed by: Jacob Brink
+ * Date: 4/17/2020
+ * Project: 09
+ */
+
+import java.util.LinkedList;
+import java.util.Iterator;
+import java.util.Collections;
+
+public class Search {
+
+    public static void main(String [] args) {
+	LinkedList<Integer> list1, list2, list3, list4;
+	list1 = new LinkedList<Integer>();
+	list2 = new LinkedList<Integer>();
+	list3 = new LinkedList<Integer>();
+	list4 = new LinkedList<Integer>();
+	
+	list1.add(99);    // 99, 88, 77, 66, 55
+	list1.add(88);    // max is first
+	list1.add(77);
+	list1.add(66);  
+	list1.add(55);
+
+	list2.add(55);    // 55, 66, 77, 88, 99
+	list2.add(66);    // max is last
+	list2.add(77);  
+	list2.add(88);  
+	list2.add(99);  
+  
+	list3.add(55);    // 55, 77, 99, 88, 66
+	list3.add(77);    // max is in the middle
+	list3.add(99);  
+	list3.add(88);  
+	list3.add(66);  
+
+	list4.add(55);    // 55, 77, 99, 88, 66
+	list4.add(77);    // max is in the middle
+	list4.add(100);  
+	list4.add(88);  
+	list4.add(66);
+
+	System.out.println(String.format("Position of 99 (0) in List1: %s", searchList(list1, 99)));
+	System.out.println(String.format("Position of 99 (4)in List2: %s", searchList(list2, 99)));
+	System.out.println(String.format("Position of 99 (2) in List3: %s", searchList(list3, 99)));
+	System.out.println(String.format("Position of 99 (-1) in List4: %s", searchList(list4, 99)));
+    }
+
+    /** searchList()
+     *
+     * @param: list, a LinkedList<Integer>; item, an integer
+     * returns: position of integer if in list, else -1
+     */
+    public static int searchList(LinkedList<Integer> list, int item) {
+	Iterator<Integer> listIterator = list.iterator();
+	int position = -1;
+	int count = 0;
+	while (listIterator.hasNext()) {
+	    if (listIterator.next() == item) {
+		position = count;
+		break;
+	    }
+	    count++;
+	}
+	return position;
+    }
+
+}
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/java[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/java[00m$ javac Search.java
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/java[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/java[00m$ java Search
+Position of 99 (0) in List1: 0
+Position of 99 (4)in List2: 4
+Position of 99 (2) in List3: 2
+Position of 99 (-1) in List4: -1
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/java[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/java[00m$ exit
+
+Script done on 2020-04-18 10:54:58-0500
+Script started on 2020-04-18 11:30:00-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ruby[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ruby[00m$ cat search.rb
+# search.rb tests a Ruby linked list.
+#
+# Begun by: Dr. Adams for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 4/22/2020
+# Project: 09
+###################################################
+
+require './List'
+
+list1 = List.new
+list2 = List.new
+list3 = List.new
+list4 = List.new
+
+list1.append(99).append(88).append(77).append(66).append(55)
+list2.append(55).append(66).append(77).append(88).append(99)
+list3.append(55).append(77).append(99).append(88).append(66)
+list4.append(55).append(77).append(0).append(88).append(66)
+
+list1.print 
+puts
+ puts "Position of 99 of list1: #{list1.search(99)}"
+
+list2.print 
+puts
+puts "Position of 99 of list2: #{list2.search(99)}"
+
+list3.print 
+puts
+puts "Position of 99 of list3: #{list3.search(99)}"
+
+list4.print 
+puts
+puts "Position of 99 of list4: #{list4.search(99)}"
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ruby[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ruby[00m$ cat List.rb
+# List.rb implements a linked list structure in Ruby.
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 4/22/2020
+# Project: 09
+#######################################################
+
+require 'test/unit/assertions'
+include Test::Unit::Assertions
+
+class List
+
+  # initialize a List to be empty
+  # Postcondition: first == nil and last == nil and length == 0
+  def initialize
+    @first = nil
+    @last = nil
+    @length = 0
+  end
+
+  
+  # create reader method for length
+  attr_reader :length
+
+
+  # Am I empty?
+  # Return: length == 0
+  def empty?
+    @length == 0
+  end
+  
+  # append a value to me
+  # Receive: value, the item to be appended
+  # Postcondition: my last item is value and
+  #                 my length is one more than it was
+  def append(value)
+    newNode = Node.new(value, nil)
+
+    if empty?
+      @first = newNode
+    else
+      @last.next = newNode      
+    end
+
+    @last = newNode
+    @length += 1
+    self
+  end
+
+
+  # print my items
+  # Postcondition: my items have been displayed to the screen
+
+  def print
+    temp = @first
+    while !temp.nil?
+      printf " #{temp.value}"
+      temp = temp.next
+    end
+  end
+
+
+  # find my maximum item
+  # Return: my maximum item
+  def max
+    temp = @first
+    maxValue = -99999
+    while !temp.nil?
+      if temp.value > maxValue then
+        maxValue = temp.value
+      end
+      temp = temp.next
+    end
+    maxValue
+  end
+
+  # search for integer in list
+  # returns position if exists, else -1
+  def search(item)
+    temp = @first
+    count = 0
+    while !temp.nil?
+      if temp.value == item then
+        return count
+      end
+      count += 1
+      temp = temp.next
+    end
+    -1
+  end
+  
+  
+  # Node class
+  class Node
+    def initialize(item, link)
+      @value = item
+      @next = link
+    end
+
+    attr_reader :value
+    attr_accessor :next
+  end
+  
+end
+
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ruby[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ruby[00m$ ruby search.rb
+ 99 88 77 66 55
+Position of 99 of list1: 0
+ 55 66 77 88 99
+Position of 99 of list2: 4
+ 55 77 99 88 66
+Position of 99 of list3: 2
+ 55 77 0 88 66
+Position of 99 of list4: -1
+]0;jacob@DESKTOP-QKT72KA: ~/214/projects/09/ruby[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/projects/09/ruby[00m$ exit
+
+Script done on 2020-04-18 11:30:26-0500
