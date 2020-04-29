@@ -3,7 +3,8 @@
 #
 # Begun by: Dr. Adams, for CS 214 at Calvin College.
 # Completed by: Jacob Brink
-# Date: 4/24/2020
+# Date: 4/29/2020
+# Project: 10
 ####################################################
 
 class Bird
@@ -21,9 +22,13 @@ class Bird
   def className
     self.class.to_s
   end
+
+  def movement
+    "error"
+  end
   
   def print()
-    puts @name + ", a " + className + ", says \"" + call + "\""
+    puts @name + ", a " + className + " " + movement + " past, said, \"" + call + "\""
   end
 
   

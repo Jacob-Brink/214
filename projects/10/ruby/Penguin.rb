@@ -1,5 +1,5 @@
-# Duck.rb | Defines the Duck class which inherits attributes and methods
-#   from the FlyingBird superclass.
+# Penguin.rb | Defines the Penguin class which inherits attributes and methods
+#   from the WalkingBird superclass.
 #
 # Begun by: Dr. Adams, for CS 214 at Calvin College.
 # Completed by: Jacob Brink
@@ -7,10 +7,10 @@
 # Project: 10
 ####################################################
 
-require './FlyingBird.rb'
+require './WalkingBird.rb'
 
-class Duck < FlyingBird
+class Penguin < WalkingBird
   def call
-    'Quack!'
+    'Whoo-hoo'
   end
 end

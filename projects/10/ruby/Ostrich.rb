@@ -1,4 +1,4 @@
-# Duck.rb | Defines the Duck class which inherits attributes and methods
+# Ostrich.rb | Defines the Ostrich class which inherits attributes and methods
 #   from the FlyingBird superclass.
 #
 # Begun by: Dr. Adams, for CS 214 at Calvin College.
@@ -7,10 +7,10 @@
 # Project: 10
 ####################################################
 
-require './FlyingBird.rb'
+require './WalkingBird.rb'
 
-class Duck < FlyingBird
+class Ostrich < WalkingBird
   def call
-    'Quack!'
+    '*Ostrich Noises*'
   end
 end

@@ -1,0 +1,15 @@
+# Kiwi.rb | Defines the Kiwi class which inherits attributes and methods
+#   from the WalkingBird superclass.
+#
+# Begun by: Dr. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 4/24/2020
+####################################################
+
+require './WalkingBird.rb'
+
+class Kiwi < WalkingBird
+  def call
+    'Whoo-hoo'
+  end
+end

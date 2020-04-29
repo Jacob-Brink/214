@@ -1,14 +1,15 @@
 # Owl.rb | Defines the Owl class which inherits attributes and methods
-#   from the Bird superclass.
+#   from the FlyingBird superclass.
 #
 # Begun by: Dr. Adams, for CS 214 at Calvin College.
 # Completed by: Jacob Brink
-# Date: 4/24/2020
+# Date: 4/29/2020
+# Project: 10
 ####################################################
 
-require './Bird.rb'
+require './FlyingBird.rb'
 
-class Owl < Bird
+class Owl < FlyingBird
   def call
     'Whoo-hoo'
   end
