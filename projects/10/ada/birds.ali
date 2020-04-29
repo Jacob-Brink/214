@@ -1,0 +1,76 @@
+V "GNAT Lib v7"
+M P W=b
+A -mtune=generic
+A -march=x86-64
+P SS ZX
+
+RN
+RV NO_IO
+RV NO_DEFAULT_INITIALIZATION
+RV SPARK_05
+
+U birds%b		birds.adb		3506b2f7 NE OO SU
+W ada%s			ada.ads			ada.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W bird_package%s	bird_package.adb	bird_package.ali
+W duck_package%s	duck_package.adb	duck_package.ali
+W goose_package%s	goose_package.adb	goose_package.ali
+W owl_package%s		owl_package.adb		owl_package.ali
+
+D ada.ads		20170106103348 76789da1 ada%s
+D a-except.ads		20151016123252 291912d5 ada.exceptions%s
+D a-ioexce.ads		20140225151544 e4a01f64 ada.io_exceptions%s
+D a-stream.ads		20141120112812 119b8fb3 ada.streams%s
+D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
+D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
+D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
+D a-uncdea.ads		20070406091342 f15a5ed1 ada.unchecked_deallocation%s
+D bird_package.ads	20200418175258 c278ef0e bird_package%s
+D birds.adb		20200418175225 915736cf birds%b
+D duck_package.ads	20200418175320 947436f6 duck_package%s
+D goose_package.ads	20200418175337 f7afc371 goose_package%s
+D interfac.ads		20160502101001 5ab55268 interfaces%s
+D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
+D owl_package.ads	20200418175355 3d9f6b65 owl_package%s
+D system.ads		20170510173650 4635ec04 system%s
+D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
+D s-exctab.ads		20140225151139 54135002 system.exception_table%s
+D s-ficobl.ads		20140718105747 078245e4 system.file_control_block%s
+D s-parame.ads		20140801093848 7e2a0d7f system.parameters%s
+D s-secsta.ads		20170112134946 9751b57e system.secondary_stack%s
+D s-soflin.ads		20151020124036 14e1eb6c system.soft_links%s
+D s-stache.ads		20140225151139 a37c21ec system.stack_checking%s
+D s-stalib.ads		20151112104907 09bd3940 system.standard_library%s
+D s-stoele.ads		20140225151139 2dc34a04 system.storage_elements%s
+D s-string.ads		20140225151139 8fe54fb7 system.strings%s
+D s-ststop.ads		20140225151139 e6693757 system.strings.stream_ops%s
+D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
+D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
+D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+X 1 ada.ads
+16K9*Ada 20e8 10|13r3 18r1
+X 6 a-textio.ads
+49K13*Text_IO 471e16 10|13w7 18r5
+166U14*New_Line 10|29s38 31s16 34s16 37s16 40s16 42s4
+242U14*Put 10|29s4
+X 9 bird_package.ads
+10K9*Bird_Package 51e17 10|9w6 14r5
+12R6*Bird_Type 49e21 10|23r12
+19U11*Init 10|30s4 33s4 36s4 39s4
+43U11*Put 10|31s4 34s4 37s4 40s4
+X 10 birds.adb
+21U11*Birds 21b11 43l5 43t10
+23r4 Bird1{9|12R6} 30m9 31r8
+24r4 Bird2{11|14R9} 33m9 34r8
+25r4 Bird3{12|14R7} 36m9 37r8
+26r4 Bird4{15|13R9} 39m9 40r8
+X 11 duck_package.ads
+12K9*Duck_Package 10|10w3 15r3 11|34e17
+14R9*Duck_Type<9|12R6> 10|24r12 11|33e17
+X 12 goose_package.ads
+12K9*Goose_Package 10|11w3 16r3 12|38e18
+14R7*Goose_Type<9|12R6> 10|25r12 12|36e21
+X 15 owl_package.ads
+11K9*Owl_Package 10|12w3 17r3 15|36e16
+13R9*Owl_Type<9|12R6> 10|26r12 15|33e17
+
