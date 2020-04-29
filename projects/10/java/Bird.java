@@ -2,8 +2,8 @@
  *
  * Begun by: Prof. Adams, for CS 214 at Calvin College.
  * Completed by: Jacob Brink
- * Date: 4/24/2020
- * Lab: 10
+ * Date: 4/29/2020
+ * Project: 10
  ******************************************************/
 
 import java.io.*;

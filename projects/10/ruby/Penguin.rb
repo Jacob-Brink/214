@@ -11,6 +11,6 @@ require './WalkingBird.rb'
 
 class Penguin < WalkingBird
   def call
-    'Whoo-hoo'
+    '*Penguin Noises*'
   end
 end

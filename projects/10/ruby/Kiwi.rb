@@ -11,6 +11,6 @@ require './WalkingBird.rb'
 
 class Kiwi < WalkingBird
   def call
-    'Whoo-hoo'
+    '*Kiwi Noises*'
   end
 end

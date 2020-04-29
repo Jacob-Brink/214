@@ -1,10 +1,10 @@
 /* Birds.java illustrates inheritance and polymorphism.
  *
- * Begun by: Joel Adams, for CS 214 Lab 10 at Calvin College.
+ * Begun by: Prof. Adams, for CS 214 at Calvin College.
  * Completed by: Jacob Brink
- * Date: 4/24/2020
- * Lab: 10
- *********************************************************/
+ * Date: 4/29/2020
+ * Project: 10
+ ******************************************************/
 
 public class Birds {
   
