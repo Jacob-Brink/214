@@ -3,8 +3,8 @@
 --
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
 -- Completed by: Jacob Brink
--- Date: 4/24/2020
--- Lab: 10
+-- Date: 4/29/2020
+-- Project: 10
 -----------------------------------------------------
 
 with Ada.Text_IO;

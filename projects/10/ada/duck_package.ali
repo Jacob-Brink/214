@@ -1,6 +1,4 @@
 V "GNAT Lib v7"
-A -mtune=generic
-A -march=x86-64
 P SS ZX
 
 RN
@@ -12,16 +10,16 @@ RV NO_STANDARD_STORAGE_POOLS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U duck_package%b	duck_package.adb	c5709b38 NE OO PK
+U duck_package%b	duck_package.adb	f64f10ad NE OO PK
 W ada%s			ada.ads			ada.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 
-U duck_package%s	duck_package.ads	560cd9f8 EE OO PF PK
+U duck_package%s	duck_package.ads	2ca12e34 EE OO PF PK
 W ada.exceptions%s	a-except.adb		a-except.ali
 W ada.streams%s		a-stream.adb		a-stream.ali
 W ada.tags%s		a-tags.adb		a-tags.ali
-W bird_package%s	bird_package.adb	bird_package.ali
+W flying_bird_package%s	flying_bird_package.adb	flying_bird_package.ali
 W system%s		system.ads		system.ali
 W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 W system.storage_elements%s  s-stoele.adb	s-stoele.ali
@@ -34,9 +32,10 @@ D a-tags.ads		20151016130316 01f5e3ef ada.tags%s
 D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
 D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
 D a-uncdea.ads		20070406091342 f15a5ed1 ada.unchecked_deallocation%s
-D bird_package.ads	20200418175258 c278ef0e bird_package%s
-D duck_package.ads	20200418175320 947436f6 duck_package%s
-D duck_package.adb	20200418175312 6969581a duck_package%b
+D bird_package.ads	20200429191013 b167fb80 bird_package%s
+D duck_package.ads	20200429173120 a74bbd63 duck_package%s
+D duck_package.adb	20200429173415 6969581a duck_package%b
+D flying_bird_package.ads  20200429185505 8bea9357 flying_bird_package%s
 D interfac.ads		20160502101001 5ab55268 interfaces%s
 D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
 D system.ads		20170510173650 4635ec04 system%s
@@ -60,16 +59,18 @@ X 1 ada.ads
 X 6 a-textio.ads
 49K13*Text_IO 471e16 11|10w10 11r9
 X 9 bird_package.ads
-10K9*Bird_Package 51e17 10|10w6 10r24
-12R6*Bird_Type 49e21 10|14r26 30r26
 19U11*Init
 25V11*Name{string}
 X 10 duck_package.ads
 12K9*Duck_Package 30E9 34l5 34e17 11|13b14 35l5 35t17
-14R9*Duck_Type<9|12R6> 9|19p11 25p11 10|20P14 20r31 27P14 27r36 30c9 33e17
-. 11|20r30 30r35
+14R9*Duck_Type<12|13R9> 9|19p11 25p11 10|20P14 20r31 27P14 27r36 30c9 33e17
+. 11|20r30 30r35 12|15P13
 20V14*Call{string}<9|31p11> 20>19 11|20b13 23l8 23t12
 20r19 A_Duck{14R9} 11|20b18
 27V14*Type_Name{string}<9|37p11> 27>24 11|30b13 33l8 33t17
 27r24 A_Duck{14R9} 11|30b23
+X 12 flying_bird_package.ads
+11K9*Flying_Bird_Package 10|10w6 10r31 12|23e24
+13R9*Flying_Bird_Type<9|12R6> 10|14r26 30r26 12|21e17
+15V13*Movement{string}<9|50p10>
 

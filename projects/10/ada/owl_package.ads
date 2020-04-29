@@ -1,19 +1,19 @@
 -- owl_package.ads gives Owl-related declarations,
---  and derives Owl from Bird.
+--  and derives Owl from Flying_Bird.
 --
 -- Completed by: Jacob Brink
--- Date: 4/24/2020
--- Lab: 10
+-- Date: 4/29/2020
+-- Project: 10
 -----------------------------------------------------
 
-with Bird_Package; use Bird_Package;
+with Flying_Bird_Package; use Flying_Bird_Package;
 
 package Owl_Package is
    
-   type Owl_Type is new Bird_Type with private;
+   type Owl_Type is new Flying_Bird_Type with private;
 
    ----------------------------------------------------
-   -- A Owl's Call (Over-rides Bird.Call())           -
+   -- A Owl's Call (Over-rides Flying_Bird.Call())           -
    -- Receive: An_Owl, an Owl_Type.                   -
    -- Return: "Whoo!"                                 -
    ----------------------------------------------------
@@ -21,13 +21,13 @@ package Owl_Package is
 
    -----------------------------------------------------
    -- Determine type of a Owl                          -
-   -- (Over-rides Bird.Type_Name())                    -
+   -- (Over-rides Flying_Bird.Type_Name())                    -
    -- Receive: An_Owl, an Owl_Type.                    -
    -- Return: "Owl".                                   -
    -----------------------------------------------------
    function Type_Name(An_Owl : in Owl_Type) return String;
 private
-   type Owl_Type is new Bird_Type with
+   type Owl_Type is new Flying_Bird_Type with
       record
 	 null;
       end record;

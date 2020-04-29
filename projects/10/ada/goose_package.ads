@@ -3,15 +3,15 @@
 --  and derives Goose from Bird.
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
 -- Completed by: Jacob Brink
--- Date: 4/24/2020
--- Lab: 10
+-- Date: 4/29/2020
+-- Project: 10
 -----------------------------------------------------
 
-with Bird_Package; use Bird_Package;
+with Flying_Bird_Package; use Flying_Bird_Package;
 
 package Goose_Package is
 
- type Goose_Type is new Bird_Type with private;
+ type Goose_Type is new Flying_Bird_Type with private;
 
 
  ----------------------------------------------------
@@ -30,7 +30,7 @@ function  Call(A_Goose : in Goose_Type) return String;
 function  Type_Name(A_Goose : in Goose_Type) return String;
 
 private
-type Goose_Type is new Bird_Type with
+type Goose_Type is new Flying_Bird_Type with
           record
             null;
           end record;

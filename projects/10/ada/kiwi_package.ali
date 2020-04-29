@@ -10,19 +10,19 @@ RV NO_STANDARD_STORAGE_POOLS
 RV NO_ELABORATION_CODE
 RV SPARK_05
 
-U owl_package%b		owl_package.adb		62300eef NE OO PK
+U kiwi_package%b	kiwi_package.adb	b01ee460 NE OO PK
 W ada%s			ada.ads			ada.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 
-U owl_package%s		owl_package.ads		4c152691 EE OO PF PK
+U kiwi_package%s	kiwi_package.ads	60e72438 EE OO PF PK
 W ada.exceptions%s	a-except.adb		a-except.ali
 W ada.streams%s		a-stream.adb		a-stream.ali
 W ada.tags%s		a-tags.adb		a-tags.ali
-W flying_bird_package%s	flying_bird_package.adb	flying_bird_package.ali
 W system%s		system.ads		system.ali
 W system.secondary_stack%s  s-secsta.adb	s-secsta.ali
 W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W walking_bird_package%s  walking_bird_package.adb  walking_bird_package.ali
 
 D ada.ads		20170106103348 76789da1 ada%s
 D a-except.ads		20151016123252 291912d5 ada.exceptions%s
@@ -33,11 +33,10 @@ D a-textio.ads		20140717063745 386df5d4 ada.text_io%s
 D a-unccon.ads		20170106103348 31484697 ada.unchecked_conversion%s
 D a-uncdea.ads		20070406091342 f15a5ed1 ada.unchecked_deallocation%s
 D bird_package.ads	20200429191013 b167fb80 bird_package%s
-D flying_bird_package.ads  20200429185505 8bea9357 flying_bird_package%s
 D interfac.ads		20160502101001 5ab55268 interfaces%s
 D i-cstrea.ads		20140801100435 e53d8b8e interfaces.c_streams%s
-D owl_package.ads	20200429173219 c7ffb5c6 owl_package%s
-D owl_package.adb	20200429173252 9da24efd owl_package%b
+D kiwi_package.ads	20200429190707 518082de kiwi_package%s
+D kiwi_package.adb	20200429190744 d9f3936a kiwi_package%b
 D system.ads		20170510173650 4635ec04 system%s
 D s-crtl.ads		20141120112812 0ebbdb71 system.crtl%s
 D s-exctab.ads		20140225151139 54135002 system.exception_table%s
@@ -54,23 +53,24 @@ D s-ststop.ads		20140225151139 e6693757 system.strings.stream_ops%s
 D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
+D walking_bird_package.ads  20200429190907 3167a6e6 walking_bird_package%s
 X 1 ada.ads
-16K9*Ada 20e8 14|10r6 11r5
+16K9*Ada 20e8 13|10r6 11r5
 X 6 a-textio.ads
-49K13*Text_IO 471e16 14|10w10 11r9
+49K13*Text_IO 471e16 13|10w10 11r9
 X 9 bird_package.ads
 19U11*Init
 25V11*Name{string}
-X 10 flying_bird_package.ads
-11K9*Flying_Bird_Package 23e24 13|9w6 9r31
-13R9*Flying_Bird_Type<9|12R6> 21e17 13|13r25 30r25
-15V13*Movement{string}<9|50p10>
-X 13 owl_package.ads
-11K9*Owl_Package 30E9 36l5 36e16 14|13b14 36l5 36t16
-13R9*Owl_Type<10|13R9> 9|19p11 25p11 10|15P13 13|20P13 20r30 28P13 28r35
-. 30c9 33e17 14|20r30 31r35
-20V13*Call{string}<9|31p11> 20>18 14|20b13 23l8 23t12
-20r18 An_Owl{13R9} 14|20b18
-28V13*Type_Name{string}<9|37p11> 28>23 14|31b13 34l8 34t17
-28r23 An_Owl{13R9} 14|31b23
+X 12 kiwi_package.ads
+12K9*Kiwi_Package 30E9 34l5 34e17 13|13b14 35l5 35t17
+14R9*Kiwi_Type<30|12R9> 9|19p11 25p11 12|20P14 20r31 27P14 27r36 30c9 33e17
+. 13|20r30 30r35 30|14P13
+20V14*Call{string}<9|31p11> 20>19 13|20b13 23l8 23t12
+20r19 A_Kiwi{14R9} 13|20b18
+27V14*Type_Name{string}<9|37p11> 27>24 13|30b13 33l8 33t17
+27r24 A_Kiwi{14R9} 13|30b23
+X 30 walking_bird_package.ads
+10K9*Walking_Bird_Package 12|10w6 10r32 30|22e25
+12R9*Walking_Bird_Type<9|12R6> 12|14r26 30r26 30|20e17
+14V13*Movement{string}<9|50p10>
 

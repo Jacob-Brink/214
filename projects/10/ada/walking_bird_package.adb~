@@ -1,0 +1,31 @@
+-- walking_bird_package.adb defines Walking_Bird_Type methods
+--
+-- Begun by: Dr. Adams, for CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 4/29/2020
+-- Project: 10
+-----------------------------------------------------
+
+
+package body Walking_Bird_Package is
+
+   type Walking_Bird_Type is new Bird_Type private;
+   
+   ----------------------------------------------------
+   -- A Walking Bird's movement                        -
+   -- Receive: A_Bird, a Walking_Bird_Type             -
+   -- Output: Movement Description                    -
+   ----------------------------------------------------
+   function Movement(A_Bird : in Walking_Bird_Type) return String is
+   begin
+      return "flew";
+   end Movement;
+   
+
+private
+   type Walking_Bird_Type is new Bird_Type with
+      record
+	 null;
+      end record;
+
+end Bird_Package;

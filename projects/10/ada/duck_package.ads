@@ -3,15 +3,15 @@
 --  and derives Duck from Bird.
 -- Begun by: Dr. Adams, CS 214 at Calvin College.
 -- Completed by: Jacob Brink
--- Date: 4/24/2020
--- Lab: 10
+-- Date: 4/29/2020
+-- Project: 10
 -----------------------------------------------------
 
-with Bird_Package; use Bird_Package;
+with Flying_Bird_Package; use Flying_Bird_Package;
 
 package Duck_Package is
 
-   type Duck_Type is new Bird_Type with private;
+   type Duck_Type is new Flying_Bird_Type with private;
    ----------------------------------------------------
    -- A Duck's Call (Over-rides Bird.Call())          -
    -- Receive: A_Duck, a Duck_Type.                   -
@@ -27,7 +27,7 @@ package Duck_Package is
    function  Type_Name(A_Duck : in Duck_Type) return String;
 
 private
-   type Duck_Type is new Bird_Type with
+   type Duck_Type is new Flying_Bird_Type with
       record
 	 null;
       end record;

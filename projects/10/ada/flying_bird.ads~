@@ -2,14 +2,14 @@
 --
 -- Begun by: Dr. Adams, for CS 214 at Calvin College.
 -- Completed by: Jacob Brink
--- Date: 4/29/2020
--- Project: 10
+-- Date: 4/24/2020
+-- Lab: 10
 -----------------------------------------------------
 
 
-package Bird_Package is
+package Flying_Bird_Package is
 
-type Bird_Type is tagged private;
+type Flying_Bird_Type is tagged private;
  ----------------------------------------------------
  -- initialization                                  -
  -- Receive: A_Bird, a Bird_Type;                   -
@@ -41,14 +41,6 @@ function  Type_Name(A_Bird : in Bird_Type) return String;
  -- Output: Everything known about A_Bird           -
  ----------------------------------------------------
 procedure Put(A_Bird : in Bird_Type'Class);
-
- ----------------------------------------------------
- -- A Bird's movement                               -
- -- Receive: A_Bird, a Bird_Type                    -
- -- Output: Movement Description        d           -
- ----------------------------------------------------
-function Movement(A_Bird : in Bird_Type) return String;
-
 
 private
 type Bird_Type is
