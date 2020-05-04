@@ -79,6 +79,8 @@ public class ThreadedArraySum {
         long sliceSum = 0;
         for (int i = start; i < stop; ++i) {  // sum the ints
             sliceSum += myArray[i];           //  in my slice
+	    System.out.println(Thread.currentThread().getName());
+
         }
         return sliceSum;
     }
@@ -161,7 +163,8 @@ public class ThreadedArraySum {
 
 	try {
 	    for (int i = 1; i < myNumThreads; ++i) {  // for each helper h:
-		helpers[i].join();                        //  wait for h to finish
+		helpers[i].join();
+		System.out.println(String.format("Joining thread %s to main thread", i));//  wait for h to finish
 		sum += helpers[i].getPartialSum();        //  get its partial sum
 	    }
 	} catch( InterruptedException ie) {             // required by join()
