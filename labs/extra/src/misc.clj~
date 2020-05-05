@@ -1,8 +1,8 @@
-;; reverse.clj "test-drives" function reverse-simple() and super-reverse().
+;; misc.clj "test-drives" function misc-simple() and super-misc().
 ;;
 ;; Output: the average of a sequence of numbers.
 ;;
-;; Usage: clojure -m reverse
+;; Usage: clojure -m misc
 ;;
 ;; Begun by: Dr. Adams, CS 214 at Calvin College.
 ;; Completed by: Jacob Brink
@@ -10,29 +10,29 @@
 ;; Lab: 12
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(ns reverse)
+(ns misc)
 
-;; reverse function
-(defn reverse-simple [listA reverseList]
+;; misc function
+(defn member? [listA item]
   (if (= (count listA) 1)
-    (conj reverseList (first listA)) ;;end recursion by returning reverseList with first number (really last number in original listA) to beginning of reverseList
-    (reverse-simple (rest listA) (conj reverseList (first listA)))         
+    (conj miscList (first listA)) ;;end recursion by returning miscList with first number (really last number in original listA) to beginning of miscList
+    (misc-simple (rest listA) (conj miscList (first listA)))         
     )
   )
 
 
-;; super-reverse function
-(defn super-reverse [listA reverseList]
+;; super-misc function
+(defn super-misc [listA miscList]
   (let [item
         (if (list? (first listA))
-               (super-reverse (first listA) '())
+               (super-misc (first listA) '())
                (first listA)
                )
 
         ]
     (if (= (count listA) 1)
-      (conj reverseList item) ;;end recursion by returning reverseList with first number (really last number in original listA) to beginning of reverseList
-      (super-reverse (rest listA) (conj reverseList item))         
+      (conj miscList item) ;;end recursion by returning miscList with first number (really last number in original listA) to beginning of miscList
+      (super-misc (rest listA) (conj miscList item))         
       )
     
     )
@@ -51,8 +51,8 @@
                 )]
     (when (not (empty? meta))
       (print "Original List Is " (first meta))
-      (print "\nReversed List Is " (reverse-simple (first meta) '()))
-     (print "\nSuper Reversed List Is " (super-reverse (first meta) '()))
+      (print "\nMiscd List Is " (misc-simple (first meta) '()))
+     (print "\nSuper Miscd List Is " (super-misc (first meta) '()))
       (print "\n\n")
       (recur (rest meta))          
       )
