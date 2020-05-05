@@ -12,8 +12,9 @@
 ;;;;          and how long it took to compute that sum.
 ;;;;
 ;;;; Begun by: Prof. Adams for CS 214 at Calvin College.
-;;;; Completed by:
-;;;; Date:
+;;;; Completed by: Jacob Brink
+;;;; Date: 5/4/2020
+;;;; Lab: 11
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (ns arraySum)
