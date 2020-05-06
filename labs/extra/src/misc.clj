@@ -1,4 +1,4 @@
-;; misc.clj "test-drives" function misc-simple() and super-misc().
+;; misc.clj "test-drives" function member?() and subsequence().
 ;;
 ;; Output: the average of a sequence of numbers.
 ;;
@@ -7,7 +7,7 @@
 ;; Begun by: Dr. Adams, CS 214 at Calvin College.
 ;; Completed by: Jacob Brink
 ;; Date: 5/5/2020
-;; Lab: 12
+;; Lab: Extra Credit
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (ns misc)
