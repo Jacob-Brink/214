@@ -1,0 +1,721 @@
+Script started on 2020-05-07 11:01:19-0400
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ cat tasked_array_sum.adb
+-- tasked_array_sum.adb sums the values from an input file using an array.
+--
+-- Begun by: Prof. Adams, for CS 214 at Calvin College.
+-- Completed by: Jacob Brink
+-- Date: 5/4/2020
+-- Lab: 11
+--
+-- Usage: tasked_array_sum <inFileName>
+-------------------------------------------------------------------
+
+with Ada.Text_IO,            -- string output
+  Ada.Integer_Text_IO,    -- integer output
+  Ada.Command_Line,       -- Argument()
+  Ada.Real_Time;          -- Clock, Time, etc.
+
+use  Ada.Text_IO, Ada.Integer_Text_IO, Ada.Real_Time;
+
+procedure tasked_array_sum is
+
+   package Long_IO is new Integer_IO(Long_Integer); use Long_IO;
+
+   type Int_Array is array (Integer range <>) of Long_Integer;
+   type Int_Array_Pointer is access Int_Array;
+
+   Values: Int_Array_Pointer;
+   Total:  Long_Integer;
+   Start_Time, Stop_Time:  Ada.Real_Time.Time;
+   Time_Required: Duration;
+   
+   task type Array_Adder_Task is 
+      entry sum(ID, Slice_Size: in Integer);
+      entry report(Result: out Long_Integer);
+   end;   
+   
+   --
+   -- check for command-line arguments
+   --
+   procedure Check_Command_Line is
+   begin
+      if Ada.Command_Line.Argument_Count /= 2 then
+         New_line;
+         Put("Usage: tasked_array_sum <inFileName> <numTasks>");
+         New_line; New_line;
+         Ada.Command_Line.Set_Exit_Status(1);
+      end if;
+   end Check_Command_Line;
+
+   -- fill array with values from an input file
+   -- Parameters: File_Name, a String
+   --             V, a pointer to a dynamic array
+   -- Precondition: File_Name is the name of a valid input file
+   --            && its first line is the N, the number of
+   --                (other) numbers in the file.
+   -- Postcondition: V points to a dynamic array of length N
+   --                 containing the N items from the input file.
+   --
+   procedure Read_File(File_Name: in String; V: in out Int_Array_Pointer) is
+      Size:   Integer;
+      Number_File : File_Type;
+   begin
+      Open(File => Number_File,
+	   Mode => In_File,
+	   Name => File_Name); 
+      Get(Number_File, Size);
+      V := new Int_Array(0..Size-1);
+      for i in V'Range loop
+         Get(Number_File, V(i));
+      end loop;
+   end Read_File;
+
+   -- Sum_Slice adds up the values in an array
+   -- 
+   -- Parameter: V, a pointer to an array of ints
+   -- Return: the sum of the int values in V.
+   --
+   function Sum_Slice(V: in Int_Array_Pointer; Start, Stop: in Integer) return Long_Integer is
+      Partial_Sum: Long_Integer := 0;
+   begin
+      for i in Start..Stop loop
+	 Partial_Sum := Partial_Sum + V(i);
+      end loop;
+      return Partial_Sum;
+   end Sum_Slice;
+
+   -- Output results
+   -- Parameter: Result, the sum of the array's values
+   --            Compute_Time, how long it took to sum them.
+   -- Postcondition: Result and Compute_Time have been
+   --                 displayed on the console.
+   --
+   procedure Display(Result: in Long_Integer; Compute_Time: in Duration) is
+   begin
+      New_line;
+      Put("The sum is ");
+      Put(Result);
+      New_line;
+      Put(" and computing it took "); 
+      Put(Duration'Image (Compute_Time));
+      Put(" secs.");
+      New_line; New_line;
+   end Display;
+   
+   task body Array_Adder_Task is
+      My_Total : Long_Integer := 0;
+      My_Start_Index, My_Stop_Index : Integer;
+   begin
+      accept sum(ID, Slice_Size: in Integer) do
+	 My_Start_Index := ID * Slice_Size;
+	 My_Stop_Index := My_Start_Index + Slice_Size - 1;
+      end; 
+
+      My_Total := Sum_Slice(Values, 
+			    My_Start_Index,
+			    My_Stop_Index);
+
+      accept report(Result: out Long_Integer) do
+	 Result := My_Total;
+      end; 
+   end Array_Adder_Task;
+   
+   
+   
+   
+   
+   function Sum_In_Parallel(Values: in Int_Array_Pointer;
+                            Num_Tasks: in Integer) return Long_Integer is
+      Partial_Result, Result: Long_Integer := 0;
+      Leftovers, Slice_Size, Start, Stop : Integer;
+
+      type Task_Array is array(Integer range <>) of Array_Adder_Task;
+      type Task_Array_Ptr is access Task_Array;
+      Adder_Tasks : Task_Array_Ptr;
+
+   begin
+      Slice_Size := Values'Length / Num_Tasks;
+       Adder_Tasks := new Task_Array(1..Num_Tasks-1);
+
+      for task_ID in 1..NUM_TASKS-1 loop
+         Adder_Tasks(task_ID).sum(task_ID, Slice_Size);
+      end loop;
+
+      Result := Sum_Slice(Values, 0, Slice_Size-1);
+
+      Leftovers := Values'Length REM Num_Tasks;
+
+      if ( Leftovers > 0 ) then
+         Start := Values'Length - Leftovers;
+         Stop := Values'Length - 1;
+         for i in Start..Stop loop
+            Result := Result + Values(i);
+         end loop;
+      end if;
+
+      for task_ID in 1..Num_Tasks-1 loop
+         Adder_Tasks(task_ID).report(Partial_Result);
+         Result := Result + Partial_Result;
+      end loop;
+
+      return Result;
+   end Sum_In_Parallel;
+   
+
+begin
+   Check_Command_Line;
+   Read_File( Ada.Command_Line.Argument(1), Values );
+   Start_Time := Clock;
+   Total := Sum_In_Parallel(Values, Integer'Value( Ada.Command_Line.Argument(2)));
+   Stop_Time := Clock;
+   Time_Required := Ada.Real_Time.To_Duration(Stop_Time - Start_Time);
+   Display(Total, Time_Required);
+end tasked_array_sum;
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ gnatmake tasked_+ array_sum
+x86_64-linux-gnu-gcc-7 -c tasked_array_sum.adb
+x86_64-linux-gnu-gnatbind-7 -x tasked_array_sum.ali
+x86_64-linux-gnu-gnatlink-7 tasked_array_sum.ali
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ ./tasked_array_sum 1000000numbers.txt 1
+
+
+raised ADA.IO_EXCEPTIONS.NAME_ERROR : 1000000numbers.txt: No such file or directory
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ 
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ ./tasked_array_sum 1000000numbers.txt 1[1@.[1@.[1@/[1@n[1@u[1@m[1@b[1@e[1@r[1@s[1@/
+
+The sum is             50473230
+ and computing it took  0.002783432 secs.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ ./tasked_array_sum ../numbers/1000000numbers.txt 1 4
+
+The sum is             50473230
+ and computing it took  0.002036587 secs.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ada[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ada[00m$ exit
+
+Script done on 2020-05-07 11:03:51-0400
+Script started on 2020-05-07 11:04:24-0400
+]0;jpb34@gold04: ~/Documents/214/labs/11/clojure[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/clojure[00m$ cat src. /threadedArraySum.clj
+;;;; threadedarraysum.clj sums the integers in a file using an array.
+;;;;
+;;;; Usage: clojure -m threadedarraysum <inputFileName> 
+;;;;
+;;;; Input: the name of the input file and the number of threads
+;;;;         (both entered on the command-line).
+;;;; Precondition: the first line of the file is an integer N
+;;;;               the second line is a blank
+;;;;               the remaining lines contain N integers
+;;;;               (one per line).
+;;;; Output: the sum of the other numbers in the file
+;;;;          and how long it took to compute that sum.
+;;;;
+;;;; Begun by: Prof. Adams for CS 214 at Calvin College.
+;;;; Completed by: Jacob Brink
+;;;; Date: 5/4/2020
+;;;; Lab: 11
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(ns threadedArraySum
+  (:require [clojure.core.async            ; need this clause to use async
+             :refer [chan go put! take! <! >! <!! >!!] 
+             ] 
+            ) 
+  )
+
+;;; recursively fill an array with values from a Java Scanner
+;;;
+;;; Parameters: array, an array of longs 
+;;;             in, a scanner.
+;;; Precondition: in contains N values &&
+;;;               array contains space for N values.
+;;; Postcondition: array contains the N values from in.
+;;; Pass back: array, containing the N values from in.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn fill [array in] 
+  (loop [i 0]                            ; set i to 0
+    (when (< i (count array))            ; while i < array.size
+      (aset array i (.nextLong in))      ;  array[i] = in.nextLong
+      (recur (inc i))                    ;  recurse (i+1)
+      )
+    )
+  )
+
+;; The following version of fill works for smaller arrays,
+;;  but generates StackOverflow errors for larger arrays
+;;  even though the function uses end-recursion.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+                                        ;(defn fill [ array index in] 
+                                        ;  (if (< index (count array))
+                                        ;    (do
+                                        ;        (aset-long array index (.nextLong in))
+                                        ;        (fill array (inc index) in)
+                                        ;    )
+                                        ;    array
+                                        ;  )
+                                        ;)
+
+
+;;; read values from a file into an array 
+;;;
+;;;   Receive: inFile, a String naming an input file.
+;;;   Precondition: the first line of the input file is N,
+;;;                  the second line is blank, and
+;;;                  the rest of the file contains N integers,
+;;;                   one per line.
+;;;   Postcondition: the N int values have been read
+;;;                   from 'in' and stored in an array.
+;;;   Return: an array containing the N values from the file.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn readFile [fileName]
+                                        ; before proceeding, check to make sure fileName exists 
+  (assert (.exists (clojure.java.io/file fileName))
+          (str "input file '" fileName "' not found"))
+  (let
+      [
+       in (java.util.Scanner. (java.io.File. fileName))
+       numNumbers (.nextLong in)       ; read first line
+       blankLine (.nextLine in)        ; read blank line
+       array (long-array numNumbers 0) ; allocate array of N zeros
+       ]
+
+    (fill array in)                  ; fill array with other vals from in
+    (.close in)                      ; close Scanner
+    array                            ; return the array
+    )
+  )
+
+
+
+
+
+;;; calcPartialSum():
+;;; - sum a 'slice' of an array given start and stop indices.
+;;; 
+;;; Receive: anArray, an array containing values to be summed;
+;;;          start, a long containing the starting index;
+;;;          stop, a long containing the stopping index.
+;;; Return: the sum of anArray[start] .. anArray[stop-1] (inclusive).
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn calcPartialSum [anArray start stop]
+(loop
+    [                           ; initially:
+      partialSum 0              ;  partialSum = 0
+      i          start          ;  i = start
+    ]
+    (if (>= i stop)             ; Basis: i >= stop:
+      partialSum                ;  return partialSum
+                                ; I-step:
+                                ;  return loop(partialSum + a[i], ++i)
+      (recur (+ partialSum (get anArray i)) (inc i))
+    )
+  )
+)
+
+;;; sum a 'slice' of an array based on thread ID and numThreads
+;;;
+;;; Receive: anArray, the array of ints to be summed;
+;;;          id, the ID of the current thread;
+;;;          numThreads, how many workers we have;
+;;;          channel, the channel to write its slice-sum to.
+;;; Postcondition: the sum of the values in this thread's slice
+;;;           of anArray have been put into channel.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; 
+(defn sumSlice [anArray id numThreads channel]
+  (let
+    [ arraySize   (count anArray)              ; determine array size
+      sliceSize   (quot arraySize numThreads)  ; calculate slice size
+      start       (* id sliceSize)             ; calc. starting index
+      stop        (if (< id (- numThreads 1))  ; calc. stopping index
+                     (+ start sliceSize)       ; - all but last thread
+                     arraySize                 ; - last thread
+                  )
+                                               ; calc. sum of my slice
+      partialSum  (calcPartialSum anArray start stop)
+    ]
+
+    ; write partial sum to channel
+    (put! channel partialSum)
+  )
+  )
+
+
+
+;;; sum the values in an array sequentially.
+;;; 
+;;; Receive: anArray, an array containing values to be summed.
+;;; Return: the sum of the values in anArray.
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn sumArray [anArray  numThreads]
+  (let
+      [ resChannel (chan) ]        ; define shared channel for results
+
+    (loop [id 1]                 ; loop to fork threads,
+      (when (< id numThreads)    ;  each writing its partial-sum 
+        (go                      ;  to the channel
+          (sumSlice anArray id numThreads resChannel)
+          )
+        (recur (inc id))
+        )
+      )
+                                        ; main thread does slice 0
+    (sumSlice anArray 0 numThreads resChannel)
+                                        ; loop to read each partial-sum
+    (loop [ sum 0                ;  from resChannel and add it to sum
+           id  0]               ;  
+      (if (>= id numThreads)     ; Basis: id >= numThreads:
+        sum                      ;  return sum
+                                        ; I-Step: 
+                                        ;  return sum + next resChannel val
+                                        ;          and recurse (id+1)
+        (recur (+ sum (<!! resChannel)) (inc id)) 
+        )
+      )
+    )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; main method 
+;;;
+;;; Receive: inFile, a String containing the name of an input file.
+;;; Precondition: inFile has N+2 lines, formatted as follows:
+;;;                the first line is a positive integer N 
+;;;                the second line is a blank line
+;;;                the remaining N lines are the values (1 per line).
+;;; Output: the sum of the values in inFile
+;;;           and the time required to sum them
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn -main [inFile numThreadsStr]
+  (let
+      [
+       anArray    (readFile inFile)        ; read inFile into anArray 
+       numValues  (count anArray)          ; determine numValues
+       numThreads   (read-string numThreadsStr)  ; numThreadsStr -> integer
+       
+       startTime  (System/nanoTime)        ; - start timer
+       sum        (sumArray anArray numThreads)       ; - sum values sequentially
+       stopTime   (System/nanoTime)        ; - stop timer
+       totalTime  (- stopTime startTime)   ; - calc. sequential time
+       ]
+                                        ; output results
+    (printf "\nThe *parallel* sum of the %d numbers is %d;\n"
+            numValues sum)
+    (printf " summing them with %d thread(s) took %d time units.\n\n"
+            numThreads totalTime)
+    )
+  )
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/clojure[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/clojure[00m$ clojure -m threadedArraySum 1 ../numbers/1000000numbers.txt 1
+
+The *parallel* sum of the 1000000 numbers is 50473230;
+ summing them with 1 thread(s) took 274895194 time units.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/clojure[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/clojure[00m$ clojure -m threadedArraySum ../numbers/1000000numbers.txt 1 4
+
+The *parallel* sum of the 1000000 numbers is 50473230;
+ summing them with 4 thread(s) took 201266740 time units.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/clojure[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/clojure[00m$ exit
+
+Script done on 2020-05-07 11:05:54-0400
+Script started on 2020-05-07 10:59:51-0400
+]0;jpb34@gold04: ~/Documents/214/labs/11/java[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/java[00m$ cat ThreadedArraySum.java
+/* ThreadedArraySum.java sums the integers in a file using an array.
+ *
+ * Usage: java -Xint ThreadedArraySum <fileName> <threadCount>
+ *
+ * Input: the name of the input file
+ *         (entered on the command-line).
+ * Precondition: the first line of the file is the number
+ *                of (other) numbers in the file.
+ * Output: the sum of the other numbers in the file
+ *          and how long it took to compute that sum.
+ *
+ * Begun by: Prof. Adams for CS 214 at Calvin College.
+ * Completed by: Jacob Brink
+ * Date: 5/4/2020
+ * Lab: 11
+ */
+
+import java.util.Scanner;                   // convenient I/O
+import java.io.File;                        // file I/O
+import java.io.FileNotFoundException;       // file exception
+import java.lang.System;                    // nanoTime()
+
+public class ThreadedArraySum {
+
+    private class Helper extends Thread {
+
+	public Helper(int id) {
+	    super();
+	    myID = id;
+	    myPartialSum = 0;
+	}
+
+	public void run() {
+	    myPartialSum = sumSlice(myID);
+	}
+
+	public final long getPartialSum() {
+	    return myPartialSum;
+	}
+
+	private int  myID = 0;
+	private long myPartialSum = 0;
+    } // Helper
+    
+    private int myNumThreads;
+    
+    public static void main(String [] args) {
+	ThreadedArraySum me = new ThreadedArraySum(args);
+	me.run();
+    }
+
+    /* constructor
+     * @param: args, an array of Strings
+     * Precondition: args.length == 1 &&
+     *                args[0] is the name of an input file
+     *                 whose first line is N, an integer
+     *                 followed by a blank line
+     *                 followed by N integers, one per line.
+     * Postcondition: myScanner is a Scanner for that input file
+     *             && myArray is an array containing the N ints.
+     */
+    public ThreadedArraySum(String [] args) {
+	if (args.length < 1) {
+	    System.err.println("\n*** Usage: java Sum <fileName> <threadCount>\n");
+	    System.exit(1);
+	}
+	Scanner aScanner = openScanner( args[0] ); // open input file
+	myArray = readFile(aScanner);              // fill array with values
+	myNumThreads = getNumThreads( args );
+    }
+
+    private long sumSlice(int id) {
+        int sliceSize = myArray.length / myNumThreads;
+        int start = id * sliceSize;         // starting index
+        int stop = (id+1) * sliceSize;      // stopping index
+        if ( id == myNumThreads-1 ) {       // have final thread
+            stop = myArray.length;            //  handle leftovers
+        } 
+        long sliceSum = 0;
+        for (int i = start; i < stop; ++i) {  // sum the ints
+            sliceSum += myArray[i];           //  in my slice
+
+        }
+        return sliceSum;
+    }
+
+    private final int getNumThreads( String [] args ) {
+	if (args.length >= 2) {
+	    return Integer.parseInt( args[1] );
+	} else {
+	    return 1;
+	}
+    }
+    
+    /* utility to open / return a Scanner to a file 
+     *   whose name comes from the command-line.
+     * 
+     * @param: fileName, a String
+     * Precondition: fileName is the name of an input file.
+     * Return: a Scanner for that input file.
+     */
+    private Scanner openScanner(String fileName) {
+	Scanner in = null;
+	try {
+	    File theFile = new File ( fileName );
+	    in = new Scanner( theFile );
+	} catch ( FileNotFoundException  fnfe ) {
+	    System.err.println("\n*** Unable to open '" + fileName + "'\n");
+	    System.exit(1);
+	}
+
+	return in;
+    }
+
+    /* fill an array with values from a Scanner
+     * @param: in, a Scanner to an input file.
+     * Precondition: the first line of the input file is N,
+     *                the number of (other) numbers in the file.
+     * Postcondition: the N int values have been read
+     *                 from 'in' and stored in an array.
+     * Return: the array containing the N int values.
+     */
+    private int[] readFile(Scanner in) {
+	int numNumbers = in.nextInt();           // read how many numbers
+	int [] array = new int[numNumbers];      // allocate array
+	for (int i = 0; i < array.length; i++) { // fill array
+	    array[i] = in.nextInt();              //   with numbers
+	}
+	in.close();                              // close input file
+	return array;                            // we're done
+    }
+
+    /* how long does it take to process the values in myArray?
+     * Precondition: myArray has been filled with N input values.
+     * Output: the sum of the values in myArray
+     *          and how long it took to compute that sum.
+     */
+    public void run() {
+	long startTime = System.nanoTime();             // start timing
+	long sum = sumArray(myArray);                    // sum the values
+	long totalTime = System.nanoTime() - startTime; // stop timing
+     
+	System.out.println("\nThe sum of the " + myArray.length
+			   + " numbers is: " + sum 
+			   + "\n and summing them took " 
+			   + totalTime + " time units.\n");
+    }
+
+    /* sum the values in an array
+     * @param: arr, an array of integers
+     * Return: the sum of the int values in arr.
+     */
+    private long sumArray(int[] arr) {
+	Helper[] helpers = new Helper[myNumThreads];
+
+	for (int i = 1; i < myNumThreads; ++i) {     // for each helper:
+	    helpers[i] = new Helper(i);                  //  create, and
+	    helpers[i].start();                          //  launch them
+	}
+
+	long sum = sumSlice(0);                         // main thread does slice 0
+
+	try {
+	    for (int i = 1; i < myNumThreads; ++i) {  // for each helper h:
+		helpers[i].join();
+		sum += helpers[i].getPartialSum();        //  get its partial sum
+	    }
+	} catch( InterruptedException ie) {             // required by join()
+	    System.err.println("\n*** a Helper was interrupted!\n");
+	    System.err.println(ie);
+	    System.exit(1);
+	}
+
+	return sum;
+    }
+
+    private int [] myArray = null;
+}
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/java[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/java[00m$ javac ThreadedArraySum.java 
+]0;jpb34@gold04: ~/Documents/214/labs/11/java[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/java[00m$ java ThreadedArraySum ../numbers/1000000numbewr   r ers.txt 1
+
+The sum of the 1000000 numbers is: 50473230
+ and summing them took 4386490 time units.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/java[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/java[00m$ java ThreadedArraySum ../numbers/1000000numbers.txt 1 4
+
+The sum of the 1000000 numbers is: 50473230
+ and summing them took 7796251 time units.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/java[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/java[00m$ exit
+
+Script done on 2020-05-07 11:00:48-0400
+Script started on 2020-05-07 11:07:01-0400
+]0;jpb34@gold04: ~/Documents/214/labs/11/ruby[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ruby[00m$ cat threadedArr   _array_su  jm  m.rb
+# threaded_array_sum.rb sums the values in an array
+#
+# Begun by: Prof. Adams, for CS 214 at Calvin College.
+# Completed by: Jacob Brink
+# Date: 5/4/2020
+# Lab: 11
+#
+# Usage: ruby threaded_array_sum.rb <inFileName>
+######################################################
+
+# make certain the input file was specified on the command-line
+def checkCommandLine
+  if ARGV.length != 2
+    puts "\nUsage: sum <fileName> <numThreads>\n\n"
+    exit(1)
+  end
+end
+
+# return: an array containing the values from the file
+#  whose name was specified on the command-line
+def readFile
+  strArray = IO.readlines( ARGV[0] )
+  intArray = Array.new( Integer(strArray[0]) )
+  for i in 2..strArray.size
+    if  !strArray[i].nil?
+      intArray[i-2] = Integer( strArray[i].chomp )
+    end
+  end
+  intArray 
+end
+
+def sumInParallel(values, numThreads)
+      sliceSize = values.size / numThreads
+      threadArray = Array.new( numThreads )
+      result = 0
+      lock = Mutex.new
+
+      (1..numThreads-1).each do | i |
+          threadArray[i] = Thread.new { 
+                            myTotal = sumSlice(values, 
+                                                 i,
+                                                 sliceSize) 
+                            lock.synchronize {
+                                result += myTotal
+                            }
+          }
+      end
+
+      myTotal  = sumSlice(values, 0, sliceSize)
+
+      leftovers = values.size % numThreads
+      if leftovers > 0
+         for i in values.size-leftovers..values.size-1
+            myTotal += values[i]
+         end
+      end
+
+      lock.synchronize {
+         result += myTotal
+      }
+
+      for i in 1..numThreads-1
+         threadArray[i].join
+      end
+
+      result
+   end
+
+# Return: the sum of the values 
+def sumSlice(values, id, sliceSize)
+  start = id * sliceSize
+  stop = start + sliceSize - 1
+  myTotal = 0
+  for i in start..stop
+    myTotal += values[i]
+  end
+  myTotal
+end
+
+def main
+  checkCommandLine
+  values = readFile
+  startTime = Time.now
+  total = sumInParallel(values, Integer( ARGV[1] ))
+  endTime = Time.now
+  interval = (endTime - startTime).to_f
+  puts "\nThe sum is #{total}\n"
+  printf(" and computing it took %.9f seconds.\n\n", interval)
+end
+
+main
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ruby[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ruby[00m$ ruby threaded_array_sum.rb 1 ../numbers/1000000numbers.txt 1
+
+The sum is 50473230
+ and computing it took 0.042639108 seconds.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ruby[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ruby[00m$ ruby threaded_array_sum.rb ../numbers/1000000numbers.txt 1 4
+
+The sum is 50473230
+ and computing it took 0.043856931 seconds.
+
+]0;jpb34@gold04: ~/Documents/214/labs/11/ruby[01;32mjpb34@gold04[00m:[01;34m~/Documents/214/labs/11/ruby[00m$ exit
+
+Script done on 2020-05-07 11:07:51-0400

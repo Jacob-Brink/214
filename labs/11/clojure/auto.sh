@@ -52,7 +52,7 @@ for file in "$ndir"/*; do
 		   fi
 
 		   #do adding by concatenation cuz its a mess otherwise
-		   num=$(echo $(grep -o '\(\([0-9]*.[0-9][0-9]*\)\|\([0-9][0-9]*\)\) time units' <<< $RAWINPUT) | sed -e 's/ time units//')
+		   num=$(echo $(grep -o 'took[ ]*\(\([0-9]*.[0-9][0-9]*\)\|\([0-9][0-9]*\)\)' <<< $RAWINPUT) | sed -e 's/took[ ]*//')
 		   if (( j == 1 )); then
 		       EQUATION='('num
 		   else

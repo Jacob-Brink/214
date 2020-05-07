@@ -92,7 +92,7 @@ D s-traent.ads		20140730135025 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20160502101423 34867c83 system.unsigned_types%s
 D s-valint.ads		20090409150019 48a52a3f system.val_int%s
 D s-wchcon.ads		20140718092328 1b7d22d2 system.wch_con%s
-D tasked_array_sum.adb	20200504181557 fbab9bf7 tasked_array_sum%b
+D tasked_array_sum.adb	20200505215927 fbab9bf7 tasked_array_sum%b
 X 1 ada.ads
 16K9*Ada 20e8 49|11r6 12r3 13r3 14r3 16r6 16r19 16r40 27r28 40r10 44r10 165r15
 . 167r52 169r21
