@@ -41,8 +41,8 @@ for file in "$ndir"/*; do
 	progress=0
 	pbar 0
         for i in `seq 0 5`; do
-	        EQUATION=""
-        	for j in `seq 1 3`; do
+	        RESULTS=()
+        	for j in `seq 0 2`; do
 
 		   # on first loop do non threaded command
 		   if (( i == 0 )); then
@@ -53,26 +53,19 @@ for file in "$ndir"/*; do
 
 		   #do adding by concatenation cuz its a mess otherwise
 		   num=$(echo $(grep -o 'took[ ]*\(\([0-9]*.[0-9][0-9]*\)\|\([0-9][0-9]*\)\)' <<< $RAWINPUT) | sed -e 's/took[ ]*//')
-		   if (( j == 1 )); then
-		       EQUATION='('num
-		   else
-		       EQUATION="${EQUATION}+${num}"		   
-		   fi
+		   RESULTS[$j]=$num
 
 		   #update progress bar
-		   # progress_bar=$(echo $progress_bar | sed -e 's/\(:-\)\|\(=-\)/==/')
-		   # echo -ne "${progress_bar}\r"
 		   ((progress++))
 		   pbar  $progress
 	       done
-
-	  #actually do maths
-	  EQUATION="${EQUATION})/3"
-	  avg=$(bc <<< "scale=9; ${EQUATION}")
-
-	  CSV_ROW="${CSV_ROW} \t ${avg}"
+		#echo ${RESULTS[*]}
+		#sort numbers and get median
+		IFS=$'\n' sorted=($(sort -g <<<"${RESULTS[*]}"))
+		unset IFS
+		MEDIAN=${RESULTS[1]}
+		CSV_ROW="${CSV_ROW} \t ${MEDIAN}"
         done
-	CSV_ROW="${CSV_ROW}"
 	echo -e $CSV_ROW >> results.txt
     fi
 done
