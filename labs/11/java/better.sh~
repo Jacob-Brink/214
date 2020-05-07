@@ -53,19 +53,21 @@ for file in "$ndir"/*; do
 
 		   #do adding by concatenation cuz its a mess otherwise
 		   num=$(echo $(grep -o 'took[ ]*\(\([0-9]*.[0-9][0-9]*\)\|\([0-9][0-9]*\)\)' <<< $RAWINPUT) | sed -e 's/took[ ]*//')
-		   RESULTS[$j]=$num
+		   RESULTS[$i]=$num
 
 		   #update progress bar
 		   ((progress++))
 		   pbar  $progress
 	       done
-		#echo ${RESULTS[*]}
+		echo ${RESULTS[@]}
 		#sort numbers and get median
 		IFS=$'\n' sorted=($(sort -g <<<"${RESULTS[*]}"))
 		unset IFS
 		MEDIAN=${RESULTS[1]}
+
 		CSV_ROW="${CSV_ROW} \t ${MEDIAN}"
         done
+	CSV_ROW="${CSV_ROW}"
 	echo -e $CSV_ROW >> results.txt
     fi
 done
