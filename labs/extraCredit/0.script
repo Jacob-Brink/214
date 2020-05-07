@@ -1,0 +1,9 @@
+Script started on 2020-05-07 09:30:49-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> (+ 1 2 3 4 5)
+15
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 09:31:02-0500

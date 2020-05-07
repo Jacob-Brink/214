@@ -1,0 +1,19 @@
+Script started on 2020-05-07 09:39:24-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> (Def     def triple (fn [x] (* x 3)))
+#'user/triple
+user=> (triop  ple 4)
+12
+user=> (#(* % 3) 4)
+12
+user=> (# #(+ (* %1 %1) (* %2 %2)) 3 4)
+25
+user=> (def sum2Squares #(+ (* %1 %1) (* %2 %2)))
+#'user/sum2Squares
+user=> (sum2Squares 3 4)
+25
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 09:42:53-0500

@@ -1,0 +1,29 @@
+FILE 	 0 	 1 	 2 	 3 	 4 	 5
+
+../numbers/100000000numbers.txt 	 .174760100 	 .192543066 	 .105229800 	 .072719700 	 .061438900 	 .075543033
+../numbers/10000000numbers.txt 	 .021067666 	 .021134766 	 .011371366 	 .007333866 	 .006206200 	 .009625800
+../numbers/1000000numbers.txt 	 .002108566 	 .002382533 	 .001331233 	 .001454266 	 .001273500 	 .001360366
+../numbers/100000numbers.txt 	 .000332266 	 .000236633 	 .000435000 	 .000563800 	 .000657933 	 .000637766
+../numbers/10000numbers.txt 	 .000021866 	 .000044033 	 .000242333 	 .000357766 	 .000418133 	 .000537066
+../numbers/1000numbers.txt 	 .000003000 	 .000021500 	 .000236966 	 .000341766 	 .000449033 	 .000553900
+../numbers/5numbers.txt 	 .000001033 	 .000017933 	 .000253066 	 .000325966 	 .000529233 	 .000675800
+../numbers/NumbersGenerator.class 	 0 	 0 	 0 	 0 	 0 	 0
+../numbers/NumbersGenerator.java 	 0 	 0 	 0 	 0 	 0 	 0
+../numbers/100000000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/10000000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/1000000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/100000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/10000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/1000numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/5numbers.txt 	 0 	 0 	 0 	 0 	 0
+
+../numbers/NumbersGenerator.class 	 0 	 0 	 0 	 0 	 0
+
+../numbers/NumbersGenerator.java 	 0 	 0 	 0 	 0 	 0
+

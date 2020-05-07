@@ -1,0 +1,13 @@
+Script started on 2020-05-07 09:58:52-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ s[Kclojure
+Clojure 1.10.1
+user=> (defrm        (def negate #(map (fn [x] (- 0 x)) %))
+#'user/negate
+user=> (ng egate [-1 2 -3])
+(1 -2 3)
+user=> (negatte  e [ -4 5 -6])
+(4 -5 6)
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 10:14:00-0500

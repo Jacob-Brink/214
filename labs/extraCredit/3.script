@@ -1,0 +1,56 @@
+Script started on 2020-05-07 09:45:47-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> (map inc [1 2 3 4])
+(2 3 4 5)
+user=> (map - [1 2 3 4])
+(-1 -2 -3 -4)
+user=> (map - [1 2 3 4] [1 2 3 4])
+(0 0 0 0)
+user=> (map even? [1 2 3 4])
+(false true false true)
+user=> (map str ["a" "b" "c"] ["A" "B" "C"])
+("aA" "bB" "cC")
+user=> map count [[11] [11 22] [11 22 33]])
+#object[clojure.core$map 0x466d49f0 "clojure.core$map@466d49f0"]
+#object[clojure.core$count 0x2d7e1102 "clojure.core$count@2d7e1102"]
+[[11] [11 22] [11 22 33]]
+Syntax error reading source at (REPL:6:37).
+Unmatched delimiter: )
+user=> (map count [[11] [11 22] [11 22 33]])
+(1 2 3)
+user=> (map + [1 2 3 4] [1 2 3 4])
+(2 4 6 8)
+user=> (map * [1 2 3 4] [1 2 3 4])
+(1 4 9 16)
+user=> (Math/abs -3)
+3
+user=> (map Math/abs [-1 2 -3 4 -5])
+Syntax error compiling at (REPL:1:1).
+Unable to find static field: abs in class java.lang.Math
+user=> (map (fn [x] (if (< x 0) (- x) x)) [                                    (map (fn [x] (if (< x 0) (- x) x)) [-1 2 -3 4 -5])
+(1 2 3 4 5)
+user=>  (defn subtract-n [n sequence]
+   	(map (fn [x] (- x n)) sequence)
+   )
+#'user/subtract-n
+user=> (subtract-n 2 [5 6 7 8])
+(3 4 5 6)
+user=> (filter odd? [1 2 3 4])
+(1 3)
+user=> (filter even? [1 2 3 4])
+(2 4)
+user=> (filter neg? [1 2 3 4])
+()
+user=> (filter neg? [-1 1 -2 2 -3 3])
+(-1 -2 -3)
+user=> (filter pos?  [-1 1 -2 2 -3 3])
+(1 2 3)
+user=> (filter (fn [x] (and (pos? x) (even? x))) [-1 1 -2 2 -3 3 -4 4])
+(2 4)
+user=> (filter (fn [x] (and (pos? x) (even? x))) [-1 1 -2 2 -3 3 -4 4])                                                                (filter (fn [x] (or (neg? x) (odd? x))) [-1 1 -2 2 -3 3 -4 4])
+(-1 1 -2 -3 3 -4)
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 09:53:27-0500

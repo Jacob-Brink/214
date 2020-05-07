@@ -1,0 +1,15 @@
+Script started on 2020-05-07 10:24:31-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> (defn sumSquares [seq] (reduce + (map (fn [x] (* x x)) seq)))
+#'user/sumSquares
+user=> (sumSquares [             (sumSquares '(1 2 3))
+14
+user=> (sumSquares '(1 2 3 4 5)) 
+55
+user=>  (sumSquares [-1 -2 -3 0 1])
+15
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 10:25:13-0500

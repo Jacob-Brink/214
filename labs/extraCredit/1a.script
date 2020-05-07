@@ -1,0 +1,13 @@
+Script started on 2020-05-07 09:34:34-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/. abs z))) 2 4 6)
+6
+user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 2 4 6)^[[D^[[D              -20 4 5)
+20
+user=> ((fn [x y z] (max (Math/abs x) (Math/abs y) (Math/abs z))) 2 4 6)      -1 -2- ^[[2~        -3)
+3
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 09:35:59-0500

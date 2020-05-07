@@ -1,0 +1,15 @@
+Script started on 2020-05-07 09:36:17-0500
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ clojure
+Clojure 1.10.1
+user=> ((fn [x y z] (+ x y z)) 1 2 3)
+6
+user=> ((fn [x] (nil? x)) 1)
+false
+user=> ((fn [x] (nil? x)) nil)
+true
+user=> ((fn [] 17.2))
+17.2
+user=> 
+]0;jacob@DESKTOP-QKT72KA: ~/214/labs/extraCredit[01;32mjacob@DESKTOP-QKT72KA[00m:[01;34m~/214/labs/extraCredit[00m$ exit
+
+Script done on 2020-05-07 09:37:48-0500
